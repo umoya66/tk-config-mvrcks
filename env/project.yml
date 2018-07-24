@@ -1,4 +1,4 @@
-# Copyright (c) 2016 Shotgun Software Inc.
+# Copyright (c) 2017 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -9,28 +9,43 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 #
 
-description: Toolkit configuration to be loaded whenever an association with a
-             project has been established.
+description: Apps and Engines when launching with a project only context.
+
+################################################################################
 
 includes:
-- includes/houdini/project.yml
-- includes/maya/project.yml
-- includes/nuke/project.yml
-- includes/flame/project.yml
-- includes/desktop/project.yml
-- includes/shell/project.yml
-- includes/photoshopcc/project.yml
-- includes/3dsmax/project.yml
-- includes/shotgun/all.yml
+- ./includes/frameworks.yml
+- ./includes/settings/tk-3dsmaxplus.yml
+- ./includes/settings/tk-desktop.yml
+- ./includes/settings/tk-flame.yml
+- ./includes/settings/tk-houdini.yml
+- ./includes/settings/tk-mari.yml
+- ./includes/settings/tk-maya.yml
+- ./includes/settings/tk-motionbuilder.yml
+- ./includes/settings/tk-nuke.yml
+- ./includes/settings/tk-photoshopcc.yml
+- ./includes/settings/tk-shell.yml
+- ./includes/settings/tk-shotgun.yml
+
+################################################################################
+# configuration for all engines to load in a project context
 
 engines:
-  tk-houdini: '@houdini.project'
-  tk-maya: '@maya.project'
-  tk-nuke: '@nuke.project'
-  tk-nukestudio: '@nukestudio.project'
-  tk-desktop: '@desktop.project'
-  tk-shell: '@shell.project'
-  tk-photoshopcc: '@photoshopcc.project'
-  tk-3dsmaxplus: '@3dsmax.project'
-  tk-shotgun: '@shotgun.all'
-  tk-flame: '@flame.project'
+  tk-3dsmaxplus: "@settings.tk-3dsmaxplus.project"
+  tk-desktop: "@settings.tk-desktop.project"
+  tk-flame: "@settings.tk-flame.project"
+  tk-hiero: "@settings.tk-nuke.hiero.project"
+  tk-houdini: "@settings.tk-houdini.project"
+  tk-mari: "@settings.tk-mari.project"
+  tk-maya: "@settings.tk-maya.project"
+  tk-motionbuilder: "@settings.tk-motionbuilder.project"
+  tk-nuke: "@settings.tk-nuke.project"
+  tk-nukestudio: "@settings.tk-nuke.nukestudio.project"
+  tk-photoshopcc: "@settings.tk-photoshopcc.project"
+  tk-shell: "@settings.tk-shell.project"
+  tk-shotgun: "@settings.tk-shotgun.project"
+
+################################################################################
+# reference all of the common frameworks
+
+frameworks: "@frameworks"

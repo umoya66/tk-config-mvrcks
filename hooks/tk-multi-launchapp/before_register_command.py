@@ -42,3 +42,4 @@ class BeforeRegisterCommand(HookBaseClass):
             engine_instance_name = "tk-nukestudio"
 
         return engine_instance_name
+
