@@ -53,7 +53,14 @@ engines.tk-maya.location:
 engines.tk-motionbuilder.location:
   type: app_store
   name: tk-motionbuilder
-  version: v0.4.2
+  version: v0.4.1
+
+# Natron
+engines.tk-natron.location:
+  type: path
+  name: tk-natron
+  path: /array/users/mhatton/dev/tk-natron
+  version: v0.9.4
 
 # Nuke
 engines.tk-nuke.location:

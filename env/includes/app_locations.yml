@@ -151,6 +151,22 @@ apps.tk-houdini-mantranode.location:
   name: tk-houdini-mantranode
   version: v0.3.0
 
+# ---- Natron apps
+
+# quickdailies
+apps.tk-natron-quickdailies.location:
+  name: tk-natron-quickdailies
+  type: path
+  path: /array/users/mhatton/dev/tk-natron-quickdailies
+  version: v0.3.6
+
+# writenode
+apps.tk-natron-writenode.location:
+  name: tk-natron-writenode
+  type: path
+  path: /array/users/mhatton/dev/tk-natron-writenode
+  version: v1.2.0
+
 # ---- Nuke apps
 
 # quickreview
