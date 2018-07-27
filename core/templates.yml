@@ -270,34 +270,25 @@ paths:
     # The location of maya work renders
     maya_shot_render_exr: 
         definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
-        root_name: 'primary'
-    maya_shot_render_jpg: 
+    maya_shot_render_jpg:
         definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
-        root_name: 'primary'
-    maya_shot_render_mov: 
+    maya_shot_render_mov:
         definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.mov'
-        root_name: 'primary'
-    maya_shot_render_dpx: 
+    maya_shot_render_dpx:
         definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
-        root_name: 'primary'
 
     # The location of maya publish renders
     maya_shot_render_pub_exr: 
         definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
-        root_name: 'primary'
-    maya_shot_render_pub_jpg: 
+    maya_shot_render_pub_jpg:
         definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
-        root_name: 'primary'
-    maya_shot_render_pub_mov: 
+    maya_shot_render_pub_mov:
         definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.mov'
-        root_name: 'primary'
-    maya_shot_render_pub_dpx: 
+    maya_shot_render_pub_dpx:
         definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
-        root_name: 'primary'
 
     # maya_shot_alembic_cache:
     #     definition: '@shot_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
-    #     root_name: 'primary'
 
 
 
@@ -411,32 +402,24 @@ paths:
 
     nuke_shot_render_mono_exr:
         definition:  '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
-        root_name: 'primary'
     nuke_shot_render_pub_mono_exr:
         definition: '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
-        root_name: 'primary'
 
     nuke_shot_render_mono_tif:
         definition:  '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.tif'
-        root_name: 'primary'
     nuke_shot_render_pub_mono_tif:
         definition: '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.tif'
-        root_name: 'primary'
 
     nuke_shot_render_mono_prores:
         definition:  '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}_prores.mov'
-        root_name: 'primary'
 
     nuke_shot_render_pub_mono_prores:
         definition:  '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}_prores.mov'
-        root_name: 'primary'
 
     nuke_shot_render_mono_qt:
         definition:  '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.mov'
-        root_name: 'primary'
     nuke_shot_render_pub_mono_qt:
         definition: '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.mov'
-        root_name: 'primary'
 
     nuke_shot_render_stereo:
         definition: '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
@@ -472,7 +455,6 @@ paths:
 
     shot_alembic_cache:
         definition: '@shot_root/publish/alembic/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}[_{grp_name}]_v{version}.abc'
-        root_name: 'primary'
 
 
     #
@@ -521,7 +503,6 @@ paths:
         definition: '@asset_root/publish/maya/scenes/{Asset}_{Step}_{name}_v{version}.{maya_extension}'
     # maya_asset_alembic_cache:
     #     definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
-    #     root_name: 'primary'
 
 
     #
