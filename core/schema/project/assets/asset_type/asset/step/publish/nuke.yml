@@ -14,3 +14,5 @@ type: "static"
 # defer creation and only create this folder when Nuke starts
 defer_creation: "tk-nuke"
 
+writeable: True
+
