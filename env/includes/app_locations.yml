@@ -107,8 +107,11 @@ apps.tk-multi-workfiles2.location:
 
 # shotgun folders
 apps.tk-shotgun-folders.location:
-  type: app_store
-  name: tk-shotgun-folders
+    # type: app_store
+    # name: tk-shotgun-folders
+    # version: v0.1.6
+  type: dev
+  path: /home/mhatton/dev/tk-shotgun-folders
   version: v0.1.6
 
 # shotgun launchfolder

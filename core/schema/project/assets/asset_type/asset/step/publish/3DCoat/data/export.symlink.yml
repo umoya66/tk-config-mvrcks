@@ -1,4 +1,4 @@
-target: "../../../../../../../../images/$Project/publish/assets/$Asset/$Step/3DCoat/data/export"
+target: "../../../../../../../../../cache/$Project/publish/assets/$Asset/$Step/3DCoat/data/export"
 
 
 
