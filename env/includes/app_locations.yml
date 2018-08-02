@@ -113,10 +113,15 @@ apps.tk-shotgun-folders.location:
   # type: dev
   # path: /home/mhatton/dev/tk-shotgun-folders
   # version: v0.1.6
-  type: git_branch
-  branch: master
+
+  # type: git_branch
+  # branch: master
+  # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
+  # version: bd568093926
+  type: git
   path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
-  version: bd568093926
+  version: v0.0.1
+
 
 # shotgun launchfolder
 apps.tk-shotgun-launchfolder.location:
