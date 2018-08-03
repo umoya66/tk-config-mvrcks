@@ -88,7 +88,7 @@ apps.tk-multi-shotgunpanel.location:
   # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
   type: git
   path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
-  version: v0.0.1
+  version: v0.0.2
 
 # snapshot
 apps.tk-multi-snapshot.location:
