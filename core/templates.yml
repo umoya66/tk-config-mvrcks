@@ -95,8 +95,13 @@ keys:
         alias: DD
     project:
         type: str
+        # shotgun_entity_type: Project
+        # shotgun_field_name: sg_code
+
+    thisProject:
+        type: str
         shotgun_entity_type: Project
-        shotgun_field_name: sg_code
+        shotgun_field_name: tank_name
 
     track:
         type: str
@@ -189,15 +194,15 @@ paths:
 
     # The location of WIP files
     hiero_project_work:
-        definition: 'editorial/work/{project}_{name}_v{version}.hrox'
+        definition: 'editorial/work/{thisProject}_{name}_v{version}.hrox'
     hiero_project_work_area:
         definition: 'editorial/work'
     # The location of backups of WIP files
     hiero_project_snapshot:
-        definition: 'editorial/work/snapshots/{project}_{name}_v{version}_{timestamp}.hrox'
+        definition: 'editorial/work/snapshots/{thisProject}_{name}_v{version}_{timestamp}.hrox'
     # The location of published hiero files
     hiero_project_publish:
-        definition: 'editorial/publish/{project}_{name}_v{version}.hrox'
+        definition: 'editorial/publish/{thisProject}_{name}_v{version}.hrox'
     hiero_project_publish_area:
         definition: 'editorial/publish'
 
