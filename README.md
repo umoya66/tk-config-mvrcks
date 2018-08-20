@@ -1,4 +1,6 @@
-This is the DEV branch
+This is Mavericks Shotgun Default configuration
+based on tk-config-default2
+
 
 -------------------------------------------------------------------------
 The Shotgun Pipeline Toolkit Default Configuration
