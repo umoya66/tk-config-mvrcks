@@ -281,7 +281,7 @@ settings.tk-nuke.nukestudio.project:
   location: '@engines.tk-nuke.location'
   
   # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
+  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: Cineon, floatLut: AlexaV3LogC}    
 
 # shot_step
 settings.tk-nuke.nukestudio.shot_step:
