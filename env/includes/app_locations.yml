@@ -81,9 +81,12 @@ apps.tk-multi-setframerange.location:
 
 # shotgun panel
 apps.tk-multi-shotgunpanel.location:
-  type: app_store
-  name: tk-multi-shotgunpanel
-  version: v1.6.2
+    #  type: app_store
+    #  name: tk-multi-shotgunpanel
+    #  version: v1.6.2
+  type: git
+  path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
+  version: v0.0.2
 
 # snapshot
 apps.tk-multi-snapshot.location:
@@ -107,9 +110,12 @@ apps.tk-multi-workfiles2.location:
 
 # shotgun folders
 apps.tk-shotgun-folders.location:
-  type: app_store
-  name: tk-shotgun-folders
-  version: v0.1.7
+  # type: app_store
+  # name: tk-shotgun-folders
+  # version: v0.1.7
+  type: git
+  path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
+  version: v0.0.1
 
 # shotgun launchfolder
 apps.tk-shotgun-launchfolder.location:
@@ -150,6 +156,22 @@ apps.tk-houdini-mantranode.location:
   type: app_store
   name: tk-houdini-mantranode
   version: v0.3.1
+
+# ---- Natron apps
+
+# quickdailies
+apps.tk-natron-quickdailies.location:
+  name: tk-natron-quickdailies
+  type: path
+  path: /array/users/mhatton/dev/tk-natron-quickdailies
+  version: v0.3.6
+
+# writenode
+apps.tk-natron-writenode.location:
+  name: tk-natron-writenode
+  type: path
+  path: /array/users/mhatton/dev/tk-natron-writenode
+  version: v1.2.0
 
 # ---- Nuke apps
 

@@ -14,3 +14,5 @@ type: "static"
 # defer creation and only create this folder when Photoshop starts
 defer_creation: "tk-photoshopcc"
 
+writeable: True
+
