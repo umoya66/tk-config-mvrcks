@@ -1,6 +1,6 @@
 This is Mavericks Shotgun Default configuration
 based on tk-config-default2
-
+CRE
 
 -------------------------------------------------------------------------
 The Shotgun Pipeline Toolkit Default Configuration
