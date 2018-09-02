@@ -2,6 +2,12 @@ This is Mavericks Shotgun Default configuration
 based on tk-config-default2
 
 
+Things to note on finalising dev merges to the project final
+- check that any app_locations that are git sourced will need to be turned back on
+- check the primary storage name
+-
+
+
 -------------------------------------------------------------------------
 The Shotgun Pipeline Toolkit Default Configuration
 -------------------------------------------------------------------------

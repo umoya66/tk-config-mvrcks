@@ -81,14 +81,15 @@ apps.tk-multi-setframerange.location:
 
 # shotgun panel
 apps.tk-multi-shotgunpanel.location:
-    # type: app_store
-    # name: tk-multi-shotgunpanel
-    # version: v1.6.1
+  type: app_store
+  name: tk-multi-shotgunpanel
+  version: v1.6.1
   # type: dev
   # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
-  type: git
-  path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
-  version: v0.0.2
+
+  # type: git
+  # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
+  # version: v0.0.2
 
 # snapshot
 apps.tk-multi-snapshot.location:
@@ -112,9 +113,9 @@ apps.tk-multi-workfiles2.location:
 
 # shotgun folders
 apps.tk-shotgun-folders.location:
-    # type: app_store
-    # name: tk-shotgun-folders
-    # version: v0.1.6
+  type: app_store
+  name: tk-shotgun-folders
+  version: v0.1.6
   # type: dev
   # path: /home/mhatton/dev/tk-shotgun-folders
   # version: v0.1.6
@@ -123,9 +124,9 @@ apps.tk-shotgun-folders.location:
   # branch: master
   # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
   # version: bd568093926
-  type: git
-  path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
-  version: v0.0.1
+  # type: git
+  # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
+  # version: v0.0.1
 
 
 # shotgun launchfolder
