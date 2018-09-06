@@ -424,6 +424,7 @@ paths:
 
     nuke_shot_render_mono_prores:
         definition:  '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}_prores.mov'
+
     nuke_shot_render_pub_mono_prores:
         definition:  '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}_prores.mov'
 

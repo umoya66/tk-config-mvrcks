@@ -135,7 +135,6 @@ settings.tk-nuke.project:
   # set up default project colour space for Nuke
   project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
 
-
 # sequence
 settings.tk-nuke.sequence:
   apps:
