@@ -74,9 +74,6 @@ settings.tk-nuke.hiero.project:
     name: "File Open..."
   location: "@engines.tk-nuke.location"
   
-  # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
-
 ################################################################################
 # Nuke
 
@@ -133,7 +130,7 @@ settings.tk-nuke.project:
   location: "@engines.tk-nuke.location"
   
   # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
+  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}
 
 # sequence
 settings.tk-nuke.sequence:
@@ -280,9 +277,6 @@ settings.tk-nuke.nukestudio.project:
     name: File Open...
   location: '@engines.tk-nuke.location'
   
-  # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
-
 # shot_step
 settings.tk-nuke.nukestudio.shot_step:
   apps:
