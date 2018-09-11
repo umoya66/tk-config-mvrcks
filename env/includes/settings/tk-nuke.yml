@@ -73,9 +73,6 @@ settings.tk-nuke.hiero.project:
   - app_instance: tk-multi-workfiles2
     name: "File Open..."
   location: "@engines.tk-nuke.location"
-  
-  # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
 
 ################################################################################
 # Nuke
@@ -279,9 +276,6 @@ settings.tk-nuke.nukestudio.project:
   - app_instance: tk-multi-workfiles2
     name: File Open...
   location: '@engines.tk-nuke.location'
-  
-  # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
 
 # shot_step
 settings.tk-nuke.nukestudio.shot_step:
