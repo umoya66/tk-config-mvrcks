@@ -1,6 +1,5 @@
 # This is Mavericks Shotgun Default configuration
-## based on tk-config-default2
-
+### based on tk-config-default2
 
 Things to note on finalising dev merges to the project final
 - check the primary storage name
