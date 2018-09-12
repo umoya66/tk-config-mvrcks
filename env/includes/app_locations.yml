@@ -81,15 +81,14 @@ apps.tk-multi-setframerange.location:
 
 # shotgun panel
 apps.tk-multi-shotgunpanel.location:
-  type: app_store
-  name: tk-multi-shotgunpanel
-  version: v1.6.1
+    # type: app_store
+    # name: tk-multi-shotgunpanel
+    # version: v1.6.1
   # type: dev
   # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
-
-  # type: git
-  # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
-  # version: v0.0.2
+  type: git
+  path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
+  version: v0.0.2
 
 # snapshot
 apps.tk-multi-snapshot.location:
