@@ -63,8 +63,8 @@ settings.tk-nuke-writenode.shot:
  #    promote_write_knobs: []
  #    proxy_publish_template:
  #    proxy_render_template:
- #    publish_template: nuke_shot_render_pub_mono_dnxhd
- #    render_template: nuke_shot_render_mono_dnxhd
+ #    publish_template: nuke_shot_render_pub_mono_qt
+ #    render_template: nuke_shot_render_mono_qt
  #    settings: {colorspace: sRGB, mov64_format: mov (QuickTime / MOV), mov64_fps: 23.976, mov64_write_timecode: true, mov64_codec: AVdn, mov64_dnxhd_codec_profile: DNxHD 422 8-bit 36Mbit }
  #    tank_type: Rendered Image
  #    tile_color: []
