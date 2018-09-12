@@ -35,6 +35,17 @@ settings.tk-natron-writenode.asset:
 settings.tk-natron-writenode.shot:
   template_script_work: natron_shot_work
   write_nodes:
+  - file_type: dpx
+    name: Delivery DPX
+    promote_write_knobs: [datatype]
+    proxy_publish_template:
+    proxy_render_template:
+    publish_template: nuke_shot_render_pub_mono_dpx
+    render_template: nuke_shot_render_mono_dpx
+    settings: {datatype: 10 bit , colorspace: AlexaV3LogC}
+    tank_type: Rendered Image
+    tile_color: []
+
 
   - file_type: tiff
     name: Roto Matte Tiff
@@ -47,16 +58,16 @@ settings.tk-natron-writenode.shot:
     tank_type: Rendered Image
     tile_color: []
 
-  - file_type: exr 
-    name: Mono EXR 
-    promote_write_knobs: []
-    proxy_publish_template:
-    proxy_render_template:
-    publish_template: nuke_shot_render_pub_mono_exr
-    render_template: nuke_shot_render_mono_exr
-    settings: {datatype: 16 bit half}
-    tank_type: Rendered Image
-    tile_color: []
+  # - file_type: exr
+  #   name: Mono EXR
+  #   promote_write_knobs: []
+  #   proxy_publish_template:
+  #   proxy_render_template:
+  #   publish_template: nuke_shot_render_pub_mono_exr
+  #   render_template: nuke_shot_render_mono_exr
+  #   settings: {datatype: 16 bit half}
+  #   tank_type: Rendered Image
+  #   tile_color: []
 
 #   - file_type: exr
 #     name: Stereo Exr, 32 bit
