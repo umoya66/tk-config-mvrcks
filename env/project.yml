@@ -27,6 +27,8 @@ includes:
 - ./includes/settings/tk-photoshopcc.yml
 - ./includes/settings/tk-shell.yml
 - ./includes/settings/tk-shotgun.yml
+- ./includes/settings/tk-multi-starterapp.yml
+
 
 ################################################################################
 # configuration for all engines to load in a project context
@@ -46,6 +48,7 @@ engines:
   tk-photoshopcc: "@settings.tk-photoshopcc.project"
   tk-shell: "@settings.tk-shell.project"
   tk-shotgun: "@settings.tk-shotgun.project"
+  tk-multi-starterapp: "@settings.tk-multi-starterapp.project"
 
 ################################################################################
 # reference all of the common frameworks

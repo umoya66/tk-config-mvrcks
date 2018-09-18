@@ -19,6 +19,12 @@ includes:
 
 # ---- Multi apps
 
+# sterterapp TEST
+apps.tk-multi-starterapp.location:
+  type: dev
+  # name: TestStarterApp
+  path: /home/mhatton/dev/mvrcks/TestShotgunStarterApp
+
 # about
 apps.tk-multi-about.location:
   type: app_store
