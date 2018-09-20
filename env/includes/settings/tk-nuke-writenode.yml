@@ -44,7 +44,6 @@ settings.tk-nuke-writenode.shot:
     publish_template: nuke_shot_render_pub_mono_exr
     render_template: nuke_shot_render_mono_exr
     settings: {datatype: 16 bit half, colorspace: linear}
-    settings: {}
     tank_type: Rendered Image
     tile_color: []
   
@@ -55,7 +54,6 @@ settings.tk-nuke-writenode.shot:
     proxy_render_template:
     publish_template: nuke_shot_render_pub_mono_tif
     render_template: nuke_shot_render_mono_tif
-    settings: {}
     settings: {datatype: 8 bit, colorspace: sRGB }
     tank_type: Rendered Image
     tile_color: [26,26,256]
@@ -65,9 +63,7 @@ settings.tk-nuke-writenode.shot:
     proxy_publish_template:
     proxy_render_template:
     publish_template: nuke_shot_render_pub_mono_qt
-      # fields: context, version, [SEQ], [channel], [output], [name], [width], [height], [eye], [YYYY], [MM], [DD], *
     render_template: nuke_shot_render_mono_qt
-      # fields: context, version, [SEQ], [channel], [output], [name], [width], [height], [eye], [YYYY], [MM], [DD], *
     settings:
       datatype: 8 bit
       colorspace: sRGB
