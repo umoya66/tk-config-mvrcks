@@ -53,7 +53,6 @@ settings.tk-nuke-writenode.shot:
     proxy_render_template:
     publish_template: nuke_shot_render_pub_mono_tif
     render_template: nuke_shot_render_mono_tif
-    settings: {}
     settings: {datatype: 8 bit, colorspace: sRGB }
     tank_type: Rendered Image
     tile_color: []
