@@ -130,7 +130,7 @@ settings.tk-nuke.project:
   location: "@engines.tk-nuke.location"
   
   # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
+  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: linear}
 
 # sequence
 settings.tk-nuke.sequence:
