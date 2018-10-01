@@ -1,4 +1,4 @@
-# This is Mavericks Shotgun Default configuration
+#  This is Mavericks Shotgun Default configuration
 ## based on tk-config-default2
 
 
