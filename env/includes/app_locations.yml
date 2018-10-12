@@ -121,7 +121,7 @@ apps.tk-multi-workfiles2.location:
 apps.tk-shotgun-folders.location:
   type: app_store
   name: tk-shotgun-folders
-  version: v0.1.6
+  # version: v0.1.6
   # type: dev
   # path: /home/mhatton/dev/tk-shotgun-folders
   # version: v0.1.6
@@ -133,6 +133,13 @@ apps.tk-shotgun-folders.location:
   # type: git
   # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
   # version: v0.0.1
+
+  # Uploaded Shotgun config
+  type: shotgun
+  entity_type: UploadedApp
+  id: 1
+  field: sg_uploaded_config            # attachment field where payload can be found
+  version: v0.0.1
 
 
 # shotgun launchfolder
