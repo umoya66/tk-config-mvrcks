@@ -55,9 +55,11 @@ settings.tk-nuke-writenode.shot:
     publish_template: nuke_shot_render_pub_mono_tif
     render_template: nuke_shot_render_mono_tif
     settings: {}
-    settings: {datatype: 8 bit, colorspace: sRGB }
+    settings: {datatype: 8 bit, colorspace: sRGB, channels: rgba}
     tank_type: Rendered Image
     tile_color: []
+
+
 
 #   - file_type: exr
 #     name: Stereo Exr, 32 bit
