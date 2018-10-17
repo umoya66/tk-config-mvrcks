@@ -35,7 +35,6 @@ settings.tk-nuke-writenode.asset:
 settings.tk-nuke-writenode.shot:
   template_script_work: nuke_shot_work
   write_nodes:
-
   - file_type: exr
     name: Delivery EXR
     promote_write_knobs: []
