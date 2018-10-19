@@ -1,2 +1,2 @@
-target: "../../../../../../cache/$Project/ingestion/asset/$Asset/$Step/ingestion"
+target: "../../../../../../cache/$Project/ingestion/assets/$Asset/$Step/ingestion"
 
