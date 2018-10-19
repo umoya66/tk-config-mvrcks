@@ -112,9 +112,9 @@ apps.tk-multi-workfiles2.location:
 
 # shotgun folders
 apps.tk-shotgun-folders.location:
-    # type: app_store
-    # name: tk-shotgun-folders
-    # version: v0.1.6
+  # type: app_store
+  # name: tk-shotgun-folders
+  # version: v0.1.6
   # type: dev
   # path: /home/mhatton/dev/tk-shotgun-folders
   # version: v0.1.6
@@ -123,6 +123,7 @@ apps.tk-shotgun-folders.location:
   # branch: master
   # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
   # version: bd568093926
+
   type: git
   path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
   version: v0.0.1
