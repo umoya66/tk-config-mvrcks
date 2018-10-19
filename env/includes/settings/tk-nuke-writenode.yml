@@ -44,8 +44,8 @@ settings.tk-nuke-writenode.shot:
     render_template: nuke_shot_render_mono_exr
     settings: {datatype: 16 bit half, colorspace: linear}
     tank_type: Rendered Image
-    tile_color: []
-  
+    tile_color: [26,26,256]
+
   - file_type: tiff
     name: Roto Matte Tiff
     promote_write_knobs: []
@@ -55,7 +55,7 @@ settings.tk-nuke-writenode.shot:
     render_template: nuke_shot_render_mono_tif
     settings: {datatype: 8 bit, colorspace: sRGB }
     tank_type: Rendered Image
-    tile_color: []
+    tile_color: [26,26,256]
 
 #   - file_type: exr
 #     name: Stereo Exr, 32 bit
