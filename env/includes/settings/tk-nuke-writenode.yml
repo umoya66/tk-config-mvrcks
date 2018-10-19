@@ -57,7 +57,7 @@ settings.tk-nuke-writenode.shot:
     render_template: nuke_shot_render_mono_tif
     settings: {datatype: 8 bit, colorspace: linear }
     tank_type: Rendered Image
-    tile_color: []
+    tile_color: [26,26,256]
 
   - file_type: exr
     name: Mono EXR
@@ -68,7 +68,7 @@ settings.tk-nuke-writenode.shot:
     render_template: nuke_shot_render_mono_exr
     settings: {datatype: 16 bit half, colorspace: linear }
     tank_type: Rendered Image
-    tile_color: []
+    tile_color: [26,26,256]
 
   # - file_type: mov
   #   name: BUF Quicktime
