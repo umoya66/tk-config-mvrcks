@@ -115,6 +115,12 @@ apps.tk-shotgun-folders.location:
   # type: app_store
   # name: tk-shotgun-folders
   # version: v0.1.6
+
+  type: path
+  windows_path: c:\path\to\app
+  linux_path: /mav/stor/studio/systems/_shotgun/apps/tk-shotgun-folders
+  mac_path: /mav/stor/studio/systems/_shotgun/apps/tk-shotgun-folders
+
   # type: dev
   # path: /home/mhatton/dev/tk-shotgun-folders
   # version: v0.1.6
@@ -123,17 +129,18 @@ apps.tk-shotgun-folders.location:
   # branch: master
   # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
   # version: bd568093926
+
   # type: git
   # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
   # version: v0.0.1
 
   # Uploaded Shotgun config
-  type: shotgun
-  name: tk-shotgun-folders
-  entity_type: UploadedApp  # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  # type: shotgun
+  # # name: tk-shotgun-folders
+  # entity_type: UploadedApp  # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
   # id: 1  # shotgun entity id
-  field: sg_uploaded_config            # attachment field where payload can be found
-  version: 1  # attachment id of particular attachment
+  # field: sg_uploaded_config            # attachment field where payload can be found
+  # version: v0.0.1 # attachment id of particular attachment
 
 
 # shotgun launchfolder
@@ -202,9 +209,16 @@ apps.tk-nuke-quickreview.location:
 
 # writenode
 apps.tk-nuke-writenode.location:
-  name: tk-nuke-writenode
-  type: app_store
-  version: v1.3.2
+  # name: tk-nuke-writenode
+  # type: app_store
+  # version: v1.3.2
+
+
+  type: path
+  # path: /array/users/mhatton/dev/tk-natron-writenode
+  windows_path: c:\path\to\app
+  linux_path: /mav/stor/studio/systems/_shotgun/apps/tk-nuke-writenode
+  mac_path: /mav/stor/studio/systems/_shotgun/apps/nuke-writenode
 
 # ---- Flame apps
 
