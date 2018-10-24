@@ -17,7 +17,6 @@ includes:
 - ./tk-multi-launchapp.yml
 - ./tk-multi-publish2.yml
 - ./tk-multi-screeningroom.yml
-# - ./tk-multi-starterapp.yml
 
 ################################################################################
 
@@ -38,7 +37,6 @@ settings.tk-desktop.project:
     tk-multi-launchmotionbuilder: "@settings.tk-multi-launchapp.motionbuilder"
     tk-multi-publish2: "@settings.tk-multi-publish2.standalone"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
-#     tk-multi-starterapp: "@settings.tk-multi-starterapp"
   groups:
   - matches:
     - "*Fla*"

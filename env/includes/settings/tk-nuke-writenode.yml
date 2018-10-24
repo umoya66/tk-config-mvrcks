@@ -15,10 +15,6 @@ includes:
 
 ################################################################################
 
-settings.tk-nuke-writenode.asset:
-
-
-
 # asset
 settings.tk-nuke-writenode.asset:
   template_script_work: nuke_asset_work
@@ -37,11 +33,8 @@ settings.tk-nuke-writenode.asset:
 
 # shot
 settings.tk-nuke-writenode.shot:
-
   template_script_work: nuke_shot_work
-
   write_nodes:
-
   - file_type: exr
     name: Delivery EXR
     promote_write_knobs: []
@@ -51,8 +44,8 @@ settings.tk-nuke-writenode.shot:
     render_template: nuke_shot_render_mono_exr
     settings: {datatype: 16 bit half, colorspace: linear}
     tank_type: Rendered Image
-    tile_color: []
-  
+    tile_color: [26,26,256]
+
   - file_type: tiff
     name: Roto Matte Tiff
     promote_write_knobs: []
@@ -62,7 +55,7 @@ settings.tk-nuke-writenode.shot:
     render_template: nuke_shot_render_mono_tif
     settings: {datatype: 8 bit, colorspace: sRGB, channels: rgba }
     tank_type: Rendered Image
-    tile_color: []
+    tile_color: [26,26,256]
 
   - file_type: mov
     name: Quicktime
@@ -102,6 +95,5 @@ settings.tk-nuke-writenode.shot:
 #     settings: {}
 #     tank_type: Rendered Image
 #     tile_color: []
-
   location: "@apps.tk-nuke-writenode.location"
 
