@@ -256,3 +256,10 @@ apps.tk-mari-projectmanager.location:
 ################################################################################
 # reference all of the common frameworks
 frameworks: '@frameworks'
+
+
+# timecard
+apps.tk-desktop-timecard.location:
+  name: tk-desktop-timecard
+  type: dev
+  path: ~/dev/mvrcks/tk-desktop-timecard
