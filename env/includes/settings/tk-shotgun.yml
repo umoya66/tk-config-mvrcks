@@ -19,6 +19,8 @@ includes:
 - ./tk-shotgun-folders.yml
 - ./tk-shotgun-launchfolder.yml
 - ./tk-shotgun-launchpublish.yml
+- ./tk-desktop-timecard.yml
+
 
 ################################################################################
 
@@ -43,6 +45,9 @@ settings.tk-shotgun.asset_step:
     tk-multi-publish2: "@settings.tk-multi-publish2.standalone"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-shotgun-launchfolder: "@settings.tk-shotgun-launchfolder"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.asset_step"
   location: "@engines.tk-shotgun.location"
 
 # project
@@ -55,6 +60,9 @@ settings.tk-shotgun.project:
     tk-multi-publish2: "@settings.tk-multi-publish2.standalone"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-shotgun-launchfolder: "@settings.tk-shotgun-launchfolder"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.project"
   location: "@engines.tk-shotgun.location"
 
 # publishedfile_version
@@ -95,4 +103,7 @@ settings.tk-shotgun.shot_step:
     tk-multi-publish2: "@settings.tk-multi-publish2.standalone"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-shotgun-launchfolder: "@settings.tk-shotgun-launchfolder"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.shot_step"
   location: "@engines.tk-shotgun.location"
