@@ -1,0 +1,57 @@
+# Copyright (c) 2018 Shotgun Software Inc.
+#
+# CONFIDENTIAL AND PROPRIETARY
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
+# Source Code License included in this distribution package. See LICENSE.
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
+# not expressly granted therein are reserved by Shotgun Software Inc.
+#
+
+################################################################################
+
+includes:
+- ../app_locations.yml
+- ../engine_locations.yml
+- ./tk-multi-launchapp.yml
+# - ./tk-multi-publish2.yml
+# - ./tk-multi-screeningroom.yml
+
+################################################################################
+
+
+settings.tk-desktop-timecard.project:
+  my_tasks_extra_display_fields: ['est_in_mins']
+  # my_tasks_extra_display_fields: []
+  my_tasks_filters:
+  - [task_assignees, is, '{context.user}']
+  - [content, not_contains, 'NextVersionDue']
+  - [milestone, is, False]
+
+  location: "@apps.tk-desktop-timecard.location"
+
+settings.tk-desktop-timecard.asset_step:
+  my_tasks_extra_display_fields: ['est_in_mins']
+  # my_tasks_extra_display_fields: []
+  my_tasks_filters:
+  - [task_assignees, is, '{context.user}']
+  - [content, not_contains, 'NextVersionDue']
+  - [entity, is, '{context.entity}']
+  - [milestone, is, False]
+  - [step, is, '{context.step}']
+
+  location: "@apps.tk-desktop-timecard.location"
+
+settings.tk-desktop-timecard.shot_step:
+  my_tasks_extra_display_fields: ['est_in_mins']
+  # my_tasks_extra_display_fields: []
+  my_tasks_filters:
+  - [task_assignees, is, '{context.user}']
+  - [content, not_contains, 'NextVersionDue']
+  - [entity, is, '{context.entity}']
+  - [milestone, is, False]
+  - [step, is, '{context.step}']
+
+  location: "@apps.tk-desktop-timecard.location"
+
