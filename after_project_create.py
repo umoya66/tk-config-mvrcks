@@ -21,6 +21,27 @@ the following keyword arguments:
 * log -        A logger instance to which progress can be reported via
                standard logger methods (info, warning, error etc)
 
+Mavericks workaround in a python console run the fllowing...
+----
+from shotgun_api3 import Shotgun
+import sgtk
+
+SERVER_PATH = 'https://mavericks.shotgunstudio.com'  # make sure to change this to https if your studio uses it.
+SCRIPT_NAME = 'CleanVersions'
+SCRIPT_KEY = 'ebff505b5bbd4f973b407ca69aa8392418c323b4df336e061fea6c72100e12a0'
+
+sg = Shotgun(SERVER_PATH, SCRIPT_NAME, SCRIPT_KEY)
+
+logger = sgtk.platform.get_logger(__name__)
+
+# run this  file
+after_project_create
+
+create(sg, {PROJECT ID}, logger)
+
+----
+
+
 """
 
 def create(sg, project_id, log, **kwargs):
