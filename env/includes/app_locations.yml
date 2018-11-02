@@ -86,9 +86,16 @@ apps.tk-multi-shotgunpanel.location:
     # version: v1.6.1
   # type: dev
   # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
-  type: git
-  path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
-  version: v0.0.2
+  # type: git
+  # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
+  # version: v0.0.2
+
+  # Uploaded Shotgun config
+  type: shotgun
+  name: tk-multi-shotgunpanel  # UploadedApp Name field
+  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  field: sg_uploaded_config  # attachment field where payload can be found
+  version:  285098           # attachment id of particular attachment
 
 # snapshot
 apps.tk-multi-snapshot.location:
@@ -115,6 +122,12 @@ apps.tk-shotgun-folders.location:
   # type: app_store
   # name: tk-shotgun-folders
   # version: v0.1.6
+
+  # type: path
+  # windows_path: c:\path\to\app
+  # linux_path: /mav/stor/studio/systems/_shotgun/apps/tk-shotgun-folders
+  # mac_path: /mav/stor/studio/systems/_shotgun/apps/tk-shotgun-folders
+
   # type: dev
   # path: /home/mhatton/dev/tk-shotgun-folders
   # version: v0.1.6
@@ -124,10 +137,16 @@ apps.tk-shotgun-folders.location:
   # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
   # version: bd568093926
 
-  type: git
-  path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
-  version: v0.0.1
+  # type: git
+  # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
+  # version: v0.0.1
 
+  # Uploaded Shotgun config
+  type: shotgun
+  name: tk-shotgun-folders
+  entity_type: UploadedApp  # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  field: sg_uploaded_config            # attachment field where payload can be found
+  version:  284923 # attachment id of particular attachment
 
 # shotgun launchfolder
 apps.tk-shotgun-launchfolder.location:
@@ -195,9 +214,22 @@ apps.tk-nuke-quickreview.location:
 
 # writenode
 apps.tk-nuke-writenode.location:
+  # name: tk-nuke-writenode
+  # type: app_store
+  # version: v1.3.2
+
+  # type: path
+  # # path: /array/users/mhatton/dev/tk-natron-writenode
+  # windows_path: c:\path\to\app
+  # linux_path: /mav/stor/studio/systems/_shotgun/apps/tk-nuke-writenode
+  # mac_path: /mav/stor/studio/systems/_shotgun/apps/nuke-writenode
+
+  # Uploaded Shotgun config
+  type: shotgun
   name: tk-nuke-writenode
-  type: app_store
-  version: v1.3.2
+  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  field: sg_uploaded_config  # attachment field where payload can be found
+  version:  285095           # attachment id of particular attachment
 
 # ---- Flame apps
 
@@ -224,3 +256,18 @@ apps.tk-mari-projectmanager.location:
 ################################################################################
 # reference all of the common frameworks
 frameworks: '@frameworks'
+
+
+# timecard
+apps.tk-desktop-timecard.location:
+  # name: tk-desktop-timecard
+  # type: dev
+  # path: ~/dev/mvrcks/tk-desktop-timecard
+
+  # Uploaded Shotgun config
+  type: shotgun
+  name: tk-desktop-timecard
+  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  field: sg_uploaded_config  # attachment field where payload can be found
+  version:  286917           # attachment id of particular attachment
+
