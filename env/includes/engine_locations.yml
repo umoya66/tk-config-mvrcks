@@ -29,7 +29,7 @@ engines.tk-desktop.location:
 engines.tk-flame.location:
   type: app_store
   name: tk-flame
-  version: v1.13.4
+  version: v1.14.6
 
 # Houdini
 engines.tk-houdini.location:
@@ -41,38 +41,31 @@ engines.tk-houdini.location:
 engines.tk-mari.location:
   type: app_store
   name: tk-mari
-  version: v1.2.0
+  version: v1.2.2
 
 # Maya
 engines.tk-maya.location:
   type: app_store
   name: tk-maya
-  version: v0.9.3
+  version: v0.9.4
 
 # Motion Builder
 engines.tk-motionbuilder.location:
   type: app_store
   name: tk-motionbuilder
-  version: v0.4.1
-
-# Natron
-engines.tk-natron.location:
-  type: path
-  name: tk-natron
-  path: /array/users/mhatton/dev/tk-natron
-  version: v0.9.4
+  version: v0.4.2
 
 # Nuke
 engines.tk-nuke.location:
   type: app_store
   name: tk-nuke
-  version: v0.11.1
+  version: v0.11.4
 
 # Photoshop
 engines.tk-photoshopcc.location:
   type: app_store
   name: tk-photoshopcc
-  version: v1.6.2
+  version: v1.6.3
 
 # Shell
 engines.tk-shell.location:
