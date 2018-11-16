@@ -256,3 +256,18 @@ apps.tk-mari-projectmanager.location:
 ################################################################################
 # reference all of the common frameworks
 frameworks: '@frameworks'
+
+
+# timecard
+apps.tk-desktop-timecard.location:
+  # name: tk-desktop-timecard
+  # type: dev
+  # path: ~/dev/mvrcks/tk-desktop-timecard
+
+  # Uploaded Shotgun config
+  type: shotgun
+  name: tk-desktop-timecard
+  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  field: sg_uploaded_config  # attachment field where payload can be found
+  version:  286917           # attachment id of particular attachment
+
