@@ -27,7 +27,6 @@ includes:
 - ./includes/settings/tk-houdini.yml
 - ./includes/settings/tk-maya.yml
 - ./includes/settings/tk-motionbuilder.yml
-  # - ./includes/settings/tk-natron.yml
 - ./includes/settings/tk-nuke.yml
 - ./includes/settings/tk-photoshopcc.yml
 - ./includes/settings/tk-shell.yml
@@ -42,7 +41,6 @@ engines:
   tk-houdini: "@settings.tk-houdini.shot"
   tk-maya: "@settings.tk-maya.shot"
   tk-motionbuilder: "@settings.tk-motionbuilder.shot"
-#   tk-natron: "@settings.tk-natron.shot"
   tk-nuke: "@settings.tk-nuke.shot"
   tk-photoshopcc: "@settings.tk-photoshopcc.shot"
   tk-shell: "@settings.tk-shell.shot"

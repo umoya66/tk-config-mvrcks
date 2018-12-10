@@ -25,6 +25,7 @@ includes:
 - ./tk-multi-snapshot.yml
 - ./tk-multi-workfiles2.yml
 - ./tk-nuke-writenode.yml
+
 - ./tk-desktop-timecard.yml
 
 ################################################################################
@@ -140,7 +141,8 @@ settings.tk-nuke.project:
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   location: "@engines.tk-nuke.location"
-  
+  # linux_args: --disable-nuke-frameserver
+
   # set up default project colour space for Nuke
   project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}
 
@@ -202,6 +204,7 @@ settings.tk-nuke.shot_step:
   - {app_instance: tk-multi-workfiles2, name: File Save...}
   - {app_instance: tk-multi-publish2, name: Publish...}
   location: "@engines.tk-nuke.location"
+  # linux_args: --disable-nuke-frameserver
 
 ################################################################################
 # NukeStudio
