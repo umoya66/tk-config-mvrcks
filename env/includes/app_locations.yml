@@ -35,25 +35,25 @@ apps.tk-multi-breakdown.location:
 apps.tk-multi-demo.location:
   type: app_store
   name: tk-multi-demo
-  version: v1.0.2
+  version: v1.1.0
 
 # launchapp
 apps.tk-multi-launchapp.location:
   type: app_store
   name: tk-multi-launchapp
-  version: v0.10.0
+  version: v0.10.2
 
 # loader2
 apps.tk-multi-loader2.location:
   type: app_store
   name: tk-multi-loader2
-  version: v1.19.1
+  version: v1.19.2
 
 # publish2
 apps.tk-multi-publish2.location:
   type: app_store
   name: tk-multi-publish2
-  version: v2.1.6
+  version: v2.2.2
 
 # pythonconsole
 apps.tk-multi-pythonconsole.location:
@@ -113,7 +113,13 @@ apps.tk-multi-workfiles.location:
 apps.tk-multi-workfiles2.location:
   type: app_store
   name: tk-multi-workfiles2
-  version: v0.11.6
+  version: v0.11.8
+
+# dev utils
+apps.tk-multi-devutils.location:
+  type: app_store
+  name: tk-multi-devutils
+  version: v1.0.0
 
 # ---- Shotgun apps
 
@@ -152,7 +158,7 @@ apps.tk-shotgun-folders.location:
 apps.tk-shotgun-launchfolder.location:
   type: app_store
   name: tk-shotgun-launchfolder
-  version: v0.1.5
+  version: v0.2.1
 
 # shotgun launchpublish
 apps.tk-shotgun-launchpublish.location:
@@ -180,29 +186,13 @@ apps.tk-hiero-openinshotgun.location:
 apps.tk-houdini-alembicnode.location:
   type: app_store
   name: tk-houdini-alembicnode
-  version: v0.3.0
+  version: v0.3.1
 
 # houdini mantranode
 apps.tk-houdini-mantranode.location:
   type: app_store
   name: tk-houdini-mantranode
-  version: v0.3.0
-
-# ---- Natron apps
-
-# quickdailies
-apps.tk-natron-quickdailies.location:
-  name: tk-natron-quickdailies
-  type: path
-  path: /array/users/mhatton/dev/tk-natron-quickdailies
-  version: v0.3.6
-
-# writenode
-apps.tk-natron-writenode.location:
-  name: tk-natron-writenode
-  type: path
-  path: /array/users/mhatton/dev/tk-natron-writenode
-  version: v1.2.0
+  version: v0.3.1
 
 # ---- Nuke apps
 
@@ -237,13 +227,13 @@ apps.tk-nuke-writenode.location:
 apps.tk-flame-export.location:
   name: tk-flame-export
   type: app_store
-  version: v1.8.4
+  version: v1.9.2
 
 # flame review
 apps.tk-flame-review.location:
   name: tk-flame-review
   type: app_store
-  version: v1.2.2
+  version: v1.3.0
 
 # ---- Mari apps
 
@@ -251,7 +241,7 @@ apps.tk-flame-review.location:
 apps.tk-mari-projectmanager.location:
   name: tk-mari-projectmanager
   type: app_store
-  version: v1.2.0
+  version: v1.2.1
 
 ################################################################################
 # reference all of the common frameworks
