@@ -30,5 +30,5 @@ workspace -fr "clips" "clips";
 workspace -fr "animExport" "data";
 workspace -fr "OBJ" "data";
 workspace -fr "templates" "assets";
-workspace -fr "Alembic" "data";
+workspace -fr "Alembic" "alembic";
 workspace -fr "FBX" "data";

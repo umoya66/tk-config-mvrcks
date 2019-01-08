@@ -114,7 +114,7 @@ keys:
             tif: Tiff
             png: PNG
             jpg: Jpeg
-            DNG: dng
+            dng: dng
         default: exr
 
     qt_extension:
@@ -295,8 +295,11 @@ paths:
     maya_shot_render_pub_dpx:
         definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
 
-    # maya_shot_alembic_cache:
-    #     definition: '@shot_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+    maya_shot_work_alembic:
+        definition: '@shot_root/work/maya/alembic/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+
+    maya_shot_publish_alembic:
+        definition: '@shot_root/publish/maya/alembic/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}[_{grp_name}]_v{version}.abc'
 
 
 
@@ -450,9 +453,11 @@ paths:
 
     # export of shot asset data from hiero
     hiero_plate_path:
-        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.{plate_extension}'
+        # definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.{plate_extension}'
+        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.exr'
     hiero_render_path:
-        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{qt_extension}'
+        # definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{qt_extension}'
+        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.mov'
 
     ##########################################################################################
     # Asset pipeline
@@ -515,6 +520,11 @@ paths:
         definition: '@asset_root/publish/maya/scenes/{Asset}_{Step}_{name}_v{version}.{maya_extension}'
     # maya_asset_alembic_cache:
     #     definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+    maya_asset_work_alembic:
+        definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+
+    maya_asset_publish_alembic:
+        definition: '@asset_root/publish/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
 
 
     #
