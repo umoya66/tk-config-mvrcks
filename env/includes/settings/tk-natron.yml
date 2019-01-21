@@ -14,20 +14,15 @@
 includes:
 - ../app_locations.yml
 - ../engine_locations.yml
-- ./tk-multi-breakdown.yml
 - ./tk-multi-loader2.yml
 - ./tk-multi-publish2.yml
-- ./tk-multi-reviewsubmission.yml
 - ./tk-multi-screeningroom.yml
 - ./tk-multi-shotgunpanel.yml
 - ./tk-multi-snapshot.yml
 - ./tk-multi-workfiles2.yml
-- ./tk-natron-quickdailies.yml
-- ./tk-natron-writenode.yml
-
+- ./tk-multi-breakdown.yml
 
 ################################################################################
-# Natron
 
 # asset
 settings.tk-natron.asset:
@@ -36,9 +31,10 @@ settings.tk-natron.asset:
       location: "@apps.tk-multi-about.location"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel"
-    tk-multi-workfiles2: "@settings.tk-multi-workfiles2"
+    tk-multi-workfiles2: "@settings.tk-multi-workfiles2.natron.project"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
+  debug_logging: false
   location: "@engines.tk-natron.location"
 
 # asset_step
@@ -46,22 +42,19 @@ settings.tk-natron.asset_step:
   apps:
     tk-multi-about:
       location: "@apps.tk-multi-about.location"
-    tk-multi-breakdown:
-      location: "@apps.tk-multi-breakdown.location"
+    tk-multi-breakdown: "@settings.tk-multi-breakdown.natron"
     tk-multi-loader2: "@settings.tk-multi-loader2.natron"
     tk-multi-publish2: "@settings.tk-multi-publish2.natron.asset_step"
-    tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.natron.asset"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
-    tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel.natron"
+    tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel"
     tk-multi-snapshot: "@settings.tk-multi-snapshot.natron.asset_step"
     tk-multi-workfiles2: "@settings.tk-multi-workfiles2.natron.asset_step"
-    tk-natron-quickdailies: "@settings.tk-natron-quickdailies.asset"
-    tk-natron-writenode: "@settings.tk-natron-writenode.asset"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}
   - {app_instance: tk-multi-workfiles2, name: File Save...}
   - {app_instance: tk-multi-publish2, name: Publish...}
+  template_project: asset_work_area_natron
   location: "@engines.tk-natron.location"
 
 # project
@@ -71,9 +64,10 @@ settings.tk-natron.project:
       location: "@apps.tk-multi-about.location"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel"
-    tk-multi-workfiles2: "@settings.tk-multi-workfiles2"
+    tk-multi-workfiles2: "@settings.tk-multi-workfiles2.natron.project"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
+  debug_logging: true
   location: "@engines.tk-natron.location"
 
 # sequence
@@ -83,7 +77,7 @@ settings.tk-natron.sequence:
       location: "@apps.tk-multi-about.location"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel"
-    tk-multi-workfiles2: "@settings.tk-multi-workfiles2"
+    tk-multi-workfiles2: "@settings.tk-multi-workfiles2.natron.project"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   location: "@engines.tk-natron.location"
@@ -95,7 +89,7 @@ settings.tk-natron.shot:
       location: "@apps.tk-multi-about.location"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel"
-    tk-multi-workfiles2: "@settings.tk-multi-workfiles2.launch_at_startup"
+    tk-multi-workfiles2: "@settings.tk-multi-workfiles2.natron.project"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   location: "@engines.tk-natron.location"
@@ -105,23 +99,28 @@ settings.tk-natron.shot_step:
   apps:
     tk-multi-about:
       location: "@apps.tk-multi-about.location"
-    tk-multi-breakdown:
-      location: "@apps.tk-multi-breakdown.location"
+    tk-multi-breakdown: "@settings.tk-multi-breakdown.natron"
     tk-multi-setframerange:
       location: "@apps.tk-multi-setframerange.location"
+      # location:
+      #   type: dev
+      #   path: "C:/Users/diego garcia/Google Drive/Development/factor64/tk-multi-setframerange"
+      # location:
+      #   type: git_branch
+      #   branch: enable_hooks_for_app
+      #   path: https://github.com/diegogarciahuerta/tk-multi-setframerange
+      #   version: b24a977
+      hook_frame_operation: "{engine}/tk-multi-setframerange/frame_operations_tk-natron.py"
     tk-multi-loader2: "@settings.tk-multi-loader2.natron"
     tk-multi-publish2: "@settings.tk-multi-publish2.natron.shot_step"
-    tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.natron.shot"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel.natron"
     tk-multi-snapshot: "@settings.tk-multi-snapshot.natron.shot_step"
     tk-multi-workfiles2: "@settings.tk-multi-workfiles2.natron.shot_step"
-    tk-natron-quickdailies: "@settings.tk-natron-quickdailies.shot"
-    tk-natron-writenode: "@settings.tk-natron-writenode.shot"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}
   - {app_instance: tk-multi-workfiles2, name: File Save...}
   - {app_instance: tk-multi-publish2, name: Publish...}
+  template_project: shot_work_area_natron
   location: "@engines.tk-natron.location"
-

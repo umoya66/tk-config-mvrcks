@@ -54,7 +54,8 @@ settings.tk-desktop.project:
     - "*Motion*"
     - "*Nuke*"
     - "*Photoshop*"
-    - "*Blend*"
+    - "*Blender*"
+    - "*Natron*"
     name: Creative Tools
   - matches:
     - "*Hiero*"

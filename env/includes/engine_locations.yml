@@ -79,4 +79,16 @@ engines.tk-shotgun.location:
   name: tk-shotgun
   version: v0.8.2
 
+# Natron
+engines.tk-natron.location:
 
+  # type: git
+  # branch: master
+  # path: https://github.com/diegogarciahuerta/tk-natron.git
+  # version: v1.0.0
+
+  type: path
+  path: ~/dev/mvrcks/tk-natron
+  # windows_path: c:\path\to\app
+  # linux_path: /mav/stor/studio/systems/_shotgun/apps/tk-nuke-writenode
+  # mac_path: /mav/stor/studio/systems/_shotgun/apps/nuke-writenode
