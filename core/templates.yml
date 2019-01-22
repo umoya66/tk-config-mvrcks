@@ -678,24 +678,20 @@ strings:
 
     # write node outputs
     natron_asset_render_mono_dpx:
-        definition: '@asset_root/work/renders/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.dpx'
+        definition: '@asset_root/work/images/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.dpx'
         # definition: '@asset_root/work/renders/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_v{version}.{SEQ}.dpx'
         # root_name: 'primary'
-    # nuke_asset_render_pub:
-        # definition: '@asset_root/work/renders/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
-        # definition: '@asset_root/publish/elements/{name}/v{version}/{width}x{height}/{Asset}_{name}_{nuke.output}_v{version}.{SEQ}.exr'
-        # definition: '@asset_root/publish/renders/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
-    # re
+
     natron_asset_render_pub_mono_dpx:
         definition: '@asset_root/publish/elements/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_v{version}.{SEQ}.dpx'
         # root_name: 'primary'
 
     natron_asset_render_stereo:
-        definition: '@asset_root/work/renders/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
+        definition: '@asset_root/work/images/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
         # root_name: 'primary'
 
     natron_asset_render_pub_stereo:
-        definition: '@asset_root/publish/elements/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
+        definition: '@asset_root/publish/images/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
         # root_name: 'primary'
 
     # review output
@@ -733,27 +729,27 @@ strings:
 
     # The location of published natron script files
     natron_shot_publish:
-        definition: '@shot_root/publish/natron/{name}.v{version}.ntp'
+        definition: '@shot_root/publish/natron/{Shot}_{Step}_{name}_v{version}.ntp'
         # root_name: 'primary'
 
     # write node outputs
     natron_shot_render_mono_dpx:
         # definition: '@shot_root/work/images/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_v{version}.{SEQ}.dpx'
-        definition: '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
+        definition: '@shot_root/work/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
         # # root_name: 'primary'
 
     natron_shot_render_pub_mono_dpx:
         # definition: '@shot_root/publish/elements/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_v{version}.{SEQ}.dpx'
-        definition: '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
+        definition: '@shot_root/publish/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
         # root_name: 'primary'
 
     natron_shot_render_stereo:
-        definition: '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
+        definition: '@shot_root/work/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
         # definition: '@shot_root/work/images/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
         # root_name: 'primary'
 
     natron_shot_render_pub_stereo:
-        definition: '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
+        definition: '@shot_root/publish/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
         # definition: '@shot_root/publish/elements/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
         # root_name: 'primary'
 
