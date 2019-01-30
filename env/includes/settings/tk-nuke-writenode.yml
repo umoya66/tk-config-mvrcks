@@ -35,7 +35,7 @@ settings.tk-nuke-writenode.asset:
 settings.tk-nuke-writenode.shot:
   template_script_work: nuke_shot_work
   write_nodes:
-  - file_type: exr
+  - file_type: dpx
     name: Delivery DPX
     promote_write_knobs: []
     proxy_publish_template:
