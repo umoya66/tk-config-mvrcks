@@ -516,7 +516,10 @@ paths:
     #     definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
 
     maya_shot_pub_alembic:
-        definition: '@shot_root/publish/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+        definition: '@asset_root/publish/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+
+    maya_shader_network_publish:
+        definition: '@asset_root/publish/maya/surfacing/{name}.v{version}.ma'
 
 
     #
