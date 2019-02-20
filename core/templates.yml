@@ -298,6 +298,9 @@ paths:
     maya_shot_alembic:
         definition: '@shot_root/work/maya/alembic/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}[_{grp_name}]_v{version}.abc'
 
+    maya_shot_pub_alembic:
+        definition: '@shot_root/publish/maya/alembic/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+
 
     #
     # Houdini
@@ -515,7 +518,10 @@ paths:
     # maya_asset_alembic_cache:
     #     definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
 
-    maya_shot_pub_alembic:
+    maya_asset_alembic:
+        definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+
+    maya_asset_pub_alembic:
         definition: '@asset_root/publish/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
 
     maya_shader_network_publish:
