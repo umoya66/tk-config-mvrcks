@@ -201,23 +201,31 @@ settings.tk-multi-publish2.maya.asset_step:
 
 # shot step
 settings.tk-multi-publish2.maya.shot_step:
-  collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
+  collector: "{self}/collector.py:{config}/tk-multi-publish2/maya/collector.py"
+  # collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
   collector_settings:
       Work Template: maya_shot_work
   publish_plugins:
-  - name: Publish to Shotgun
-    hook: "{self}/publish_file.py"
-    settings: {}
+  # - name: Publish to Shotgun
+  #   hook: "{self}/publish_file.py"
+  #   settings: {}
   - name: Upload for review
     hook: "{self}/upload_version.py"
     settings: {}
   - name: Begin file versioning
     hook: "{engine}/tk-multi-publish2/basic/start_version_control.py"
     settings: {}
-  - name: Publish to Shotgun
+  - name: Publish Session to Shotgun
     hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session.py"
     settings:
         Publish Template: maya_shot_publish
+  - name: Publish Exported Alembics
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    settings:
+      Publish Template: maya_shot_pub_alembic
+      Alembic Template: maya_shot_alembic
+
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
 

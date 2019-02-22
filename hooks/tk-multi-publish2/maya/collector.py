@@ -16,7 +16,7 @@ import maya.cmds as cmds
 import maya.mel as mel
 import sgtk
 # import tank for debugging
-import tank as sgtk
+# import tank as sgtk
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -89,9 +89,6 @@ class MayaSessionCollector(HookBaseClass):
         item = self.collect_current_maya_session(settings, parent_item)
         project_root = item.properties["project_root"]
 
-        # look at the render layers to find rendered images on disk
-        self.collect_rendered_images(item)
-
         # if we can determine a project root, collect other files to publish
         if project_root:
 
@@ -122,15 +119,15 @@ class MayaSessionCollector(HookBaseClass):
                 }
             )
 
-        # if cmds.ls(geometry=True, noIntermediate=True):
-        #     self._collect_session_geometry(item)
-
+        # look at the render layers to find rendered images on disk
+        # self.collect_rendered_images(item)
         # self._collect_meshes(item)
 
     def collect_current_maya_session(self, settings, parent_item):
         """
         Creates an item that represents the current maya session.
 
+        :param dict settings: Configured settings for this collector
         :param parent_item: Parent Item instance
 
         :returns: Item of type maya.session
@@ -201,13 +198,6 @@ class MayaSessionCollector(HookBaseClass):
         :param str project_root: The maya project root to search for alembics
         """
 
-        #    # ensure the alembic cache dir exists
-        #    cache_dir = os.path.join(project_root, "cache", "alembic")
-        #    if not os.path.exists(cache_dir):
-        #        return
-
-        # get the directory associated with the exports from this file
-
         # get sgtk engine
         eng = sgtk.platform.current_engine()
 
@@ -272,10 +262,7 @@ class MayaSessionCollector(HookBaseClass):
 
             # allow the base class to collect and create the item. it knows how
             # to handle alembic files
-            super(MayaSessionCollector, self)._collect_file(
-                parent_item,
-                cache_path
-            )
+            super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
 
     def collect_alembic_caches(self, parent_item, project_root):
         """

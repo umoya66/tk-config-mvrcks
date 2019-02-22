@@ -16,9 +16,7 @@ import maya.cmds as cmds
 import maya.mel as mel
 import sgtk
 # import tank as sgtk for debugging
-import tank as sgtk
-
-import pprint
+# import tank as sgtk
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -138,20 +136,6 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         publish_template_name = settings["Publish Template"].value
         work_template_name = settings["Alembic Template"].value
 
-        # ensure a work file template is available on the parent item
-        #      work_template = item.parent.properties.get("alembic_template")
-        #      if not work_template:
-        #          self.logger.debug(
-        #              "A work template is required for the session item in order to "
-        #              "publish session geometry. Not accepting session geom item."
-        #          )
-        #          accepted = False
-        #      else:
-        #          self.logger.info(
-        #              'Work template name: %s\n'
-        #              'work_template: %s\n'
-        #              'publish template name: %s' % (work_template_name, work_template, publish_template_name)
-        #          )
         self.logger.info(
             'Work template name: %s    \n '
             'publish template name: %s ' % (work_template_name, publish_template_name)
@@ -177,16 +161,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         item.properties["publish_template"] = publish_template
         item.properties["alembic_template"] = work_template
 
-
-        # # check that the AbcExport command is available!
-        # if not mel.eval("exists \"AbcExport\""):
-        #     self.logger.debug(
-        #         "Item not accepted because alembic export command 'AbcExport' "
-        #         "is not available. Perhaps the plugin is not enabled?"
-        #     )
-        #     accepted = False
-
-        # because a publish template is configured, disable context change. This
+        # Because a publish template is configured, disable context change. This
         # is a temporary measure until the publisher handles context switching
         # natively.
         item.context_change_allowed = False
@@ -213,7 +188,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
 
         alembic_path = item.properties["path"]
 
-        # ---- ensure the session has been saved
+        # Ensure the session has been saved
         if not path:
             # the session still requires saving. provide a save button.
             # validation fails.
@@ -224,7 +199,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
             )
             raise Exception(error_msg)
 
-        # get the normalized path
+        # get the normalized paths
         path = sgtk.util.ShotgunPath.normalize(path)
         alembic_path = sgtk.util.ShotgunPath.normalize(alembic_path)
 
@@ -232,8 +207,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         work_template = item.properties.get("alembic_template")
         publish_template = item.properties.get("publish_template")
 
-        # get the current scene path and extract fields from it using the work
-        # template:
+        # get the current scene path and extract fields from it using the work template:
         work_fields = work_template.get_fields(alembic_path)
 
         # ensure the fields work for the publish template
@@ -252,7 +226,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
 
         # Check if published files exist
         if os.path.exists(publish_path):
-            error_msg ='Published File already exists: %s' % (publish_path)
+            error_msg = 'Published File already exists: %s' % (publish_path)
             self.logger.error(error_msg)
             raise Exception(error_msg)
 
@@ -261,9 +235,6 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
 
         self.logger.info("working template path: %s" % (work_template))
         self.logger.info("publish template path: %s" % (publish_template))
-
-        #    # run the base class validation
-        #    return super(MayaAlembicGeometryPublishPlugin, self).validate(settings, item)
 
         return True
 
@@ -276,51 +247,6 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
             instances.
         :param item: Item to process
         """
-
-        #    publisher = self.parent
-
-        #    # get the path to create and publish
-        #    publish_path = item.properties["path"]
-
-        #    # ensure the publish folder exists:
-        #    publish_folder = os.path.dirname(publish_path)
-        #    self.parent.ensure_folder_exists(publish_folder)
-
-        #    # set the alembic args that make the most sense when working with Mari.
-        #    # These flags will ensure the export of an Alembic file that contains
-        #    # all visible geometry from the current scene together with UV's and
-        #    # face sets for use in Mari.
-        #    alembic_args = [
-        #        # only renderable objects (visible and not templated)
-        #        "-renderableOnly",
-        #        # write shading group set assignments (Maya 2015+)
-        #        "-writeFaceSets",
-        #        # write uv's (only the current uv set gets written)
-        #        "-uvWrite"
-        #    ]
-
-        #    # find the animated frame range to use:
-        #    start_frame, end_frame = _find_scene_animation_range()
-        #    if start_frame and end_frame:
-        #        alembic_args.append("-fr %d %d" % (start_frame, end_frame))
-
-        #    # Set the output path:
-        #    # Note: The AbcExport command expects forward slashes!
-        #    alembic_args.append("-file %s" % publish_path.replace("\\", "/"))
-
-        #    # build the export command.  Note, use AbcExport -help in Maya for
-        #    # more detailed Alembic export help
-        #    abc_export_cmd = ("AbcExport -j \"%s\"" % " ".join(alembic_args))
-
-        #    # ...and execute it:
-        #    try:
-        #        self.parent.log_debug("Executing command: %s" % abc_export_cmd)
-        #        mel.eval(abc_export_cmd)
-        #    except Exception, e:
-        #        self.logger.error("Failed to export Geometry: %s" % e)
-        #        return
-        ##################
-        
 
         alembic_path = item.properties["path"]
         publish_path = item.properties["publish_path"]
