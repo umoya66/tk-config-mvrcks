@@ -15,6 +15,8 @@ import os
 import maya.cmds as cmds
 import maya.mel as mel
 import sgtk
+# import tank for debugging
+import tank as sgtk
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -50,7 +52,7 @@ class MayaSessionCollector(HookBaseClass):
 
         # settings specific to this collector
         maya_session_settings = {
-            "Work Template": {
+            "Alembic Template": {
                 "type": "template",
                 "default": None,
                 "description": "Template path for artist work files. Should "
@@ -58,6 +60,13 @@ class MayaSessionCollector(HookBaseClass):
                                "templates.yml. If configured, is made available"
                                "to publish plugins via the collected item's "
                                "properties. ",
+            },
+            "Publish Template": {
+                "type": "template",
+                "default": None,
+                "description": "Template path for published work files. Should"
+                               "correspond to a template defined in "
+                               "templates.yml.",
             },
         }
 
@@ -98,7 +107,8 @@ class MayaSessionCollector(HookBaseClass):
             )
 
             self.collect_playblasts(item, project_root)
-            self.collect_alembic_caches(item, project_root)
+            # self.collect_alembic_caches(item, project_root)
+            self.collect_alembic_exports(item, project_root)
         else:
 
             self.logger.info(
@@ -112,10 +122,10 @@ class MayaSessionCollector(HookBaseClass):
                 }
             )
 
-        if cmds.ls(geometry=True, noIntermediate=True):
-            self._collect_session_geometry(item)
+        # if cmds.ls(geometry=True, noIntermediate=True):
+        #     self._collect_session_geometry(item)
 
-        self._collect_meshes(item)
+        # self._collect_meshes(item)
 
     def collect_current_maya_session(self, settings, parent_item):
         """
@@ -178,6 +188,94 @@ class MayaSessionCollector(HookBaseClass):
         self.logger.info("Collected current Maya scene")
 
         return session_item
+
+    def collect_alembic_exports(self, parent_item, project_root):
+        """
+        Creates items for alembic exports using the Mavericks Export Alembic which
+        exports alembics to the directory specified in the template
+
+        Looks for a 'project_root' property on the parent item, and if such
+        exists, look for alembic exports in the specified template
+
+        :param parent_item: Parent Item instance
+        :param str project_root: The maya project root to search for alembics
+        """
+
+        #    # ensure the alembic cache dir exists
+        #    cache_dir = os.path.join(project_root, "cache", "alembic")
+        #    if not os.path.exists(cache_dir):
+        #        return
+
+        # get the directory associated with the exports from this file
+
+        # get sgtk engine
+        eng = sgtk.platform.current_engine()
+
+        # get context
+        ctx = eng.context
+
+        # get toolkit
+        tk = ctx.sgtk
+
+        # get necessary templates
+
+        maya_file = ''
+        working_template_path = ''
+
+        if ctx.entity['type'] == 'Asset':
+            maya_file = tk.templates['maya_asset_work']
+            working_template_path = tk.templates["maya_asset_alembic"]
+            publish_template_path = tk.templates["maya_asset_pub_alembic"]
+
+        elif ctx.entity['type'] == 'Shot':
+            maya_file = tk.templates['maya_shot_work']
+            working_template_path = tk.templates["maya_shot_alembic"]
+            publish_template_path = tk.templates["maya_shot_pub_alembic"]
+
+        else:
+            pass
+
+        # get current maya file path
+        current_file_path = cmds.file(query=True, sn=True)
+
+        # validate and get all the fields we need for writing out the working file
+        path_fields = maya_file.validate_and_get_fields(current_file_path)
+
+        if path_fields is not None:
+            output_path = working_template_path.apply_fields(path_fields)
+            exports_dir = os.path.dirname(output_path)
+
+        self.logger.info("Output Path: %s" % (output_path))
+        self.logger.info("maya file: %s" % (maya_file))
+        self.logger.info("working template path: %s" % (working_template_path))
+        self.logger.info("publish template path: %s" % (publish_template_path))
+
+        self.logger.info(
+            "Processing alembic exports folder: %s" % (exports_dir,),
+            extra={
+                "action_show_folder": {
+                    "path": exports_dir
+                }
+            }
+        )
+
+        # look for alembic files in the cache folder
+        for filename in os.listdir(exports_dir):
+            cache_path = os.path.join(exports_dir, filename)
+
+            # do some early pre-processing to ensure the file is of the right
+            # type. use the base class item info method to see what the item
+            # type would be.
+            item_info = self._get_item_info(filename)
+            if item_info["item_type"] != "file.alembic":
+                continue
+
+            # allow the base class to collect and create the item. it knows how
+            # to handle alembic files
+            super(MayaSessionCollector, self)._collect_file(
+                parent_item,
+                cache_path
+            )
 
     def collect_alembic_caches(self, parent_item, project_root):
         """
