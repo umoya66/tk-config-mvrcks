@@ -190,8 +190,8 @@ settings.tk-multi-publish2.maya.asset_step:
     settings:
       Publish Template: maya_shader_network_publish
   - name: Publish Exported Alembics
-    # hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-    hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     settings:
       Publish Template: maya_asset_pub_alembic
       Alembic Template: maya_asset_alembic
