@@ -295,11 +295,17 @@ paths:
     maya_shot_render_pub_dpx:
         definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
 
+    # The location of maya Alembic exports
     maya_shot_alembic:
         definition: '@shot_root/work/maya/alembic/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}[_{grp_name}]_v{version}.abc'
-
     maya_shot_pub_alembic:
         definition: '@shot_root/publish/maya/alembic/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+
+    # The location of maya playblasts
+    maya_shot_playblast:
+        definition: '@shot_root/work/maya/playblasts/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.mov'
+    maya_shot_pub_playblast:
+        definition: '@shot_root/publish/maya/playblasts/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.mov'
 
 
     #
@@ -515,17 +521,26 @@ paths:
     # The location of published maya files
     maya_asset_publish:
         definition: '@asset_root/publish/maya/scenes/{Asset}_{Step}_{name}_v{version}.{maya_extension}'
-    # maya_asset_alembic_cache:
-    #     definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
 
     maya_asset_alembic:
         definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
-
     maya_asset_pub_alembic:
         definition: '@asset_root/publish/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
 
+    maya_asset_camera:
+        definition:    '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/camera/{Asset}_{Step}_{name}_v{version}[_{grp_name}].abc'
+    maya_asset_pub_camera:
+        definition: '@asset_root/publish/maya/alembic/{Asset}_{Step}_{name}_v{version}/camera/{Asset}_{Step}_{name}_v{version}[_{grp_name}].abc'
+
     maya_shader_network_publish:
         definition: '@asset_root/publish/maya/surfacing/{name}.v{version}.ma'
+
+
+    # The location of maya playblasts
+    maya_asset_playblast:
+        definition: '@asset_root/work/maya/playblasts/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.mov'
+    maya_asset_pub_playblast:
+        definition: '@asset_root/publish/maya/playblasts/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.mov'
 
 
     #

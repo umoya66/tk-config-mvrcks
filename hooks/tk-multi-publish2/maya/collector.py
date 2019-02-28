@@ -105,10 +105,10 @@ class MayaSessionCollector(HookBaseClass):
 
             # self.collect_playblasts(item, project_root)
             # self.collect_alembic_caches(item, project_root)
+
             self.collect_alembic_exports(item, project_root)
 
             self.collect_rendered_sequences(item)
-
 
         else:
 
@@ -189,6 +189,8 @@ class MayaSessionCollector(HookBaseClass):
 
         return session_item
 
+    ##########################
+
     def collect_alembic_exports(self, parent_item, project_root):
         """
         Creates items for alembic exports using the Mavericks Export Alembic which
@@ -234,38 +236,21 @@ class MayaSessionCollector(HookBaseClass):
         # validate and get all the fields we need for writing out the working file
         path_fields = maya_file.validate_and_get_fields(current_file_path)
 
+
         if path_fields is not None:
             output_path = working_template_path.apply_fields(path_fields)
-            exports_dir = os.path.dirname(output_path)
 
-        self.logger.info("Output Path: %s" % (output_path))
-        self.logger.info("maya file: %s" % (maya_file))
-        self.logger.info("working template path: %s" % (working_template_path))
-        self.logger.info("publish template path: %s" % (publish_template_path))
+            self.logger.info("Playblast Output Path: %s" % (output_path))
+            self.logger.info("publish template path: %s" % (publish_template_path))
 
-        self.logger.info(
-            "Processing alembic exports folder: %s" % (exports_dir,),
-            extra={
-                "action_show_folder": {
-                    "path": exports_dir
-                }
-            }
-        )
-
-        # look for alembic files in the cache folder
-        for filename in os.listdir(exports_dir):
-            cache_path = os.path.join(exports_dir, filename)
-
-            # do some early pre-processing to ensure the file is of the right
-            # type. use the base class item info method to see what the item
-            # type would be.
-            item_info = self._get_item_info(filename)
-            if item_info["item_type"] != "file.alembic":
-                continue
-
-            # allow the base class to collect and create the item. it knows how
-            # to handle alembic files
-            super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
+            # exports_dir = os.path.dirname(output_path)
+            item_info = self._get_item_info(output_path)
+            if item_info["item_type"] != "file.video":
+                return
+            else:
+                super(MayaSessionCollector, self)._collect_file(parent_item, output_path)
+        else:
+            return None
 
     def collect_rendered_sequences(self, parent_item):
         """
@@ -275,6 +260,7 @@ class MayaSessionCollector(HookBaseClass):
         :return:
         """
 
+        self.logger.info("Processing rendered sequences")
         # get sgtk engine
         eng = sgtk.platform.current_engine()
 
@@ -294,13 +280,13 @@ class MayaSessionCollector(HookBaseClass):
 
         if ctx.entity['type'] == 'Asset':
             maya_file = tk.templates['maya_asset_work']
-            working_template_path = tk.templates["maya_asset_render_jpg"]
-            publish_template_path = tk.templates["maya_asset_render_pub_jpg"]
+            working_template_path = tk.templates["maya_asset_playblast"]
+            publish_template_path = tk.templates["maya_asset_pub_playblast"]
 
         elif ctx.entity['type'] == 'Shot':
             maya_file = tk.templates['maya_shot_work']
-            working_template_path = tk.templates["maya_shot_render_jpg"]
-            publish_template_path = tk.templates["maya_shot_render_pub_jpg"]
+            working_template_path = tk.templates["maya_shot_playblast"]
+            publish_template_path = tk.templates["maya_shot_pub_playblast"]
 
         else:
             pass
@@ -313,6 +299,8 @@ class MayaSessionCollector(HookBaseClass):
 
         if path_fields is not None:
             output_path = working_template_path.apply_fields(path_fields)
+            missing_keys = working_template_path.missing_keys(path_fields)
+            self.logger.info('Missing Keys: %s', str(missing_keys))
             exports_dir = os.path.dirname(output_path)
 
         self.logger.info("Output Path: %s" % (output_path))
@@ -337,14 +325,14 @@ class MayaSessionCollector(HookBaseClass):
             # type. use the base class item info method to see what the item
             # type would be.
             item_info = self._get_item_info(filename)
-            if item_info["item_type"] != "file.alembic":
+            if item_info["item_type"] != "file.video":
                 continue
 
             # allow the base class to collect and create the item. it knows how
             # to handle alembic files
             super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
 
-
+    ##########################
 
     def collect_alembic_caches(self, parent_item, project_root):
         """
