@@ -53,7 +53,7 @@ settings.tk-nuke-writenode.shot:
     proxy_render_template:
     publish_template: nuke_shot_render_pub_mono_dpx
     render_template: nuke_shot_render_mono_dpx
-    settings: {datatype: 16 bit half, colorspace: SLog3 }
+    settings: {datatype: 16 bit, colorspace: SLog3, transfer: log }
     tank_type: Rendered Image
     tile_color: [26,26,0]
 
