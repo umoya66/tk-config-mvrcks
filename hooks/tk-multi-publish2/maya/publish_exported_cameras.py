@@ -17,12 +17,11 @@ import maya.mel as mel
 import sgtk
 # import tank as sgtk for debugging
 # import tank as sgtk
-import pprint
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
 
-class MayaAlembicGeometryPublishPlugin(HookBaseClass):
+class MayaAlembicCameraPublishPlugin(HookBaseClass):
     """
     Plugin for publishing an open maya session.
 
@@ -44,7 +43,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         """
 
         return """
-        <p>This plugin publishes previously exported Alembic geometry for the current session. Please use 
+        <p>This plugin publishes previously exported Alembic Camera for the current session. Please use 
         the Mavericks Alembic Shotgun export tool.
         </p>
         """
@@ -69,7 +68,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         part of its environment configuration.
         """
         # inherit the settings from the base publish plugin
-        base_settings = super(MayaAlembicGeometryPublishPlugin, self).settings or {}
+        base_settings = super(MayaAlembicCameraPublishPlugin, self).settings or {}
 
         # settings specific to this class
         maya_publish_settings = {
@@ -132,37 +131,15 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         :returns: dictionary with boolean keys accepted, required and enabled
         """
 
-        self.logger.info('----- Start publish_exported_alembics "accept" ----')
         accepted = True
         publisher = self.parent
         publish_template_name = settings["Publish Template"].value
         work_template_name = settings["Alembic Template"].value
 
-        if item.properties['object'] == 'camera':
-            self.logger.info('IS A CAMERA')
-            return {
-                "accepted": True,
-                "checked": False,
-                'visible': True
-            }
-        elif item.properties['object'] == 'geo':
-            self.logger.info('IS A GEO')
-            return {
-                "accepted": True,
-                "checked": False,
-                'visible': True
-            }
-        else:
-
-
-        # if work_template_name == 'maya_asset_camera' or 'maya_shot_camera':
-        #     return {
-        #         "accepted": False,
-        #         "checked": False
-        #     }
-
-        self.logger.info('Work template name: %s' % work_template_name)
-        self.logger.info('publish template name: %s ' % publish_template_name)
+        self.logger.info(
+            'Work template name: %s    \n '
+            'publish template name: %s ' % (work_template_name, publish_template_name)
+        )
 
         # ensure the publish template is defined and valid and that we also have
         work_template = publisher.get_template_by_name(work_template_name)
@@ -191,8 +168,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
 
         return {
             "accepted": accepted,
-            "checked": True,
-            'visible': True
+            "checked": True
         }
 
     def validate(self, settings, item):
@@ -292,7 +268,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         )
 
         # Now that the path has been generated, hand it off to the
-        super(MayaAlembicGeometryPublishPlugin, self).publish(settings, item)
+        super(MayaAlembicCameraPublishPlugin, self).publish(settings, item)
 
 
 def _find_scene_animation_range():

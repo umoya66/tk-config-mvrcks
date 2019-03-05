@@ -296,10 +296,14 @@ paths:
         definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
 
     maya_shot_alembic:
-        definition: '@shot_root/work/maya/alembic/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}[_{grp_name}]_v{version}.abc'
-
+        definition: '@shot_root/work/maya/alembic/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].abc'
     maya_shot_pub_alembic:
-        definition: '@shot_root/publish/maya/alembic/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+        definition: '@shot_root/publish/maya/alembic/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].abc'
+
+    maya_shot_camera:
+        definition: '@shot_root/work/maya/alembic/{Shot}_{Step}_{name}_v{version}/camera/{Shot}_{Step}_{name}_v{version}[_{grp_name}].abc'
+    maya_shot_pub_camera:
+        definition: '@shot_root/publish/maya/alembic/{Shot}_{Step}_{name}_v{version}/camera/{Shot}_{Step}_{name}_v{version}[_{grp_name}].abc'
 
 
     #
@@ -519,10 +523,14 @@ paths:
     #     definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
 
     maya_asset_alembic:
-        definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
-
+        definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/geo/{Asset}_{Step}_{name}_v{version}[_{grp_name}].abc'
     maya_asset_pub_alembic:
-        definition: '@asset_root/publish/maya/alembic/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}[_{grp_name}]_v{version}.abc'
+        definition: '@asset_root/publish/maya/alembic/{Asset}_{Step}_{name}_v{version}/geo/{Asset}_{Step}_{name}_v{version}[_{grp_name}].abc'
+
+    maya_asset_camera:
+        definition: '@asset_root/work/maya/alembic/{Asset}_{Step}_{name}_v{version}/camera/{Asset}_{Step}_{name}_v{version}[_{grp_name}].abc'
+    maya_asset_pub_camera:
+        definition: '@asset_root/publish/maya/alembic/{Asset}_{Step}_{name}_v{version}/camera/{Asset}_{Step}_{name}_v{version}[_{grp_name}].abc'
 
     maya_shader_network_publish:
         definition: '@asset_root/publish/maya/surfacing/{name}.v{version}.ma'
