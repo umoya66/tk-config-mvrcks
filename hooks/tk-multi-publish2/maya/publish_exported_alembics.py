@@ -142,7 +142,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
             self.logger.info('IS A CAMERA')
             return {
                 "accepted": True,
-                "checked": False,
+                "checked": True,
                 'visible': True
             }
         elif item.properties['object'] == 'geo':
@@ -153,6 +153,13 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
                 'visible': True
             }
         else:
+            self.logger.info('This is neither')
+            return {
+                "accepted": False,
+                "checked": False,
+                'visible': True
+            }
+
 
 
         # if work_template_name == 'maya_asset_camera' or 'maya_shot_camera':
