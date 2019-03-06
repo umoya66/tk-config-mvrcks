@@ -1,4 +1,4 @@
-﻿# Copyright (c) 2017 Shotgun Software Inc.
+﻿                # Copyright (c) 2017 Shotgun Software Inc.
 # 
 # CONFIDENTIAL AND PROPRIETARY
 # 
@@ -16,7 +16,7 @@ import maya.cmds as cmds
 import maya.mel as mel
 import sgtk
 # import tank as sgtk for debugging
-# import tank as sgtk
+import tank as sgtk
 import pprint
 
 HookBaseClass = sgtk.get_hook_baseclass()
@@ -138,69 +138,105 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         publish_template_name = settings["Publish Template"].value
         work_template_name = settings["Alembic Template"].value
 
-        if item.properties['object'] == 'camera':
-            self.logger.info('IS A CAMERA')
-            return {
-                "accepted": True,
-                "checked": True,
-                'visible': True
-            }
-        elif item.properties['object'] == 'geo':
-            self.logger.info('IS A GEO')
-            return {
-                "accepted": True,
-                "checked": False,
-                'visible': True
-            }
+
+        # get sgtk engine
+        eng = sgtk.platform.current_engine()
+
+        # get context
+        ctx = eng.context
+
+        # get toolkit
+        tk = ctx.sgtk
+
+        # get necessary templates
+
+        maya_file = ''
+
+        if ctx.entity['type'] == 'Asset' and item.properties['object'] == 'camera':
+            maya_file = tk.templates['maya_asset_work']
+            working_template_path = tk.templates["maya_asset_camera"]
+            publish_template_path = tk.templates["maya_asset_pub_camera"]
+
+        elif ctx.entity['type'] == 'Asset' and item.properties['object'] == 'geo':
+            working_template_path = tk.templates["maya_asset_alembic"]
+            publish_template_path = tk.templates["maya_asset_pub_alembic"]
+
+        elif ctx.entity['type'] == 'Shot' and item.properties['object'] == 'camera':
+            working_template_path = tk.templates["maya_shot_camera"]
+            publish_template_path = tk.templates["maya_shot_pub_camera"]
+
+        elif ctx.entity['type'] == 'Shot' and item.properties['object'] == 'geo':
+            working_template_path = tk.templates["maya_shot_alembic"]
+            publish_template_path = tk.templates["maya_shot_pub_alembic"]
+
         else:
-            self.logger.info('This is neither')
+            self.logger.info('No viable items')
             return {
                 "accepted": False,
                 "checked": False,
-                'visible': True
+                'visible': False
             }
 
-
-
-        # if work_template_name == 'maya_asset_camera' or 'maya_shot_camera':
-        #     return {
-        #         "accepted": False,
-        #         "checked": False
-        #     }
-
-        self.logger.info('Work template name: %s' % work_template_name)
-        self.logger.info('publish template name: %s ' % publish_template_name)
-
-        # ensure the publish template is defined and valid and that we also have
-        work_template = publisher.get_template_by_name(work_template_name)
-        publish_template = publisher.get_template_by_name(publish_template_name)
-        if not publish_template:
-            self.logger.debug(
-                "The valid publish template could not be determined for the "
-                "session geometry item. Not accepting the item."
-            )
-            accepted = False
-        else:
-            self.logger.info(
-                'Publish Template: %s \n'
-                'Work Template: %s ' % (publish_template, work_template)
-            )
-
-        # we've validated the publish template. add it to the item properties
-        # for use in subsequent methods
-        item.properties["publish_template"] = publish_template
-        item.properties["alembic_template"] = work_template
-
-        # Because a publish template is configured, disable context change. This
-        # is a temporary measure until the publisher handles context switching
-        # natively.
-        item.context_change_allowed = False
-
         return {
-            "accepted": accepted,
+            "accepted": True,
             "checked": True,
             'visible': True
         }
+
+        # if item.properties['object'] == 'camera':
+        #     self.logger.info('IS A CAMERA')
+        #     publish_template_name = maya_asset_pub_camera
+        #     work_template_name = maya_asset_camera
+        #     return {
+        #         "accepted": False,
+        #         "checked": False,
+        #         'visible': True
+        #     }
+        # elif item.properties['object'] == 'geo':
+        #     self.logger.info('IS A GEO')
+        #     publish_template_name = maya_asset_pub_alembic
+        #     work_template_name = maya_asset_alembic
+        #     return {
+        #         "accepted": True,
+        #         "checked": True,
+        #         'visible': True
+        #     }
+        # else:
+        #     pass
+
+        # self.logger.info('Work template name: %s' % work_template_name)
+        # self.logger.info('publish template name: %s ' % publish_template_name)
+
+        # ensure the publish template is defined and valid and that we also have
+        # work_template = publisher.get_template_by_name(work_template_name)
+        # publish_template = publisher.get_template_by_name(publish_template_name)
+        # if not publish_template:
+        #     self.logger.debug(
+        #         "The valid publish template could not be determined for the "
+        #         "session geometry item. Not accepting the item."
+        #     )
+        #     accepted = False
+        # else:
+        #     self.logger.info(
+        #         'Publish Template: %s \n'
+        #         'Work Template: %s ' % (publish_template, work_template)
+        #     )
+
+        # # we've validated the publish template. add it to the item properties
+        # # for use in subsequent methods
+        # item.properties["publish_template"] = publish_template
+        # item.properties["alembic_template"] = work_template
+
+        # # Because a publish template is configured, disable context change. This
+        # # is a temporary measure until the publisher handles context switching
+        # # natively.
+        # item.context_change_allowed = False
+
+        # return {
+        #     "accepted": accepted,
+        #     "checked": True,
+        #     'visible': True
+        # }
 
     def validate(self, settings, item):
         """

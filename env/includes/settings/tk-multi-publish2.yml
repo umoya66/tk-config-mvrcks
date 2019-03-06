@@ -196,20 +196,25 @@ settings.tk-multi-publish2.maya.asset_step:
   #   settings:
   #     Publish Template: maya_shader_network_publish
 
-  - name: Publish Exported Geo Alembics
-    # hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-    hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-    settings:
-      Publish Template: maya_asset_pub_alembic
-      Alembic Template: maya_asset_alembic
-
-  - name: Publish Exported Camera Alembics
-    # hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
-    hook: "{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
+  - name: Publish Exported Alembics
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-    settings:
-      Publish Template: maya_asset_pub_camera
-      Alembic Template: maya_asset_camera
+    settings: {}
+
+#   - name: Publish Exported Geo Alembics
+#     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+#     settings:
+#       Publish Template: maya_asset_pub_alembic
+#       Alembic Template: maya_asset_alembic
+
+#   - name: Publish Exported Camera Alembics
+#     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
+#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
+#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+#     settings:
+#       Publish Template: maya_asset_pub_camera
+#       Alembic Template: maya_asset_camera
 
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"

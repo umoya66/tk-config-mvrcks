@@ -15,8 +15,8 @@ import os
 import maya.cmds as cmds
 import maya.mel as mel
 import sgtk
-# import tank for debugging
-# import tank as sgtk
+# Importing tank for debugging
+import tank as sgtk
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -312,6 +312,9 @@ class MayaSessionCollector(HookBaseClass):
             # finally, add information to the mesh item that can be used
             # by the publish plugin to identify and export it properly
             mesh_item.properties["object"] = 'geo'
+            mesh_item.properties["path"] = cache_path
+            mesh_item.properties["alembic_template"] = abc_working_template_path
+            mesh_item.properties["publish_template"] = abc_publish_template_path
 
 
         # look for Camera alembics files in the cache folder
@@ -343,6 +346,9 @@ class MayaSessionCollector(HookBaseClass):
             # finally, add information to the mesh item that can be used
             # by the publish plugin to identify and export it properly
             mesh_item.properties["object"] = 'camera'
+            mesh_item.properties["path"] = cache_path
+            mesh_item.properties["alembic_template"] = cam_working_template_path
+            mesh_item.properties["publish_template"] = cam_publish_template_path
 
         self.logger.info('-----Finished with collecting Alembics -----')
 
