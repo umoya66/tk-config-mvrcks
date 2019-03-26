@@ -222,31 +222,39 @@ class MayaSessionCollector(HookBaseClass):
 
         # get necessary templates
 
-        maya_file = ''
-        abc_working_template_path = ''
+        # maya_template_path = ''
+        # abc_working_template_path = ''
+        
+        entity_type = ctx.entity['type'].lower
+            
+        maya_template_path = tk.templates['maya_' + entity_type + '_work']
+        abc_working_template_path = tk.templates['maya_' + entity_type + '_alembic']
+        abc_publish_template_path = tk.templates['maya_' + entity_type + '_pub_alembic']
+        cam_working_template_path = tk.templates['maya_' + entity_type + '_camera']
+        cam_publish_template_path = tk.templates['maya_' + entity_type + '_pub_camera']
 
-        if ctx.entity['type'] == 'Asset':
-            maya_file = tk.templates['maya_asset_work']
-            abc_working_template_path = tk.templates["maya_asset_alembic"]
-            abc_publish_template_path = tk.templates["maya_asset_pub_alembic"]
-            cam_working_template_path = tk.templates["maya_asset_camera"]
-            cam_publish_template_path = tk.templates["maya_asset_pub_camera"]
+        # if ctx.entity['type'] == 'Asset':
+        #     maya_template_path = tk.templates['maya_asset_work']
+        #     abc_working_template_path = tk.templates['maya_asset_alembic']
+        #     abc_publish_template_path = tk.templates['maya_asset_pub_alembic']
+        #     cam_working_template_path = tk.templates['maya_asset_camera']
+        #     cam_publish_template_path = tk.templates['maya_asset_pub_camera']
 
-        elif ctx.entity['type'] == 'Shot':
-            maya_file = tk.templates['maya_shot_work']
-            abc_working_template_path = tk.templates["maya_shot_alembic"]
-            abc_publish_template_path = tk.templates["maya_shot_pub_alembic"]
-            cam_working_template_path = tk.templates["maya_shot_camera"]
-            cam_publish_template_path = tk.templates["maya_shot_pub_camera"]
+        # elif ctx.entity['type'] == 'Shot':
+        #     maya_template_path = tk.templates['maya_shot_work']
+        #     abc_working_template_path = tk.templates["maya_shot_alembic"]
+        #     abc_publish_template_path = tk.templates["maya_shot_pub_alembic"]
+        #     cam_working_template_path = tk.templates["maya_shot_camera"]
+        #     cam_publish_template_path = tk.templates["maya_shot_pub_camera"]
 
-        else:
-            pass
+        # else:
+        #     pass
 
         # get current maya file path
         current_file_path = cmds.file(query=True, sn=True)
 
         # validate and get all the fields we need for writing out the working file
-        path_fields = maya_file.validate_and_get_fields(current_file_path)
+        path_fields = maya_template_path.validate_and_get_fields(current_file_path)
 
         if path_fields is not None:
             abc_output_path = abc_working_template_path.apply_fields(path_fields)
