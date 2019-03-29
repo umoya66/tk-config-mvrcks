@@ -132,7 +132,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         :returns: dictionary with boolean keys accepted, required and enabled
         """
 
-        self.logger.info('----- Start publish_exported_alembics "accept" ----')
+        self.logger.info('----- Start publish_exported_camera "accept" ----')
         accepted = True
         publisher = self.parent
         publish_template_name = settings["Publish Template"].value

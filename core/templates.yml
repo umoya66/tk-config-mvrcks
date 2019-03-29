@@ -305,6 +305,12 @@ paths:
     maya_shot_pub_camera:
         definition: '@shot_root/publish/maya/alembic/{Shot}_{Step}_{name}_v{version}/camera/{Shot}_{Step}_{name}_v{version}[_{grp_name}].abc'
 
+    # Maya playblasts
+    maya_shot_playblast:
+        definition: '@shot_root/work/maya/movies/{Shot}_{Step}_{name}_v{version}_playblast.mov'
+    maya_shot_pub_playblast:
+        definition: '@shot_root/publish/maya/movies/{Shot}_{Step}_{name}_v{version}_playblast.mov'
+
 
     #
     # Houdini
@@ -534,6 +540,12 @@ paths:
 
     maya_shader_network_publish:
         definition: '@asset_root/publish/maya/surfacing/{name}.v{version}.ma'
+
+    # Maya playblasts
+    maya_asset_playblast:
+        definition: '@asset_root/work/maya/movies/{Asset}_{Step}_{name}_v{version}_playblast.mov'
+    maya_asset_pub_playblast:
+        definition: '@asset_root/publish/maya/movies/{Asset}_{Step}_{name}_v{version}_playblast.mov'
 
 
     #

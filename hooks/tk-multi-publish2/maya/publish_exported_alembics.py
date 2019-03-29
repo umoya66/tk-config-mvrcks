@@ -132,7 +132,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         :returns: dictionary with boolean keys accepted, required and enabled
         """
 
-        self.logger.info('----- Start publish_exported_alembics "accept" ----')
+        self.logger.debug('----- Start publish_exported_alembics "accept" ----')
         accepted = True
         publisher = self.parent
         publish_template_name = settings["Publish Template"].value
@@ -176,6 +176,8 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
                 "checked": False,
                 'visible': False
             }
+        self.logger.debug(working_template_path)
+        self.logger.debug('----- End publish_exported_alembics "accept" ----')
 
         return {
             "accepted": True,
@@ -297,11 +299,11 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
             self.logger.error(error_msg)
             raise Exception(error_msg)
 
-        self.logger.info("Work Path: %s" % (alembic_path))
-        self.logger.info("Publish Path: %s" % (publish_path))
+        self.logger.debug("Work Path: %s" % (alembic_path))
+        self.logger.debug("Publish Path: %s" % (publish_path))
 
-        self.logger.info("working template path: %s" % (work_template))
-        self.logger.info("publish template path: %s" % (publish_template))
+        self.logger.debug("working template path: %s" % (work_template))
+        self.logger.debug("publish template path: %s" % (publish_template))
 
         return True
 

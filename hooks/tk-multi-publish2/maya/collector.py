@@ -1,4 +1,4 @@
-﻿# Copyright (c) 2017 Shotgun Software Inc.
+﻿        # Copyright (c) 2017 Shotgun Software Inc.
 # 
 # CONFIDENTIAL AND PROPRIETARY
 # 
@@ -78,6 +78,25 @@ class MayaSessionCollector(HookBaseClass):
                                "correspond to a template defined in "
                                "templates.yml.",
             },
+            "File Types": {
+                "type": "list",
+                "default": [
+                    ["Alembic Cache", "abc"],
+                    ["Alembic Camera", "abc"],
+                    ["Alembic Geo", "abc"],
+                    ["Maya Scene", "ma", "mb"],
+                    ["Rendered Image", "dpx", "exr"],
+                    ["Texture", "tiff", "tx", "tga", "dds"],
+                    ["Image", "jpeg", "jpg", "png"],
+                    ["Movie", "mov", "mp4"],
+                ],
+                "description": (
+                    "List of file types to include. Each entry in the list "
+                    "is a list in which the first entry is the Shotgun "
+                    "published file type and subsequent entries are file "
+                    "extensions that should be associated."
+                )
+            },
         }
 
         # update the base settings with these settings
@@ -113,10 +132,10 @@ class MayaSessionCollector(HookBaseClass):
                 }
             )
 
-            # self.collect_playblasts(item, project_root)
+            self.collect_playblasts(item, project_root)
             # self.collect_alembic_caches(item, project_root)
             self.collect_alembic_exports(item, project_root)
-            # self.collect_alembic_cameras(item, project_root)
+
         else:
 
             self.logger.info(
@@ -209,7 +228,7 @@ class MayaSessionCollector(HookBaseClass):
         :param str project_root: The maya project root to search for alembics
         """
 
-        self.logger.info('-----Start with collecting Alembics -----')
+        self.logger.info('-----Start with collecting Alembics  xx-----')
 
         # get sgtk engine
         eng = sgtk.platform.current_engine()
@@ -225,30 +244,13 @@ class MayaSessionCollector(HookBaseClass):
         # maya_template_path = ''
         # abc_working_template_path = ''
         
-        entity_type = ctx.entity['type'].lower
-            
+        entity_type = ctx.entity['type'].lower()
+
         maya_template_path = tk.templates['maya_' + entity_type + '_work']
         abc_working_template_path = tk.templates['maya_' + entity_type + '_alembic']
         abc_publish_template_path = tk.templates['maya_' + entity_type + '_pub_alembic']
         cam_working_template_path = tk.templates['maya_' + entity_type + '_camera']
         cam_publish_template_path = tk.templates['maya_' + entity_type + '_pub_camera']
-
-        # if ctx.entity['type'] == 'Asset':
-        #     maya_template_path = tk.templates['maya_asset_work']
-        #     abc_working_template_path = tk.templates['maya_asset_alembic']
-        #     abc_publish_template_path = tk.templates['maya_asset_pub_alembic']
-        #     cam_working_template_path = tk.templates['maya_asset_camera']
-        #     cam_publish_template_path = tk.templates['maya_asset_pub_camera']
-
-        # elif ctx.entity['type'] == 'Shot':
-        #     maya_template_path = tk.templates['maya_shot_work']
-        #     abc_working_template_path = tk.templates["maya_shot_alembic"]
-        #     abc_publish_template_path = tk.templates["maya_shot_pub_alembic"]
-        #     cam_working_template_path = tk.templates["maya_shot_camera"]
-        #     cam_publish_template_path = tk.templates["maya_shot_pub_camera"]
-
-        # else:
-        #     pass
 
         # get current maya file path
         current_file_path = cmds.file(query=True, sn=True)
@@ -264,8 +266,8 @@ class MayaSessionCollector(HookBaseClass):
 
         # self.logger.info("Output Path: %s" % (abc_output_path))
         # self.logger.info("maya file: %s" % (maya_file))
-        self.logger.info("ABC working template path: %s" % (abc_working_template_path))
-        self.logger.info("CAM working template path: %s" % (cam_working_template_path))
+        self.logger.debug("ABC working template path: %s" % (abc_working_template_path))
+        self.logger.debug("CAM working template path: %s" % (cam_working_template_path))
 
         self.logger.info(
             "Processing alembic exports folder: %s" % (abc_exports_dir,),
@@ -291,74 +293,80 @@ class MayaSessionCollector(HookBaseClass):
             "mesh.png"
         )
 
+        # check for geo dir
+        if os.path.exists(abc_exports_dir):
+
         # look for alembic files in the cache folder
-        for filename in os.listdir(abc_exports_dir):
-            cache_path = os.path.join(abc_exports_dir, filename)
+            for filename in os.listdir(abc_exports_dir):
+                cache_path = os.path.join(abc_exports_dir, filename)
 
-            # do some early pre-processing to ensure the file is of the right
-            # type. use the base class item info method to see what the item
-            # type would be.
-            item_info = self._get_item_info(filename)
-            if item_info["item_type"] != "file.alembic":
-                continue
+                # do some early pre-processing to ensure the file is of the right
+                # type. use the base class item info method to see what the item
+                # type would be.
+                item_info = self._get_item_info(filename)
+                if item_info["item_type"] != "file.alembic":
+                    continue
 
-            self.logger.info('Adding Alembic Item: %s' % (filename))
+                self.logger.info('Adding Alembic Item: %s' % (filename))
 
-            # allow the base class to collect and create the item. it knows how
-            # to handle alembic files
-            # super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
+                # allow the base class to collect and create the item. it knows how
+                # to handle alembic files
+                # super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
 
-            mesh_item = parent_item.create_item(
-                "file.alembic",
-                "Mesh",
-                filename
-            )
+                mesh_item = parent_item.create_item(
+                    "file.alembic",
+                    "Alembic Geo",
+                    filename
+                )
 
-            # set the icon for the item
-            mesh_item.set_icon_from_path(icon_path)
+                # set the icon for the item
+                mesh_item.set_icon_from_path(icon_path)
 
-            # finally, add information to the mesh item that can be used
-            # by the publish plugin to identify and export it properly
-            mesh_item.properties["object"] = 'geo'
-            mesh_item.properties["path"] = cache_path
-            mesh_item.properties["alembic_template"] = abc_working_template_path
-            mesh_item.properties["publish_template"] = abc_publish_template_path
+                # finally, add information to the mesh item that can be used
+                # by the publish plugin to identify and export it properly
+                mesh_item.properties["object"] = 'geo'
+                mesh_item.properties["path"] = cache_path
+                mesh_item.properties["alembic_template"] = abc_working_template_path
+                mesh_item.properties["publish_template"] = abc_publish_template_path
 
+
+        # check for cam dir
+        if os.path.exists(cam_exports_dir):
 
         # look for Camera alembics files in the cache folder
-        for filename in os.listdir(cam_exports_dir):
-            cache_path = os.path.join(cam_exports_dir, filename)
+            for filename in os.listdir(cam_exports_dir):
+                cache_path = os.path.join(cam_exports_dir, filename)
 
-            # do some early pre-processing to ensure the file is of the right
-            # type. use the base class item info method to see what the item
-            # type would be.
-            item_info = self._get_item_info(filename)
-            if item_info["item_type"] != "file.alembic":
-                continue
+                # do some early pre-processing to ensure the file is of the right
+                # type. use the base class item info method to see what the item
+                # type would be.
+                item_info = self._get_item_info(filename)
+                if item_info["item_type"] != "file.alembic":
+                    continue
 
-            self.logger.info('Adding Camera Item: %s' % (filename))
+                self.logger.info('Adding Camera Item: %s' % (filename))
 
-            # allow the base class to collect and create the item. it knows how
-            # to handle alembic files
-            # super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
+                # allow the base class to collect and create the item. it knows how
+                # to handle alembic files
+                # super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
 
-            mesh_item = parent_item.create_item(
-                "file.alembic",
-                "Alembic",
-                filename
-            )
+                mesh_item = parent_item.create_item(
+                    "file.alembic",
+                    "Alembic Camera",
+                    filename
+                )
 
-            # set the icon for the item
-            mesh_item.set_icon_from_path(icon_path)
+                # set the icon for the item
+                mesh_item.set_icon_from_path(icon_path)
 
-            # finally, add information to the mesh item that can be used
-            # by the publish plugin to identify and export it properly
-            mesh_item.properties["object"] = 'camera'
-            mesh_item.properties["path"] = cache_path
-            mesh_item.properties["alembic_template"] = cam_working_template_path
-            mesh_item.properties["publish_template"] = cam_publish_template_path
+                # finally, add information to the mesh item that can be used
+                # by the publish plugin to identify and export it properly
+                mesh_item.properties["object"] = 'camera'
+                mesh_item.properties["path"] = cache_path
+                mesh_item.properties["alembic_template"] = cam_working_template_path
+                mesh_item.properties["publish_template"] = cam_publish_template_path
 
-        self.logger.info('-----Finished with collecting Alembics -----')
+        self.logger.debug('-----Finished with collecting Alembics -----')
 
     def collect_alembic_caches(self, parent_item, project_root):
         """

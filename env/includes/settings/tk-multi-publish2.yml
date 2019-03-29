@@ -196,9 +196,13 @@ settings.tk-multi-publish2.maya.asset_step:
   #   settings:
   #     Publish Template: maya_shader_network_publish
 
+  - name: Publish Playblast
+    hook: "{config}/tk-multi-publish2/maya/upload_playblast_version.py"
+    settings: {}
+
   - name: Publish Exported Alembics
-    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-    # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    # hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     settings: {}
 
 #   - name: Publish Exported Geo Alembics
