@@ -1,0 +1,144 @@
+# Copyright (c) 2017 Shotgun Software Inc.
+#
+# CONFIDENTIAL AND PROPRIETARY
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
+# Source Code License included in this distribution package. See LICENSE.
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
+# not expressly granted therein are reserved by Shotgun Software Inc.
+
+################################################################################
+
+includes:
+- ../app_locations.yml
+
+################################################################################
+
+publish_help_url: &help_url "https://support.shotgunsoftware.com/hc/en-us/articles/115000068574-Integrations-User-Guide#The%20Publisher"
+
+################################################################################
+
+# ---- Stand alone publish
+
+settings.tk-multi-setframerange.standalone:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+################################################################################
+
+# ---- 3dsMax
+
+# asset step
+settings.tk-multi-setframerange.3dsmax.asset_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+# shot step
+settings.tk-multi-setframerange.3dsmax.shot_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+################################################################################
+
+# ---- Houdini
+
+# asset step
+settings.tk-multi-setframerange.houdini.asset_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+# shot step
+settings.tk-multi-setframerange.houdini.shot_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+################################################################################
+
+# ---- Mari
+
+# asset_step
+settings.tk-multi-setframerange.mari.asset_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+################################################################################
+
+# ---- Maya
+
+# asset step
+settings.tk-multi-setframerange.maya.asset_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+# shot step
+settings.tk-multi-setframerange.maya.shot_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+################################################################################
+
+# ---- Nuke
+
+# asset step
+settings.tk-multi-setframerange.nuke.asset_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+# shot step
+settings.tk-multi-setframerange.nuke.shot_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+################################################################################
+
+# ---- NukeStudio
+
+settings.tk-multi-setframerange.nukestudio:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+################################################################################
+
+# ---- Photoshop
+
+# asset step
+settings.tk-multi-setframerange.photoshop.asset_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+# shot_step
+settings.tk-multi-setframerange.photoshop.shot_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+################################################################################
+
+# ---- Motion Builder
+
+# asset_step
+settings.tk-multi-setframerange.motion_builder.asset_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+# shot_step
+settings.tk-multi-setframerange.motion_builder.shot_step:
+  location: "@apps.tk-multi-setframerange.location"
+  sg_in_frame_field: "sg_head_in"
+  sg_out_frame_field: "sg_tail_out"
+
+

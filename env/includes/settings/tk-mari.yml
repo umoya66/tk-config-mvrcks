@@ -16,9 +16,11 @@ includes:
 - ../engine_locations.yml
 - ./tk-multi-loader2.yml
 - ./tk-multi-publish2.yml
+- ./tk-multi-setframerange.yml
 - ./tk-multi-shotgunpanel.yml
 - ./tk-multi-workfiles.yml
 - ./tk-mari-projectmanager.yml
+- ./tk-desktop-timecard.yml
 
 ################################################################################
 
@@ -38,11 +40,17 @@ settings.tk-mari.asset_step:
       location: "@apps.tk-multi-about.location"
     tk-multi-breakdown:
       location: "@apps.tk-multi-breakdown.location"
+    tk-multi-setframerange:
+      location: "@apps.tk-multi-setframerange.location"
+    tk-multi-setframerange: "@settings.tk-multi-setframerange.mari.asset_step"
     tk-multi-loader2: "@settings.tk-multi-loader2.mari"
     tk-multi-publish2: "@settings.tk-multi-publish2.mari.asset_step"
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel"
     tk-multi-workfiles: "@settings.tk-multi-workfiles.mari"
     tk-mari-projectmanager: "@settings.tk-mari-projectmanager"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.asset_step"
   location: "@engines.tk-mari.location"
 
 # project
@@ -52,4 +60,7 @@ settings.tk-mari.project:
       location: "@apps.tk-multi-about.location"
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel"
     tk-multi-workfiles: "@settings.tk-multi-workfiles.mari"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.project"
   location: "@engines.tk-mari.location"
