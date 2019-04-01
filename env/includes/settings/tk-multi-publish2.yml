@@ -160,49 +160,96 @@ settings.tk-multi-publish2.mari.asset_step:
 
 # asset step
 settings.tk-multi-publish2.maya.asset_step:
-  collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
+  # revision from
+  # https://support.shotgunsoftware.com/hc/en-us/articles/219039938-Pipeline-Tutorial#Override%20the%20Maya%20collector
+  collector: "{self}/collector.py:{config}/tk-multi-publish2/maya/collector.py"
+  # Original
+  # collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
   collector_settings:
       Work Template: maya_asset_work
   publish_plugins:
-  - name: Publish to Shotgun
-    hook: "{self}/publish_file.py"
-    settings: {}
-  - name: Upload for review
-    hook: "{self}/upload_version.py"
-    settings: {}
+
+  # - name: Publish to Shotgun
+  #   hook: "{self}/publish_file.py"
+  #   settings: {}
+
+  # - name: Upload for review
+  #   hook: "{self}/upload_version.py"
+  #   settings: {}
+
   - name: Begin file versioning
     hook: "{engine}/tk-multi-publish2/basic/start_version_control.py"
     settings: {}
-  - name: Publish to Shotgun
+
+  - name: Publish Session to Shotgun
     hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session.py"
     settings:
         Publish Template: maya_asset_publish
-  - name: Publish to Shotgun
-    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session_geometry.py"
-    settings:
-        Publish Template: asset_alembic_cache
+
+  # - name: Publish Session Geo to Shotgun
+  #   hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session_geometry.py"
+  #   settings:
+  #       Publish Template: asset_alembic_cache
+
+  # - name: Publish Shaders
+  #   hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_shader_network.py"
+  #   settings:
+  #     Publish Template: maya_shader_network_publish
+
+  - name: Publish Playblast
+    hook: "{config}/tk-multi-publish2/maya/upload_playblast_version.py"
+    settings: {}
+
+  - name: Publish Exported Alembics
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    settings: {}
+
+#   - name: Publish Exported Geo Alembics
+#     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+#     settings:
+#       Publish Template: maya_asset_pub_alembic
+#       Alembic Template: maya_asset_alembic
+
+#   - name: Publish Exported Camera Alembics
+#     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
+#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
+#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+#     settings:
+#       Publish Template: maya_asset_pub_camera
+#       Alembic Template: maya_asset_camera
+
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
 
 # shot step
 settings.tk-multi-publish2.maya.shot_step:
-  collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
+  collector: "{self}/collector.py:{config}/tk-multi-publish2/maya/collector.py"
+  # collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
   collector_settings:
       Work Template: maya_shot_work
   publish_plugins:
-  - name: Publish to Shotgun
-    hook: "{self}/publish_file.py"
-    settings: {}
+  # - name: Publish to Shotgun
+  #   hook: "{self}/publish_file.py"
+  #   settings: {}
   - name: Upload for review
     hook: "{self}/upload_version.py"
     settings: {}
   - name: Begin file versioning
     hook: "{engine}/tk-multi-publish2/basic/start_version_control.py"
     settings: {}
-  - name: Publish to Shotgun
+  - name: Publish Session to Shotgun
     hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session.py"
     settings:
         Publish Template: maya_shot_publish
+  - name: Publish Exported Alembics
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    settings:
+      Publish Template: maya_shot_pub_alembic
+      Alembic Template: maya_shot_alembic
+
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
 
