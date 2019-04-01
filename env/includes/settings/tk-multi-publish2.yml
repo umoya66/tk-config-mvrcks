@@ -230,7 +230,7 @@ settings.tk-multi-publish2.maya.shot_step:
   collector_settings:
       Work Template: maya_shot_work
   publish_plugins:
-    -
+
   # - name: Publish to Shotgun
   #   hook: "{self}/publish_file.py"
   #   settings: {}
@@ -248,9 +248,9 @@ settings.tk-multi-publish2.maya.shot_step:
     settings:
         Publish Template: maya_shot_publish
 
-    - name: Publish Playblast
-      hook: "{config}/tk-multi-publish2/maya/upload_playblast_version.py"
-      settings: {}
+  - name: Publish Playblast
+    hook: "{config}/tk-multi-publish2/maya/upload_playblast_version.py"
+    settings: {}
 
   - name: Publish Exported Alembics
     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
