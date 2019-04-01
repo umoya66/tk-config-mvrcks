@@ -1,4 +1,4 @@
-﻿                # Copyright (c) 2017 Shotgun Software Inc.
+﻿                    # Copyright (c) 2017 Shotgun Software Inc.
 # 
 # CONFIDENTIAL AND PROPRIETARY
 # 
@@ -44,7 +44,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         """
 
         return """
-        <p>This plugin publishes previously exported Alembic geometry for the current session. Please use 
+        <p>This plugin publishes previously exported Alembic Geometry and Cameras for the current session. Please use 
         the Mavericks Alembic Shotgun export tool.
         </p>
         """
@@ -104,7 +104,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         ["maya.*", "file.maya"]
         """
         # return ["maya.session.geometry"]
-        return ["file.alembic"]
+        return ["file.alembic.camera", "file.alembic.geo"]
 
     def accept(self, settings, item):
         """
@@ -132,42 +132,14 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         :returns: dictionary with boolean keys accepted, required and enabled
         """
 
-        self.logger.debug('----- Start publish_exported_alembics "accept" ----')
-        accepted = True
-        publisher = self.parent
-        publish_template_name = settings["Publish Template"].value
-        work_template_name = settings["Alembic Template"].value
+        publish_type = self.get_publish_type(settings, item)
 
-
-        # get sgtk engine
-        eng = sgtk.platform.current_engine()
-
-        # get context
-        ctx = eng.context
-
-        # get toolkit
-        tk = ctx.sgtk
-
-        # get necessary templates
-
-        maya_file = ''
-
-        if ctx.entity['type'] == 'Asset' and item.properties['object'] == 'camera':
-            maya_file = tk.templates['maya_asset_work']
-            working_template_path = tk.templates["maya_asset_camera"]
-            publish_template_path = tk.templates["maya_asset_pub_camera"]
-
-        elif ctx.entity['type'] == 'Asset' and item.properties['object'] == 'geo':
-            working_template_path = tk.templates["maya_asset_alembic"]
-            publish_template_path = tk.templates["maya_asset_pub_alembic"]
-
-        elif ctx.entity['type'] == 'Shot' and item.properties['object'] == 'camera':
-            working_template_path = tk.templates["maya_shot_camera"]
-            publish_template_path = tk.templates["maya_shot_pub_camera"]
-
-        elif ctx.entity['type'] == 'Shot' and item.properties['object'] == 'geo':
-            working_template_path = tk.templates["maya_shot_alembic"]
-            publish_template_path = tk.templates["maya_shot_pub_alembic"]
+        if publish_type == 'Alembic Geo' or publish_type == 'Alembic Camera':
+            return {
+                "accepted": True,
+                "checked": True,
+                'visible': True
+            }
 
         else:
             self.logger.info('No viable items')
@@ -176,69 +148,6 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
                 "checked": False,
                 'visible': False
             }
-        self.logger.debug(working_template_path)
-        self.logger.debug('----- End publish_exported_alembics "accept" ----')
-
-        return {
-            "accepted": True,
-            "checked": True,
-            'visible': True
-        }
-
-        # if item.properties['object'] == 'camera':
-        #     self.logger.info('IS A CAMERA')
-        #     publish_template_name = maya_asset_pub_camera
-        #     work_template_name = maya_asset_camera
-        #     return {
-        #         "accepted": False,
-        #         "checked": False,
-        #         'visible': True
-        #     }
-        # elif item.properties['object'] == 'geo':
-        #     self.logger.info('IS A GEO')
-        #     publish_template_name = maya_asset_pub_alembic
-        #     work_template_name = maya_asset_alembic
-        #     return {
-        #         "accepted": True,
-        #         "checked": True,
-        #         'visible': True
-        #     }
-        # else:
-        #     pass
-
-        # self.logger.info('Work template name: %s' % work_template_name)
-        # self.logger.info('publish template name: %s ' % publish_template_name)
-
-        # ensure the publish template is defined and valid and that we also have
-        # work_template = publisher.get_template_by_name(work_template_name)
-        # publish_template = publisher.get_template_by_name(publish_template_name)
-        # if not publish_template:
-        #     self.logger.debug(
-        #         "The valid publish template could not be determined for the "
-        #         "session geometry item. Not accepting the item."
-        #     )
-        #     accepted = False
-        # else:
-        #     self.logger.info(
-        #         'Publish Template: %s \n'
-        #         'Work Template: %s ' % (publish_template, work_template)
-        #     )
-
-        # # we've validated the publish template. add it to the item properties
-        # # for use in subsequent methods
-        # item.properties["publish_template"] = publish_template
-        # item.properties["alembic_template"] = work_template
-
-        # # Because a publish template is configured, disable context change. This
-        # # is a temporary measure until the publisher handles context switching
-        # # natively.
-        # item.context_change_allowed = False
-
-        # return {
-        #     "accepted": accepted,
-        #     "checked": True,
-        #     'visible': True
-        # }
 
     def validate(self, settings, item):
         """
@@ -251,6 +160,9 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         :param item: Item to process
         :returns: True if item is valid, False otherwise.
         """
+
+        publish_type = self.get_publish_type(settings, item)
+        self.logger.debug('Validate Publish Type: %s' % publish_type)
 
         # Get path of current maya file
         path = _session_path()

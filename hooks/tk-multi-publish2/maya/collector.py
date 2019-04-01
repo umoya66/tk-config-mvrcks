@@ -1,4 +1,4 @@
-﻿        # Copyright (c) 2017 Shotgun Software Inc.
+﻿                # Copyright (c) 2017 Shotgun Software Inc.
 # 
 # CONFIDENTIAL AND PROPRIETARY
 # 
@@ -17,6 +17,7 @@ import maya.mel as mel
 import sgtk
 # Importing tank for debugging
 import tank as sgtk
+import pprint
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -102,6 +103,15 @@ class MayaSessionCollector(HookBaseClass):
         # update the base settings with these settings
         collector_settings.update(maya_session_settings)
 
+        icon_path = os.path.join( self.disk_location, os.pardir, "icons", "alembic.png")
+
+        self.common_file_info['Alembic Geo'] = {'item_type': 'file.alembic.geo',
+                                                'extensions': ['abc'],
+                                                'icon': icon_path}
+        self.common_file_info['Alembic Camera'] = {'item_type': 'file.alembic.camera',
+                                                   'extensions': ['abc'],
+                                                   'icon': icon_path}
+
         return collector_settings
 
     def process_current_session(self, settings, parent_item):
@@ -133,8 +143,8 @@ class MayaSessionCollector(HookBaseClass):
             )
 
             self.collect_playblasts(item, project_root)
-            # self.collect_alembic_caches(item, project_root)
             self.collect_alembic_exports(item, project_root)
+            # self.collect_alembic_caches(item, project_root)
 
         else:
 
@@ -264,10 +274,8 @@ class MayaSessionCollector(HookBaseClass):
             cam_output_path = cam_working_template_path.apply_fields(path_fields)
             cam_exports_dir = os.path.dirname(cam_output_path)
 
-        # self.logger.info("Output Path: %s" % (abc_output_path))
-        # self.logger.info("maya file: %s" % (maya_file))
-        self.logger.debug("ABC working template path: %s" % (abc_working_template_path))
-        self.logger.debug("CAM working template path: %s" % (cam_working_template_path))
+        self.logger.debug("Alembic Geo working template path: %s" % (abc_working_template_path))
+        self.logger.debug("Alembic Camera working template path: %s" % (cam_working_template_path))
 
         self.logger.info(
             "Processing alembic exports folder: %s" % (abc_exports_dir,),
@@ -285,38 +293,39 @@ class MayaSessionCollector(HookBaseClass):
                 }
             }
         )
-        
-        icon_path = os.path.join(
-            self.disk_location,
-            os.pardir,
-            "icons",
-            "mesh.png"
-        )
 
         # check for geo dir
         if os.path.exists(abc_exports_dir):
+            self.logger.debug('Alembic Geo directory exists')
 
         # look for alembic files in the cache folder
             for filename in os.listdir(abc_exports_dir):
                 cache_path = os.path.join(abc_exports_dir, filename)
 
-                # do some early pre-processing to ensure the file is of the right
-                # type. use the base class item info method to see what the item
-                # type would be.
-                item_info = self._get_item_info(filename)
-                if item_info["item_type"] != "file.alembic":
-                    continue
+                # # do some early pre-processing to ensure the file is of the right
+                # # type. use the base class item info method to see what the item
+                # # type would be.
+                # item_info = self._get_item_info(filename)
+                # if item_info["item_type"] != "file.alembic.geo":
+                #     continue
 
-                self.logger.info('Adding Alembic Item: %s' % (filename))
+                self.logger.info('Adding Alembic Geo Item: %s' % (filename))
 
                 # allow the base class to collect and create the item. it knows how
                 # to handle alembic files
                 # super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
 
                 mesh_item = parent_item.create_item(
-                    "file.alembic",
+                    "file.alembic.geo",
                     "Alembic Geo",
                     filename
+                )
+
+                icon_path = os.path.join(
+                    self.disk_location,
+                    os.pardir,
+                    "icons",
+                    "maps-pin.png"
                 )
 
                 # set the icon for the item
@@ -328,32 +337,43 @@ class MayaSessionCollector(HookBaseClass):
                 mesh_item.properties["path"] = cache_path
                 mesh_item.properties["alembic_template"] = abc_working_template_path
                 mesh_item.properties["publish_template"] = abc_publish_template_path
-
+                mesh_item.properties["publish_type"] = 'Alembic Geo'
 
         # check for cam dir
         if os.path.exists(cam_exports_dir):
+            self.logger.debug('Alembic Camera directory exists')
 
         # look for Camera alembics files in the cache folder
             for filename in os.listdir(cam_exports_dir):
+                self.logger.debug(filename)
                 cache_path = os.path.join(cam_exports_dir, filename)
 
-                # do some early pre-processing to ensure the file is of the right
-                # type. use the base class item info method to see what the item
-                # type would be.
-                item_info = self._get_item_info(filename)
-                if item_info["item_type"] != "file.alembic":
-                    continue
+                # # do some early pre-processing to ensure the file is of the right
+                # # type. use the base class item info method to see what the item
+                # # type would be.
+                # item_info = self._get_item_info(filename)
+                # if item_info["item_type"] != "file.alembic.camera":
+                #     self.logger.debug('Not a camera')
+                #     continue
 
-                self.logger.info('Adding Camera Item: %s' % (filename))
+                self.logger.info('Adding Alembic Camera Item: %s' % (filename))
 
                 # allow the base class to collect and create the item. it knows how
                 # to handle alembic files
                 # super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
 
                 mesh_item = parent_item.create_item(
-                    "file.alembic",
+                    "file.alembic.camera",
                     "Alembic Camera",
                     filename
+                )
+
+                icon_path = os.path.join(
+                    self.disk_location,
+                    os.pardir,
+                    "icons",
+                    "camera-flash.png"
+
                 )
 
                 # set the icon for the item
@@ -365,6 +385,7 @@ class MayaSessionCollector(HookBaseClass):
                 mesh_item.properties["path"] = cache_path
                 mesh_item.properties["alembic_template"] = cam_working_template_path
                 mesh_item.properties["publish_template"] = cam_publish_template_path
+                mesh_item.properties["publish_type"] = 'Alembic Camera'
 
         self.logger.debug('-----Finished with collecting Alembics -----')
 
@@ -484,6 +505,7 @@ class MayaSessionCollector(HookBaseClass):
 
             movie_path = os.path.join(movies_dir, filename)
 
+
             # allow the base class to collect and create the item. it knows how
             # to handle movie files
             item = super(MayaSessionCollector, self)._collect_file(
@@ -493,6 +515,7 @@ class MayaSessionCollector(HookBaseClass):
 
             # the item has been created. update the display name to include
             # the an indication of what it is and why it was collected
+            self.logger.debug('Movie Name: %s' % item.name)
             item.name = "%s (%s)" % (item.name, "playblast")
 
     def collect_rendered_images(self, parent_item):
@@ -584,3 +607,6 @@ class MayaSessionCollector(HookBaseClass):
             # finally, add information to the mesh item that can be used
             # by the publish plugin to identify and export it properly
             mesh_item.properties["object"] = object
+
+
+
