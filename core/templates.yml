@@ -441,6 +441,68 @@ paths:
     hiero_render_path:
         definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.mov'
 
+    #
+    # Natron
+    #
+
+    # shot based
+
+    # define the location of a work area
+    shot_work_area_natron:
+        definition: '@shot_root/work/natron'
+        # root_name: 'primary'
+
+    # define the location of a publish area
+    shot_publish_area_natron:
+        definition: '@shot_root/publish/natron'
+        # root_name: 'primary'
+
+    # The location of WIP script files
+    natron_shot_work:
+        definition: '@shot_root/work/natron/{Shot}_{Step}_{name}_v{version}.ntp'
+        # definition: '@shot_root/work/natron/{name}.v{version}.ntp'
+        # root_name: 'primary'
+
+    # The location of backups of WIP files
+    natron_shot_snapshot:
+        definition: '@shot_root/work/natron/snapshots/{name}.v{version}.{timestamp}.ntp'
+        # root_name: 'primary'
+
+    # The location of published natron script files
+    natron_shot_publish:
+        definition: '@shot_root/publish/natron/{Shot}_{Step}_{name}_v{version}.ntp'
+        # root_name: 'primary'
+
+    # write node outputs
+    natron_shot_render_mono_dpx:
+        # definition: '@shot_root/work/images/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_v{version}.{SEQ}.dpx'
+        definition: '@shot_root/work/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
+        # # root_name: 'primary'
+
+    natron_shot_render_pub_mono_dpx:
+        # definition: '@shot_root/publish/elements/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_v{version}.{SEQ}.dpx'
+        definition: '@shot_root/publish/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
+        # root_name: 'primary'
+
+    natron_shot_render_stereo:
+        definition: '@shot_root/work/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
+        # definition: '@shot_root/work/images/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
+        # root_name: 'primary'
+
+    natron_shot_render_pub_stereo:
+        definition: '@shot_root/publish/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
+        # definition: '@shot_root/publish/elements/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
+        # root_name: 'primary'
+
+    # review output
+    # shot_quicktime_quick:
+        # definition: '@shot_root/review/quickdaily/{Shot}_{name}_{iteration}.mov'
+        # root_name: 'primary'
+
+    natron_shot_render_movie:
+        definition: '@shot_root/review/{Shot}_{name}_v{version}.mov'
+        # root_name: 'primary'
+
     ##########################################################################################
     # Asset pipeline
 
@@ -619,31 +681,6 @@ paths:
         definition: '@asset_root/publish/nuke/{Asset}_{Step}_{name}_v{version}.nk'
 
 
-#
-# The strings section is similar to the paths section - but rather than defining paths
-# on disk, it contains a list of strings. Strings are typically used when you want to be
-# able to configure the way data is written to shotgun - it may be the name field for a
-# review version or the formatting of a publish.
-#
-
-strings:
-
-    # when a review Version in Shotgun is created inside of Nuke, this is the
-    # name that is being given to it (the code field)
-    # nuke_shot_version_name: "{Shot}_{name}_{nuke.output}_v{version}.{iteration}"
-    nuke_shot_version_name: "{Shot}_{Step}_{name}_v{version}"
-    nuke_quick_shot_version_name: "{Shot}_{name}_quick_{iteration}"
-
-    # nuke_asset_version_name: "{Asset}_{name}_{nuke.output}_v{version}.{iteration}"
-    nuke_asset_version_name: "{Asset}_{Step}_{name}_v{version}"
-    nuke_quick_asset_version_name: "{Asset}_{name}_quick_{iteration}"
-
-    # defines how the {tk_version} token in Hiero gets formatted back to tk.
-    hiero_version: "{version}"
-
-    # define how new Mari projects should be named
-    mari_asset_project_name: "{mari.project_name} - Asset {asset_name}, {task_name}"
-
 
     #
     # Natron
@@ -704,63 +741,29 @@ strings:
         # root_name: 'primary'
 
 
-    # shot based
 
-    # define the location of a work area
-    shot_work_area_natron:
-        definition: '@shot_root/work/natron'
-        # root_name: 'primary'
+#
+# The strings section is similar to the paths section - but rather than defining paths
+# on disk, it contains a list of strings. Strings are typically used when you want to be
+# able to configure the way data is written to shotgun - it may be the name field for a
+# review version or the formatting of a publish.
+#
 
-    # define the location of a publish area
-    shot_publish_area_natron:
-        definition: '@shot_root/publish/natron'
-        # root_name: 'primary'
+strings:
 
-    # The location of WIP script files
-    natron_shot_work:
-        definition: '@shot_root/work/natron/{Shot}_{Step}_{name}_v{version}.ntp'
-        # definition: '@shot_root/work/natron/{name}.v{version}.ntp'
-        # root_name: 'primary'
+    # when a review Version in Shotgun is created inside of Nuke, this is the
+    # name that is being given to it (the code field)
+    # nuke_shot_version_name: "{Shot}_{name}_{nuke.output}_v{version}.{iteration}"
+    nuke_shot_version_name: "{Shot}_{Step}_{name}_v{version}"
+    nuke_quick_shot_version_name: "{Shot}_{name}_quick_{iteration}"
 
-    # The location of backups of WIP files
-    natron_shot_snapshot:
-        definition: '@shot_root/work/natron/snapshots/{name}.v{version}.{timestamp}.ntp'
-        # root_name: 'primary'
+    # nuke_asset_version_name: "{Asset}_{name}_{nuke.output}_v{version}.{iteration}"
+    nuke_asset_version_name: "{Asset}_{Step}_{name}_v{version}"
+    nuke_quick_asset_version_name: "{Asset}_{name}_quick_{iteration}"
 
-    # The location of published natron script files
-    natron_shot_publish:
-        definition: '@shot_root/publish/natron/{Shot}_{Step}_{name}_v{version}.ntp'
-        # root_name: 'primary'
+    # defines how the {tk_version} token in Hiero gets formatted back to tk.
+    hiero_version: "{version}"
 
-    # write node outputs
-    natron_shot_render_mono_dpx:
-        # definition: '@shot_root/work/images/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_v{version}.{SEQ}.dpx'
-        definition: '@shot_root/work/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
-        # # root_name: 'primary'
-
-    natron_shot_render_pub_mono_dpx:
-        # definition: '@shot_root/publish/elements/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_v{version}.{SEQ}.dpx'
-        definition: '@shot_root/publish/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
-        # root_name: 'primary'
-
-    natron_shot_render_stereo:
-        definition: '@shot_root/work/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
-        # definition: '@shot_root/work/images/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
-        # root_name: 'primary'
-
-    natron_shot_render_pub_stereo:
-        definition: '@shot_root/publish/images/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
-        # definition: '@shot_root/publish/elements/{name}/v{version}/{width}x{height}/{Shot}_{name}_{natron.output}_{eye}_v{version}.{SEQ}.exr'
-        # root_name: 'primary'
-
-    # review output
-    # shot_quicktime_quick:
-        # definition: '@shot_root/review/quickdaily/{Shot}_{name}_{iteration}.mov'
-        # root_name: 'primary'
-
-    natron_shot_render_movie:
-        definition: '@shot_root/review/{Shot}_{name}_v{version}.mov'
-        # root_name: 'primary'
-
-
+    # define how new Mari projects should be named
+    mari_asset_project_name: "{mari.project_name} - Asset {asset_name}, {task_name}"
 

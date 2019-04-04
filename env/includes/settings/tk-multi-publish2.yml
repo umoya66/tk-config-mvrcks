@@ -439,9 +439,11 @@ settings.tk-multi-publish2.natron.shot_step:
     hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session.py"
     settings:
         Publish Template: natron_shot_publish
-  # - name: Submit for Review
-  #   hook: "{engine}/tk-multi-publish2/basic/submit_for_review.py"
-  #   settings: {}
+  - name: Submit for Review
+    hook: "{engine}/tk-multi-publish2/basic/submit_for_review.py"
+    settings:
+        Publish Template: natron_shot_render_movie
+        Work Template: natron_shot_render_mono_dpx
   # - name: Update Flame Clip
   #   hook: "{engine}/tk-multi-publish2/basic/natron_update_flame_clip.py"
   #   settings:

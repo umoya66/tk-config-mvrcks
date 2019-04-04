@@ -143,6 +143,7 @@ settings.tk-multi-loader2.maya:
 settings.tk-multi-loader2.nuke:
   action_mappings:
     Alembic Cache: [read_node]
+    Hiero Plate: [read_node]
     Flame Render: [read_node]
     Flame Quicktime: [read_node]
     Image: [read_node]
