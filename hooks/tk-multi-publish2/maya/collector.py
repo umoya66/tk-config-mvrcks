@@ -466,57 +466,63 @@ class MayaSessionCollector(HookBaseClass):
         :param str project_root: The maya project root to search for playblasts
         """
 
-        movie_dir_name = None
+        self.logger.info('-----Start collecting Playblast -----')
 
-        # try to query the file rule folder name for movies. This will give
-        # us the directory name set for the project where movies will be
-        # written
-        if "movie" in cmds.workspace(fileRuleList=True):
-            # this could return an empty string
-            movie_dir_name = cmds.workspace(fileRuleEntry='movie')
+        # get context
+        ctx = self.parent.context
 
-        if not movie_dir_name:
-            # fall back to the default
-            movie_dir_name = "movies"
+        # get entity type
+        entity_type = ctx.entity['type'].lower()
 
-        # ensure the movies dir exists
-        movies_dir = os.path.join(project_root, movie_dir_name)
-        if not os.path.exists(movies_dir):
-            return
+        # get necessary templates
+        maya_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_work')
+        playblast_working_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_playblast')
+        playblast_publish_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_pub_playblast')
+
+        # get current maya file path
+        current_file_path = cmds.file(query=True, sn=True)
+
+        # validate and get all the fields we need for writing out the working file
+        path_fields = maya_template_path.validate_and_get_fields(current_file_path)
+
+        if path_fields is not None:
+            playblast_output_path = playblast_working_template_path.apply_fields(path_fields)
+            playblast_exports_dir = os.path.dirname(playblast_output_path)
+            playblast_publish_path = playblast_publish_template_path.apply_fields(path_fields)
+
+        self.logger.debug("Playblast working template path: %s" % (playblast_working_template_path))
+        self.logger.debug(playblast_output_path)
 
         self.logger.info(
-            "Processing movies folder: %s" % (movies_dir,),
+            "Processing Playblasts exports folder: %s" % (playblast_exports_dir,),
             extra={
                 "action_show_folder": {
-                    "path": movies_dir
+                    "path": playblast_exports_dir
                 }
             }
         )
 
-        # look for movie files in the movies folder
-        for filename in os.listdir(movies_dir):
+        if os.path.exists(playblast_output_path):
+            item_info = self._get_item_info(os.path.basename(playblast_output_path))
 
-            # do some early pre-processing to ensure the file is of the right
-            # type. use the base class item info method to see what the item
-            # type would be.
-            item_info = self._get_item_info(filename)
-            if item_info["item_type"] != "file.video":
-                continue
-
-            movie_path = os.path.join(movies_dir, filename)
-
+            self.logger.debug(item_info)
 
             # allow the base class to collect and create the item. it knows how
             # to handle movie files
             item = super(MayaSessionCollector, self)._collect_file(
                 parent_item,
-                movie_path
+                playblast_output_path
             )
 
             # the item has been created. update the display name to include
             # the an indication of what it is and why it was collected
             self.logger.debug('Movie Name: %s' % item.name)
             item.name = "%s (%s)" % (item.name, "playblast")
+
+            item.properties["publish_template"] = playblast_publish_template_path
+            item.properties["publish_path"] = playblast_publish_path
+
+        self.logger.info('-----End collecting Playblast -----')
 
     def collect_rendered_images(self, parent_item):
         """
