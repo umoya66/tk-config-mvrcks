@@ -301,23 +301,22 @@ class UploadVersionPlugin(HookBaseClass):
 
         self.logger.debug(dir(item))
 
-        item = ['__class__', '__del__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__',
-                '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__',
-                '__sizeof__', '__slots__', '__str__', '__subclasshook__', '_active', '_allows_context_change',
-                '_children', '_context', '_created_temp_files', '_current_temp_file_path', '_description', '_enabled',
-                '_expanded', '_get_image', '_get_local_properties', '_get_type', '_global_properties', '_icon_path',
-                '_icon_pixmap', '_local_properties', '_name', '_parent', '_persistent', '_set_type', '_tasks',
-                '_thumbnail_enabled', '_thumbnail_explicit', '_thumbnail_path', '_thumbnail_pixmap', '_traverse_item',
-                '_type_display', '_type_spec', '_validate_image', '_visit_recursive',
-                'active', 'add_task', 'checked',
-                'children', 'clear_tasks', 'context', 'context_change_allowed', 'create_item', 'descendants',
-                'description', 'display_type', 'enabled', 'expanded', 'from_dict', 'get_property',
-                'get_thumbnail_as_path', 'icon', 'is_root', 'local_properties', 'name', 'parent', 'persistent',
-                'properties', 'remove_item', 'set_icon_from_path', 'set_thumbnail_from_path', 'tasks', 'thumbnail',
-                'thumbnail_enabled', 'thumbnail_explicit', 'to_dict', 'type', 'type_display', 'type_spec']
+        # item = ['__class__', '__del__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__',
+        #         '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__',
+        #         '__sizeof__', '__slots__', '__str__', '__subclasshook__', '_active', '_allows_context_change',
+        #         '_children', '_context', '_created_temp_files', '_current_temp_file_path', '_description', '_enabled',
+        #         '_expanded', '_get_image', '_get_local_properties', '_get_type', '_global_properties', '_icon_path',
+        #         '_icon_pixmap', '_local_properties', '_name', '_parent', '_persistent', '_set_type', '_tasks',
+        #         '_thumbnail_enabled', '_thumbnail_explicit', '_thumbnail_path', '_thumbnail_pixmap', '_traverse_item',
+        #         '_type_display', '_type_spec', '_validate_image', '_visit_recursive',
+        #         'active', 'add_task', 'checked',
+        #         'children', 'clear_tasks', 'context', 'context_change_allowed', 'create_item', 'descendants',
+        #         'description', 'display_type', 'enabled', 'expanded', 'from_dict', 'get_property',
+        #         'get_thumbnail_as_path', 'icon', 'is_root', 'local_properties', 'name', 'parent', 'persistent',
+        #         'properties', 'remove_item', 'set_icon_from_path', 'set_thumbnail_from_path', 'tasks', 'thumbnail',
+        #         'thumbnail_enabled', 'thumbnail_explicit', 'to_dict', 'type', 'type_display', 'type_spec']
 
         self.logger.debug('item properties: %s' % item.properties)
-
 
         publish_path = item.properties['publish_path']
         publish_template = item.properties['publish_template']
