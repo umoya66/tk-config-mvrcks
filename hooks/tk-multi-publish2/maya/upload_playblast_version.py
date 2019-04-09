@@ -148,116 +148,25 @@ class UploadVersionPlugin(HookBaseClass):
         publisher = self.parent
         # self.logger.debug(publisher)
         # self.logger.debug(dir(publisher))
-        # publisher = ['_Application__engine', '_Application__instance_name', '_TankBundle__cache_location',
-        #               '_TankBundle__context', '_TankBundle__descriptor', '_TankBundle__environment',
-        #               '_TankBundle__frameworks', '_TankBundle__log', '_TankBundle__module_uid',
-        #               '_TankBundle__resolve_hook_expression', '_TankBundle__resolve_hook_path', '_TankBundle__resolve_setting_value',
-        #               '_TankBundle__settings', '_TankBundle__sg', '_TankBundle__tk', '__class__', '__delattr__',
-        #               '__dict__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__',
-        #               '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__',
-        #               '__subclasshook__', '__weakref__', '_base_hooks', '_destroy_frameworks', '_get_engine_name',
-        #               '_get_instance_name', '_manager_class', '_set_context', '_set_instance_name',
-        #               '_set_settings', '_util',
-        #               'base_hooks',
-        #               'cache_location',
-        #               'change_context',
-        #               'context',
-        #               'context_change_allowed',
-        #               'create_hook_instance',
-        #               'create_publish_manager',
-        #               'description',
-        #               'descriptor',
-        #               'destroy_app',
-        #               'disk_location',
-        #               'display_name',
-        #               'documentation_url',
-        #               'engine',
-        #               'ensure_folder_exists',
-        #               'event_engine',
-        #               'event_file_close',
-        #               'event_file_open',
-        #               'execute_hook',
-        #               'execute_hook_by_name',
-        #               'execute_hook_expression',
-        #               'execute_hook_method',
-        #               'frameworks',
-        #               'get_metrics_properties',
-        #               'get_project_cache_location',
-        #               'get_setting',
-        #               'get_setting_from',
-        #               'get_template',
-        #               'get_template_by_name',
-        #               'get_template_from',
-        #               'icon_256',
-        #               'import_module',
-        #               'init_app',
-        #               'instance_name',
-        #               'log_debug',
-        #               'log_error',
-        #               'log_exception',
-        #               'log_info',
-        #               'log_metric',
-        #               'log_warning',
-        #               'logger',
-        #               'name',
-        #               'post_context_change',
-        #               'post_engine_init',
-        #               'pre_context_change',
-        #               'settings',
-        #               'sgtk',
-        #               'shotgun',
-        #               'site_cache_location',
-        #               'style_constants',
-        #               'support_url',
-        #               'tank',
-        #               'util',
-        #               'version']
+        publisher = ['_Application__engine', '_Application__instance_name', '_TankBundle__cache_location',
+                      '_TankBundle__context', '_TankBundle__descriptor', '_TankBundle__environment',
+                      '_TankBundle__frameworks', '_TankBundle__log', '_TankBundle__module_uid',
+                      '_TankBundle__resolve_hook_expression', '_TankBundle__resolve_hook_path', '_TankBundle__resolve_setting_value',
+                      '_TankBundle__settings', '_TankBundle__sg', '_TankBundle__tk', '__class__', '__delattr__',
+                      '__dict__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__',
+                      '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__',
+                      '__subclasshook__', '__weakref__', '_base_hooks', '_destroy_frameworks', '_get_engine_name',
+                      '_get_instance_name', '_manager_class', '_set_context', '_set_instance_name',
+                      '_set_settings', '_util', 'base_hooks', 'cache_location', 'change_context', 'context', 'context_change_allowed',
+                      'create_hook_instance', 'create_publish_manager', 'description', 'descriptor', 'destroy_app',
+                      'disk_location', 'display_name', 'documentation_url', 'engine', 'ensure_folder_exists', 'event_engine',
+                      'event_file_close', 'event_file_open', 'execute_hook', 'execute_hook_by_name', 'execute_hook_expression',
+                      'execute_hook_method', 'frameworks', 'get_metrics_properties', 'get_project_cache_location', 'get_setting',
+                      'get_setting_from', 'get_template', 'get_template_by_name', 'get_template_from', 'icon_256', 'import_module',
+                      'init_app', 'instance_name', 'log_debug', 'log_error', 'log_exception', 'log_info', 'log_metric', 'log_warning',
+                      'logger', 'name', 'post_context_change', 'post_engine_init', 'pre_context_change', 'settings',
+                      'sgtk', 'shotgun', 'site_cache_location', 'style_constants', 'support_url', 'tank', 'util', 'version']
 
-        # self.logger.debug('base_hooks: %s' % publisher.base_hooks )
-        # self.logger.debug('cache_location: %s' % publisher.cache_location )
-        # self.logger.debug('change_context: %s' % publisher.change_context )
-        # self.logger.debug('context: %s' % publisher.context )
-        # self.logger.debug('context_change_allowed: %s' % publisher.context_change_allowed )
-        # self.logger.debug('create_hook_instance: %s' % publisher.create_hook_instance )
-        # self.logger.debug('create_publish_manager: %s' % publisher.create_publish_manager )
-        # self.logger.debug('description: %s' % publisher.description)
-        # self.logger.debug('descriptor: %s' % publisher.descriptor)
-        # self.logger.debug('destroy_app: %s' % publisher.destroy_app )
-        # self.logger.debug('disk_location: %s' % publisher.disk_location )
-        # self.logger.debug('display_name: %s' % publisher.display_name )
-        # self.logger.debug('documentation_url: %s' % publisher.documentation_url)
-        # self.logger.debug('engine: %s' % publisher.engine)
-        # self.logger.debug('ensure_folder_exists: %s' % publisher.ensure_folder_exists)
-        # self.logger.debug('event_engine: %s' % publisher.event_engine)
-        # self.logger.debug('event_file_close: %s' % publisher.event_file_close)
-        # self.logger.debug('event_file_open: %s' % publisher.event_file_open)
-        # self.logger.debug('execute_hook: %s' % publisher.execute_hook)
-        # self.logger.debug('execute_hook_by_name: %s' % publisher.execute_hook_by_name)
-        # self.logger.debug('execute_hook_expression: %s' % publisher.execute_hook_expression)
-        # self.logger.debug('execute_hook_method: %s' % publisher.execute_hook_method)
-        # self.logger.debug('frameworks: %s' % publisher.frameworks)
-        # self.logger.debug('get_metrics_properties: %s' % publisher.get_metrics_properties)
-        # self.logger.debug('get_project_cache_location: %s' % publisher.get_project_cache_location)
-        # self.logger.debug('get_setting: %s' % publisher.get_setting)
-        # self.logger.debug('get_setting_from: %s' % publisher.get_setting_from)
-        # self.logger.debug('get_template: %s' % publisher.get_template)
-        # self.logger.debug('get_template_by_name: %s' % publisher.get_template_by_name)
-        # self.logger.debug('get_template_from: %s' % publisher.get_template_from)
-        # self.logger.debug('icon_256: %s' % publisher.icon_256)
-        # self.logger.debug('import_module: %s' % publisher.import_module)
-        # self.logger.debug('init_app: %s' % publisher.init_app)
-        # self.logger.debug('instance_name: %s' % publisher.instance_name)
-        # self.logger.debug('log_debug: %s' % publisher.log_debug)
-        # self.logger.debug('log_error: %s' % publisher.log_error)
-        # self.logger.debug('log_exception: %s' % publisher.log_exception)
-        # self.logger.debug('log_info: %s' % publisher.log_info)
-        # self.logger.debug('log_metric: %s' % publisher.log_metric)
-        # self.logger.debug('log_warning: %s' % publisher.log_warning)
-        # self.logger.debug('logger: %s' % publisher.logger)
-        # self.logger.debug('name: %s' % publisher.name)
-        # self.logger.debug('post_context_change: %s' % publisher.post_context_change)
-        # self.logger.debug('post_engine_init: %s' % publisher.post_engine_init)
-        # self.logger.debug('pre_context_change: %s' % publisher.pre_context_change)
 
         # self.logger.debug('settings: %s' % publisher.settings)
         # settings = {'collector_settings': {'Work Template': 'maya_shot_work'},
@@ -281,23 +190,7 @@ class UploadVersionPlugin(HookBaseClass):
         #             'collector': '{self}/collector.py:{config}/tk-multi-publish2/maya/collector.py',
         #             'help_url': 'https://support.shotgunsoftware.com/hc/en-us/articles/115000068574-Integrations-User-Guide#The%20Publisher'}
 
-        # self.logger.debug('get_setting_from: %s' % publisher.get_setting_from)
-        # self.logger.debug('get_template: %s' % ((publisher.get_template('maya_shot_playblast'))))
-        # self.logger.debug('get_template_by_name: %s' % publisher.get_template_by_name('maya_shot_playblast'))
-        # self.logger.debug('get_template_from: %s' % publisher.get_template_from)
-
-        # self.logger.debug('sgtk: %s' % publisher.sgtk)
-        # self.logger.debug('shotgun: %s' % publisher.shotgun)
-        # self.logger.debug('site_cache_location: %s' % publisher.site_cache_location)
-        # self.logger.debug('style_constants: %s' % publisher.style_constants)
-        # self.logger.debug('support_url: %s' % publisher.support_url)
-        # self.logger.debug('tank: %s' % publisher.tank)
-        # self.logger.debug('util: %s' % publisher.util)
-        # self.logger.debug('version: %s' % publisher.version)
-
         # Check that this file has not been published already
-
-        item_list = pprint.pformat(dir(item))
 
         self.logger.debug(dir(item))
 
