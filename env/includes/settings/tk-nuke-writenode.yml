@@ -23,8 +23,8 @@ settings.tk-nuke-writenode.asset:
     name: Exr
     proxy_publish_template:
     proxy_render_template:
-    publish_template: nuke_asset_render_pub
-    render_template: nuke_asset_render
+    publish_template: nuke_asset_library_pub_mono_exr
+    render_template: nuke_asset_library_mono_exr
     settings: {}
     tank_type: Rendered Image
     tile_color: []
@@ -40,8 +40,8 @@ settings.tk-nuke-writenode.shot:
     promote_write_knobs: []
     proxy_publish_template:
     proxy_render_template:
-    publish_template: nuke_shot_render_pub_mono_exr
-    render_template: nuke_shot_render_mono_exr
+    publish_template: nuke_shot_library_pub_mono_exr
+    render_template: nuke_shot_library_mono_exr
     settings: {datatype: 16 bit half, colorspace: linear}
     tank_type: Rendered Image
     tile_color: [26,26,256]

@@ -162,6 +162,11 @@ keys:
     grp_name:
         type: str
 
+    Library:
+        type: str
+        shotgun_entity_type: Asset
+        shotgun_field_name: sg_library
+
 #
 # The paths section contains all the the key locations where files are to be stored
 # by Sgtk Apps. Each path is made up of several keys (like {version} or {shot}) and
@@ -180,7 +185,7 @@ paths:
     # These don't require the standard formatting (with definition and root_name) because they
     # will be set within each template that uses the alias.
     shot_root: sequences/{Sequence}/{Shot}/{Step}
-    asset_root: assets/{sg_asset_type}/{Asset}/{Step}
+    asset_root: assets/{sg_asset_type}/{Library}/{Asset}/{Step}
     sequence_root: sequences/{Sequence}
 
 
@@ -417,6 +422,11 @@ paths:
     nuke_shot_render_pub_mono_exr:
         definition: '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
 
+    # nuke_shot_library_mono_exr:
+    #     definition:  '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
+    # nuke_shot_library_pub_mono_exr:
+    #     definition: '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
+
     nuke_shot_render_mono_tif:
         definition:  '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.tif'
     nuke_shot_render_pub_mono_tif:
@@ -623,13 +633,18 @@ paths:
         # definition: '@asset_root/review/quickdaily/{Asset}_{name}_{iteration}.mov'
     # The location of WIP script files
     nuke_asset_work:
-        definition: '@asset_root/work/nuke/{Asset}_{Step}_{name}_v{version}.nk'
+        definition: '@asset_root/work/nuke/{Asset}_{Step}_{Library}_{name}_v{version}.nk'
     # The location of backups of WIP files
     nuke_asset_snapshot:
         definition: '@asset_root/work/nuke/snapshots/{Asset}_{Step}_{name}_v{version}.{timestamp}.nk'
     # The location of published nuke script files
     nuke_asset_publish:
-        definition: '@asset_root/publish/nuke/{Asset}_{Step}_{name}_v{version}.nk'
+        definition: '@asset_root/publish/nuke/{Asset}_{Step}_{Library}_{name}_v{version}.nk'
+
+    nuke_asset_library_mono_exr:
+        definition:  '@asset_root/work/renders/{Library}/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
+    nuke_asset_library_pub_mono_exr:
+        definition: '@asset_root/publish/renders/{Library}/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
 
 
 #
