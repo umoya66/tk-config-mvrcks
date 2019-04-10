@@ -71,13 +71,7 @@ class PostPhaseHook(HookBaseClass):
         :param publish_tree: The :ref:`publish-api-tree` instance representing
             the items to be published.
         """
-        self.logger.debug('Publish Tree: %s' % publish_tree)
-        for item in publish_tree:
-            self.logger.debug(item)
-            for task in item:
-                self.logger.debug(task)
         self.logger.debug("Executing post validate hook method...")
-
 
     def post_publish(self, publish_tree):
         """
@@ -102,8 +96,9 @@ class PostPhaseHook(HookBaseClass):
         :param publish_tree: The :ref:`publish-api-tree` instance representing
             the items to be published.
         """
-        self.logger.debug('Publish Tree: %s' % publish_tree)
         self.logger.debug("Executing post publish hook method...")
+
+        self.logger.debug("...Ending post publish hook method")
 
     def post_finalize(self, publish_tree):
         """
@@ -130,3 +125,55 @@ class PostPhaseHook(HookBaseClass):
             the items to be published.
         """
         self.logger.debug("Executing post finalize hook method...")
+
+        published_files = []
+
+        for item in publish_tree:
+
+            # item = ['__class__', '__del__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__',
+            #       '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__',
+            #       '__sizeof__', '__slots__', '__str__', '__subclasshook__', '_active', '_allows_context_change',
+            #       '_children', '_context', '_created_temp_files', '_current_temp_file_path', '_description', '_enabled',
+            #       '_expanded', '_get_image', '_get_local_properties', '_get_type', '_global_properties', '_icon_path',
+            #       '_icon_pixmap', '_local_properties', '_name', '_parent', '_persistent', '_set_type', '_tasks',
+            #       '_thumbnail_enabled', '_thumbnail_explicit', '_thumbnail_path', '_thumbnail_pixmap', '_traverse_item',
+            #       '_type_display', '_type_spec', '_validate_image', '_visit_recursive', 'active', 'add_task', 'checked',
+            #       'children', 'clear_tasks', 'context', 'context_change_allowed', 'create_item', 'descendants',
+            #       'description', 'display_type', 'enabled', 'expanded', 'from_dict', 'get_property',
+            #       'get_thumbnail_as_path', 'icon', 'is_root', 'local_properties', 'name', 'parent', 'persistent',
+            #       'properties', 'remove_item', 'set_icon_from_path', 'set_thumbnail_from_path', 'tasks', 'thumbnail',
+            #       'thumbnail_enabled', 'thumbnail_explicit', 'to_dict', 'type', 'type_display', 'type_spec']
+
+            for task in item.tasks:
+                # self.logger.debug('--------------Task: %s -------------------' % task)
+                # task =  ['__class__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__',
+                #         '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',
+                #         '__slots__', '__str__', '__subclasshook__', '_active', '_description', '_enabled', '_item',
+                #         '_name', '_plugin', '_settings', '_visible', 'active', 'checked', 'description', 'enabled',
+                #         'finalize', 'from_dict', 'is_same_task_type', 'item', 'name', 'plugin', 'publish', 'settings',
+                #         'to_dict', 'validate', 'visible']
+
+                if task.name == 'Publish Playblast':
+                    # self.logger.debug('path: %s' % item.properties.path)
+                    # self.logger.debug('publish template: %s' % item.properties.publish_template)
+                    # self.logger.debug('publish path: %s' % item.properties.publish_path)
+                    # get version to update publish parameters - ublished_files
+                    playblast = item.properties.sg_publish_data
+
+                elif task.name == 'Publish Exported Alembics':
+                    # self.logger.debug('publish type: %s' % item.properties.publish_type)
+                    # self.logger.debug('publish name: %s' % item.name)
+                    # get id and name of publish
+                    published_files.append({'type': 'PublishedFile', 'id': item.properties['sg_publish_data']['id'], 'name': item.name})
+
+                elif task.name == 'Publish Session to Shotgun':
+                    # self.logger.debug('project root: %s' % item.properties.project_root)
+                    # self.logger.debug('path: %s' % item.properties.path)
+                    published_files.append({'type': 'PublishedFile', 'id': item.properties['sg_publish_data']['id'], 'name': item.name})
+
+        self.logger.info('Linking Published Files to Playblast Version')
+        publisher = self.parent
+
+        data = {'published_files': published_files}
+        publisher.shotgun.update("Version", playblast['id'], data)
+

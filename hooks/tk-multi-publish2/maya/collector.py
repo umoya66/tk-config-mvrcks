@@ -16,8 +16,8 @@ import maya.cmds as cmds
 import maya.mel as mel
 import sgtk
 # Importing tank for debugging
-import tank as sgtk
-import pprint
+# import tank as sgtk
+# import pprint
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -144,7 +144,6 @@ class MayaSessionCollector(HookBaseClass):
 
             self.collect_playblasts(item, project_root)
             self.collect_alembic_exports(item, project_root)
-            # self.collect_alembic_caches(item, project_root)
 
         else:
 
@@ -158,10 +157,6 @@ class MayaSessionCollector(HookBaseClass):
                     }
                 }
             )
-
-        # look at the render layers to find rendered images on disk
-        # self.collect_rendered_images(item)
-        # self._collect_meshes(item)
 
     def collect_current_maya_session(self, settings, parent_item):
         """
@@ -238,7 +233,7 @@ class MayaSessionCollector(HookBaseClass):
         :param str project_root: The maya project root to search for alembics
         """
 
-        self.logger.info('-----Start with collecting Alembics  xx-----')
+        self.logger.info('----- Start collecting Alembics -----')
 
         # self.logger.debug('self.parent: %s' % dir(self.parent))
         # parent = ['_Application__engine', '_Application__instance_name', '_TankBundle__cache_location',
@@ -321,13 +316,12 @@ class MayaSessionCollector(HookBaseClass):
             output_path = working_template_path.apply_fields(path_fields)
             exports_dir = os.path.dirname(output_path)
 
-            self.logger.debug("%s working template path: %s" % (otype, working_template_path))
+            alembic_publish_path = publish_template_path.apply_fields(path_fields)
 
             # check for dir
             if os.path.exists(exports_dir):
-                self.logger.debug('%s directory exists' % otype)
 
-            # look for alembic files in the cache folder
+                # look for alembic files in the cache folder
                 for filename in os.listdir(exports_dir):
                     cache_path = os.path.join(exports_dir, filename)
 
@@ -357,6 +351,9 @@ class MayaSessionCollector(HookBaseClass):
                     mesh_item.properties["publish_template"] = publish_template_path
                     mesh_item.properties["publish_type"] = 'Alembic ' + name.capitalize()
 
+                    mesh_item.properties["publish_path"] = alembic_publish_path
+
+
                 self.logger.info(
                     "Processing alembic exports folder: %s" % (exports_dir,),
                     extra={
@@ -366,73 +363,8 @@ class MayaSessionCollector(HookBaseClass):
                     }
                 )
 
-        self.logger.debug('-----Finished with collecting Alembics -----')
 
-    def collect_alembic_caches(self, parent_item, project_root):
-        """
-        Creates items for alembic caches
-
-        Looks for a 'project_root' property on the parent item, and if such
-        exists, look for alembic caches in a 'cache/alembic' subfolder.
-
-        :param parent_item: Parent Item instance
-        :param str project_root: The maya project root to search for alembics
-        """
-
-        # ensure the alembic cache dir exists
-        cache_dir = os.path.join(project_root, "cache", "alembic")
-        if not os.path.exists(cache_dir):
-            return
-
-        self.logger.info(
-            "Processing alembic cache folder: %s" % (cache_dir,),
-            extra={
-                "action_show_folder": {
-                    "path": cache_dir
-                }
-            }
-        )
-
-        # look for alembic files in the cache folder
-        for filename in os.listdir(cache_dir):
-            cache_path = os.path.join(cache_dir, filename)
-
-            # do some early pre-processing to ensure the file is of the right
-            # type. use the base class item info method to see what the item
-            # type would be.
-            item_info = self._get_item_info(filename)
-            if item_info["item_type"] != "file.alembic":
-                continue
-
-            # allow the base class to collect and create the item. it knows how
-            # to handle alembic files
-            super(MayaSessionCollector, self)._collect_file(
-                parent_item,
-                cache_path
-            )
-
-    def _collect_session_geometry(self, parent_item):
-        """
-        Creates items for session geometry to be exported.
-
-        :param parent_item: Parent Item instance
-        """
-
-        geo_item = parent_item.create_item(
-            "maya.session.geometry",
-            "Geometry",
-            "All Session Geometry"
-        )
-
-        # get the icon path to display for this item
-        icon_path = os.path.join(
-            self.disk_location,
-            os.pardir,
-            "icons",
-            "geometry.png"
-        )
-
-        geo_item.set_icon_from_path(icon_path)
+        self.logger.debug('----- Finished with collecting Alembics -----')
 
     def collect_playblasts(self, parent_item, project_root):
         """
@@ -445,7 +377,7 @@ class MayaSessionCollector(HookBaseClass):
         :param str project_root: The maya project root to search for playblasts
         """
 
-        self.logger.info('-----Start collecting Playblast -----')
+        self.logger.debug('-----Start collecting Playblast -----')
 
         # get entity type
         entity_type = self.parent.context.entity['type'].lower()
@@ -465,8 +397,6 @@ class MayaSessionCollector(HookBaseClass):
         playblast_exports_dir = os.path.dirname(playblast_output_path)
         playblast_publish_path = playblast_publish_template_path.apply_fields(path_fields)
 
-        self.logger.debug("Playblast working template path: %s" % (playblast_working_template_path))
-
         self.logger.info(
             "Processing Playblasts exports folder: %s" % (playblast_exports_dir,),
             extra={
@@ -477,16 +407,17 @@ class MayaSessionCollector(HookBaseClass):
         )
 
         if os.path.exists(playblast_output_path):
-            item_info = self._get_item_info(os.path.basename(playblast_output_path))
+            # item_info = self._get_item_info(os.path.basename(playblast_output_path))
 
-            self.logger.debug(item_info)
+            # self.logger.debug(item_info)
 
             # allow the base class to collect and create the item. it knows how
             # to handle movie files
-            item = super(MayaSessionCollector, self)._collect_file(
-                parent_item,
-                playblast_output_path
-            )
+            # item = super(MayaSessionCollector, self)._collect_file(
+            #     parent_item,
+            #     playblast_output_path
+            # )
+            item = parent_item.create_item("file.video", "Playblast", os.path.basename(playblast_output_path))
 
             # the item has been created. update the display name to include
             # the an indication of what it is and why it was collected
@@ -495,98 +426,7 @@ class MayaSessionCollector(HookBaseClass):
 
             item.properties["publish_template"] = playblast_publish_template_path
             item.properties["publish_path"] = playblast_publish_path
+            item.properties["path"] = playblast_output_path
 
-        self.logger.info('-----End collecting Playblast -----')
-
-    def collect_rendered_images(self, parent_item):
-        """
-        Creates items for any rendered images that can be identified by
-        render layers in the file.
-
-        :param parent_item: Parent Item instance
-        :return:
-        """
-
-        # iterate over defined render layers and query the render settings for
-        # information about a potential render
-        for layer in cmds.ls(type="renderLayer"):
-
-            self.logger.info("Processing render layer: %s" % (layer,))
-
-            # use the render settings api to get a path where the frame number
-            # spec is replaced with a '*' which we can use to glob
-            (frame_glob,) = cmds.renderSettings(
-                genericFrameImageName="*",
-                fullPath=True,
-                layer=layer
-            )
-
-            # see if there are any files on disk that match this pattern
-            rendered_paths = glob.glob(frame_glob)
-
-            if rendered_paths:
-                # we only need one path to publish, so take the first one and
-                # let the base class collector handle it
-                item = super(MayaSessionCollector, self)._collect_file(
-                    parent_item,
-                    rendered_paths[0],
-                    frame_sequence=True
-                )
-
-                # the item has been created. update the display name to include
-                # the an indication of what it is and why it was collected
-                item.name = "%s (Render Layer: %s)" % (item.name, layer)
-
-    def _collect_meshes(self, parent_item):
-        """
-        Collect mesh definitions and create publish items for them.
-
-        Added this function from
-        https://support.shotgunsoftware.com/hc/en-us/articles/219039938-Pipeline-Tutorial#Create%20a%20shader%20publish%20plugin
-
-        :param parent_item: The maya session parent item
-        """
-
-        # build a path for the icon to use for each item. the disk
-        # location refers to the path of this hook file. this means that
-        # the icon should live one level above the hook in an "icons"
-        # folder.
-
-        icon_path = os.path.join(
-            self.disk_location,
-            os.pardir,
-            "icons",
-            "mesh.png"
-        )
-
-        # iterate over all top-level transforms and create mesh items
-        # for any mesh.
-
-        for object in cmds.ls(assemblies=True):
-
-            if not cmds.ls(object, dag=True, type="mesh"):
-                # ignore non-meshes
-                continue
-
-            # create a new item parented to the supplied session item. We
-            # define an item type (maya.session.mesh) that will be
-            # used by an associated shader publish plugin as it searches for
-            # items to act upon. We also give the item a display type and
-            # display name (the group name). In the future, other publish
-            # plugins might attach to these mesh items to publish other things
-
-            mesh_item = parent_item.create_item(
-                "maya.session.mesh",
-                "Mesh",
-                object
-            )
-
-            # set the icon for the item
-            mesh_item.set_icon_from_path(icon_path)
-
-            # finally, add information to the mesh item that can be used
-            # by the publish plugin to identify and export it properly
-            mesh_item.properties["object"] = object
-
-
+        self.logger.debug('-----End collecting Playblast -----')
 

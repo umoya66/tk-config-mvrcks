@@ -15,6 +15,7 @@ import pprint
 import sys
 import sgtk
 import traceback
+import maya.cmds as cmds
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -209,25 +210,11 @@ class UploadVersionPlugin(HookBaseClass):
         #         'properties', 'remove_item', 'set_icon_from_path', 'set_thumbnail_from_path', 'tasks', 'thumbnail',
         #         'thumbnail_enabled', 'thumbnail_explicit', 'to_dict', 'type', 'type_display', 'type_spec']
 
-        self.logger.debug('item properties: %s' % item.properties)
-        self.logger.debug('item local properties: %s' % item.local_properties)
-
-        publish_name = item.properties.get("publish_name")
+        publish_path = item.properties['publish_path']
         path = item.properties["path"]
 
-        if not publish_name:
-            self.logger.debug("Using path info hook to determine publish name.")
-            # use the path's filename as the publish name
-            path_components = publisher.util.get_file_path_components(path)
-            publish_name = path_components["filename"]
-
-        item.properties['publish_name'] = publish_name
-
-        publish_path = item.properties['publish_path']
-        publish_template = item.properties['publish_template']
-
         if os.path.exists(publish_path):
-            error_msg = 'Published File already exists: %s' % (publish_path)
+            error_msg = 'Published File already exists: %s' % publish_path
             self.logger.error(error_msg,
                               extra={"action_show_folder": {"path": os.path.dirname(publish_path)}})
             return {
@@ -236,10 +223,7 @@ class UploadVersionPlugin(HookBaseClass):
                 'visible': True
                 }
 
-        # check that file is of correct type
-        file_path = item.properties["path"]
-
-        file_info = publisher.util.get_file_path_components(file_path)
+        file_info = publisher.util.get_file_path_components(path)
         extension = file_info["extension"].lower()
 
         valid_extensions = []
@@ -253,10 +237,10 @@ class UploadVersionPlugin(HookBaseClass):
         if extension in valid_extensions:
             # log the accepted file and display a button to reveal it in the fs
             self.logger.info(
-                "Version upload plugin accepted: %s" % (file_path,),
+                "Version upload plugin accepted: %s" % (path,),
                 extra={
                     "action_show_folder": {
-                        "path": file_path
+                        "path": path
                     }
                 }
             )
@@ -319,10 +303,6 @@ class UploadVersionPlugin(HookBaseClass):
             path_components = publisher.util.get_file_path_components(path)
             publish_name = path_components["filename"]
 
-        self.logger.debug("Publish name: %s" % (publish_name,))
-
-        published_files = []  # list of previuously publsihed files attached to this publsihish
-
         self.logger.info("Creating Version...")
         version_data = {
             "project": item.context.project,
@@ -330,13 +310,6 @@ class UploadVersionPlugin(HookBaseClass):
             "description": item.description,
             "entity": self._get_version_entity(item),
             "sg_task": item.context.task,
-            "published_files":  [
-                {'type': 'PublishedFile',
-                 'id': 92936,
-                 'name': 'Shot001_comp_cone_v002.ma'},
-                {'type': 'PublishedFile',
-                 'id': 107144,
-                 'name': 'Shot001_comp_cone_v011.ma'}]
         }
 
         self.logger.debug('version_data: %s' % version_data)
@@ -397,7 +370,7 @@ class UploadVersionPlugin(HookBaseClass):
         self.logger.info("Version created!")
 
         # stash the version info in the item just in case
-        item.properties["sg_version_data"] = version
+        item.properties["sg_publish_data"] = version
 
         thumb = item.get_thumbnail_as_path()
 
@@ -441,7 +414,7 @@ class UploadVersionPlugin(HookBaseClass):
         """
 
         path = item.properties["path"]
-        version = item.properties["sg_version_data"]
+        version = item.properties["sg_publish_data"]
 
         self.logger.info(
             "Version uploaded for file: %s" % (path,),
@@ -454,15 +427,6 @@ class UploadVersionPlugin(HookBaseClass):
             }
         )
 
-    def post_finalize(self, publish_tree):
-
-        # process files that were stored for later
-        files = publish_tree.root_item.properties.get("process_later", [])
-        self.logger.debug('<pre>%s</pre>' % pprint.pformat(files))
-        self.logger.debug('<pre>%s</pre>' % pprint.pformat(publish_tree))
-        pprint.pprint(files)
-        print dir(publish_tree)
-
     def _get_version_entity(self, item):
         """
         Returns the best entity to link the version to.
@@ -474,3 +438,16 @@ class UploadVersionPlugin(HookBaseClass):
             return item.context.project
         else:
             return None
+
+
+def _session_path():
+    """
+    Return the path to the current session
+    :return:
+    """
+    path = cmds.file(query=True, sn=True)
+
+    if isinstance(path, unicode):
+        path = path.encode("utf-8")
+
+    return path
