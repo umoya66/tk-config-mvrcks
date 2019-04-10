@@ -98,8 +98,6 @@ class PostPhaseHook(HookBaseClass):
         """
         self.logger.debug("Executing post publish hook method...")
 
-        self.logger.debug("...Ending post publish hook method")
-
     def post_finalize(self, publish_tree):
         """
         This method is executed after the finalize pass has completed for each

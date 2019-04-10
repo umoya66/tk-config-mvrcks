@@ -231,8 +231,8 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         self.logger.debug("Work Path: %s" % (alembic_path))
         self.logger.debug("Publish Path: %s" % (publish_path))
 
-        self.logger.debug("working template path: %s" % (work_template))
-        self.logger.debug("publish template path: %s" % (publish_template))
+        self.logger.debug("Working Template Path: %s" % (work_template))
+        self.logger.debug("Publish Template Path: %s" % (publish_template))
 
         # test version id
         item.properties['id'] = 456
