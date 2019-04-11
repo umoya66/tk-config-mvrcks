@@ -186,16 +186,6 @@ settings.tk-multi-publish2.maya.asset_step:
     settings:
         Publish Template: maya_asset_publish
 
-  # - name: Publish Session Geo to Shotgun
-  #   hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session_geometry.py"
-  #   settings:
-  #       Publish Template: asset_alembic_cache
-
-  # - name: Publish Shaders
-  #   hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_shader_network.py"
-  #   settings:
-  #     Publish Template: maya_shader_network_publish
-
   - name: Publish Playblast
     hook: "{config}/tk-multi-publish2/maya/upload_playblast_version.py"
     settings: {}
@@ -204,21 +194,6 @@ settings.tk-multi-publish2.maya.asset_step:
     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     settings: {}
-
-#   - name: Publish Exported Geo Alembics
-#     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-#     settings:
-#       Publish Template: maya_asset_pub_alembic
-#       Alembic Template: maya_asset_alembic
-
-#   - name: Publish Exported Camera Alembics
-#     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
-#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
-#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-#     settings:
-#       Publish Template: maya_asset_pub_camera
-#       Alembic Template: maya_asset_camera
 
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
