@@ -16,8 +16,8 @@ import maya.cmds as cmds
 import maya.mel as mel
 import sgtk
 # import tank as sgtk for debugging
-import tank as sgtk
-import pprint
+# import tank as sgtk
+# import pprint
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -133,6 +133,17 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         """
 
         publish_type = self.get_publish_type(settings, item)
+        publish_path = item.properties['publish_path']
+
+        if os.path.exists(publish_path):
+            error_msg = 'Published File already exists: %s' % (publish_path)
+            self.logger.error(error_msg,
+                              extra={"action_show_folder": {"path": os.path.dirname(publish_path)}})
+            return {
+                "accepted": False,
+                "checked": False,
+                'visible': True
+            }
 
         if publish_type == 'Alembic Geo' or publish_type == 'Alembic Camera':
             return {
@@ -166,6 +177,12 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
 
         # Get path of current maya file
         path = _session_path()
+
+        # get version number of parent
+        publish = self.parent
+        publish_version = publish.util.get_version_number(path)
+
+        self.logger.debug('Version Number: %s' % publish_version)
 
         alembic_path = item.properties["path"]
 
@@ -214,8 +231,11 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         self.logger.debug("Work Path: %s" % (alembic_path))
         self.logger.debug("Publish Path: %s" % (publish_path))
 
-        self.logger.debug("working template path: %s" % (work_template))
-        self.logger.debug("publish template path: %s" % (publish_template))
+        self.logger.debug("Working Template Path: %s" % (work_template))
+        self.logger.debug("Publish Template Path: %s" % (publish_template))
+
+        # test version id
+        item.properties['id'] = 456
 
         return True
 
@@ -229,8 +249,11 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         :param item: Item to process
         """
 
+        publish = self.parent
+
         alembic_path = item.properties["path"]
         publish_path = item.properties["publish_path"]
+        publish_name = item.properties.get("publish_name")
 
         # copy the file
         try:
@@ -250,6 +273,74 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
 
         # Now that the path has been generated, hand it off to the
         super(MayaAlembicGeometryPublishPlugin, self).publish(settings, item)
+
+        # publish_version = publish.util.get_version_number(_session_path())
+        # publish_type = self.get_publish_type(settings, item)
+        #
+        # self.logger.info("Creating PublishedFile...")
+
+        # version_data = {
+        #     "project": item.context.project,
+        #     "name": publish_name,
+        #     "description": item.description,
+        #     "entity": self._get_version_entity(item),
+        #     "version_number": publish_version,
+        #     'task': item.context.task,
+        #     # 'published_file_type': publish_type,
+        # }
+
+        # # path = {'local_path_windows': 'M:\\SandBox\\sequences\\Seq001\\Shot001\\comp\\publish\\maya\\alembic\\Shot001_comp_cone_v015\\camera\\Shot001_comp_cone_v015_camera1.abc',
+        # #         'name': 'Shot001_comp_cone_v015_camera1.abc',
+        # #         'local_path_linux': '/mav/stor/prod/SandBox/sequences/Seq001/Shot001/comp/publish/maya/alembic/Shot001_comp_cone_v015/camera/Shot001_comp_cone_v015_camera1.abc',
+        # #         'url': 'file:///mav/stor/prod/SandBox/sequences/Seq001/Shot001/comp/publish/maya/alembic/Shot001_comp_cone_v015/camera/Shot001_comp_cone_v015_camera1.abc',
+        # #         'local_storage':
+        # #              {'type': 'LocalStorage',
+        # #               'id': 3,
+        # #               'name': 'primary'},
+        # #         'local_path': '/mav/stor/prod/SandBox/sequences/Seq001/Shot001/comp/publish/maya/alembic/Shot001_comp_cone_v015/camera/Shot001_comp_cone_v015_camera1.abc',
+        # #         'content_type': None,
+        # #         'local_path_mac': '/mav/stor/prod/SandBox/sequences/Seq001/Shot001/comp/publish/maya/alembic/Shot001_comp_cone_v015/camera/Shot001_comp_cone_v015_camera1.abc',
+        # #         'type': 'Attachment',
+        # #         'id': 354007,
+        # #         'link_type': 'local'}
+
+        # path = {'name': os.path.basename(publish_path),
+        #         'local_path_linux': publish_path,
+        #         'local_path': publish_path,
+        #         'link_type': 'local'}
+
+        # version_data["path"] = path
+
+        # # Create the version
+        # version = publish.shotgun.create("PublishedFile", version_data)
+        # self.logger.info("PublishedFile created!")
+
+        # # upload thumbnail
+        # thumb = item.get_thumbnail_as_path()
+
+        # if thumb:
+        #     # upload thumb
+        #     self.logger.info("Uploading thumbnail...")
+        #     self.parent.shotgun.upload_thumbnail(
+        #         "PublishedFile",
+        #         version["id"],
+        #         thumb
+        #     )
+
+        # # stash the version info in the item just in case
+        # item.properties["sg_publish_data"] = version
+
+    def _get_version_entity(self, item):
+        """
+        Returns the best entity to link the version to.
+        """
+
+        if item.context.entity:
+            return item.context.entity
+        elif item.context.project:
+            return item.context.project
+        else:
+            return None
 
 
 def _find_scene_animation_range():

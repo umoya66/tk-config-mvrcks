@@ -1,5 +1,5 @@
 ﻿                # Copyright (c) 2017 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
 # 
 # This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
@@ -16,8 +16,8 @@ import maya.cmds as cmds
 import maya.mel as mel
 import sgtk
 # Importing tank for debugging
-import tank as sgtk
-import pprint
+# import tank as sgtk
+# import pprint
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -144,7 +144,6 @@ class MayaSessionCollector(HookBaseClass):
 
             self.collect_playblasts(item, project_root)
             self.collect_alembic_exports(item, project_root)
-            # self.collect_alembic_caches(item, project_root)
 
         else:
 
@@ -158,10 +157,6 @@ class MayaSessionCollector(HookBaseClass):
                     }
                 }
             )
-
-        # look at the render layers to find rendered images on disk
-        # self.collect_rendered_images(item)
-        # self._collect_meshes(item)
 
     def collect_current_maya_session(self, settings, parent_item):
         """
@@ -238,222 +233,138 @@ class MayaSessionCollector(HookBaseClass):
         :param str project_root: The maya project root to search for alembics
         """
 
-        self.logger.info('-----Start with collecting Alembics  xx-----')
+        self.logger.info('----- Start collecting Alembics -----')
 
-        # get sgtk engine
-        eng = sgtk.platform.current_engine()
+        # self.logger.debug('self.parent: %s' % dir(self.parent))
+        # parent = ['_Application__engine', '_Application__instance_name', '_TankBundle__cache_location',
+        #                      '_TankBundle__context', '_TankBundle__descriptor', '_TankBundle__environment',
+        #                      '_TankBundle__frameworks', '_TankBundle__log', '_TankBundle__module_uid',
+        #                      '_TankBundle__resolve_hook_expression', '_TankBundle__resolve_hook_path',
+        #                      '_TankBundle__resolve_setting_value', '_TankBundle__settings', '_TankBundle__sg',
+        #                      '_TankBundle__tk', '__class__', '__delattr__', '__dict__', '__doc__', '__format__',
+        #                      '__getattribute__', '__hash__', '__init__', '__module__', '__new__', '__reduce__',
+        #                      '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__',
+        #                      '__weakref__', '_base_hooks', '_destroy_frameworks', '_get_engine_name',
+        #                      '_get_instance_name', '_manager_class', '_set_context', '_set_instance_name',
+        #                      '_set_settings', '_util',
+        #           'base_hooks', 'cache_location', 'change_context', 'context',
+        #                      'context_change_allowed', 'create_hook_instance', 'create_publish_manager', 'description',
+        #                      'descriptor', 'destroy_app', 'disk_location', 'display_name', 'documentation_url',
+        #                      'engine', 'ensure_folder_exists', 'event_engine', 'event_file_close', 'event_file_open',
+        #                      'execute_hook', 'execute_hook_by_name', 'execute_hook_expression', 'execute_hook_method',
+        #                      'frameworks', 'get_metrics_properties', 'get_project_cache_location', 'get_setting',
+        #                      'get_setting_from', 'get_template', 'get_template_by_name', 'get_template_from',
+        #                      'icon_256', 'import_module', 'init_app', 'instance_name', 'log_debug', 'log_error',
+        #                      'log_exception', 'log_info', 'log_metric', 'log_warning', 'logger', 'name',
+        #                      'post_context_change', 'post_engine_init', 'pre_context_change', 'settings', 'sgtk',
+        #                      'shotgun', 'site_cache_location', 'style_constants', 'support_url', 'tank', 'util',
+        #                      'version']
 
-        # get context
-        ctx = eng.context
+        ###################
+        # useful functions
+        # self.parent.get_template_by_name('template name')  # get template object
+        # self.parent.engine  # current engine
+        # self.parent.context  # current context
+        # self.parent.ensure_folder_exists('path')
+        # self.parent.settings()  # returns teh plugin settings from tk-multi-publish2.yml
 
-        # get toolkit
-        tk = ctx.sgtk
+        # self.logger.debug('settings: %s' % (self.parent.settings))
+        # settings = {
+        #         'collector_settings': {'Work Template': 'maya_shot_work'}, 
+        #         'publish_plugins': [ 
+        #             
+        #             
+        #             {'hook': '{engine}/tk-multi-publish2/basic/start_version_control.py', 
+        #             'name': 'Begin file versioning', 
+        #             'settings': {}}, 
 
-        # get necessary templates
+        #             {'hook': '{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session.py', 
+        #                 'name': 'Publish Session to Shotgun', 
+        #                 'settings': {'Publish Template': 'maya_shot_publish'}}, 
 
-        # maya_template_path = ''
-        # abc_working_template_path = ''
-        
-        entity_type = ctx.entity['type'].lower()
+        #             {'hook': '{config}/tk-multi-publish2/maya/upload_playblast_version.py', 
+        #                 'name': 'Publish Playblast', 
+        #                 'settings': {}}, 
 
-        maya_template_path = tk.templates['maya_' + entity_type + '_work']
-        abc_working_template_path = tk.templates['maya_' + entity_type + '_alembic']
-        abc_publish_template_path = tk.templates['maya_' + entity_type + '_pub_alembic']
-        cam_working_template_path = tk.templates['maya_' + entity_type + '_camera']
-        cam_publish_template_path = tk.templates['maya_' + entity_type + '_pub_camera']
+        #             {'hook': '{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py', 
+        #                 'name': 'Publish Exported Alembics', 'settings': {}}
+        #             ], 
+        #         'collector': '{self}/collector.py:{config}/tk-multi-publish2/maya/collector.py', 
+        #         'help_url': 'https://support.shotgunsoftware.com/hc/en-us/articles/115000068574-Integrations-User-Guide#The%20Publisher'}
+
+
+        # get entity type being published - Shot/Asset/...
+        entity_type = self.parent.context.entity['type'].lower()
 
         # get current maya file path
         current_file_path = cmds.file(query=True, sn=True)
 
+        # get maya file template
+        maya_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_work')
+
         # validate and get all the fields we need for writing out the working file
         path_fields = maya_template_path.validate_and_get_fields(current_file_path)
 
-        if path_fields is not None:
-            abc_output_path = abc_working_template_path.apply_fields(path_fields)
-            abc_exports_dir = os.path.dirname(abc_output_path)
-            cam_output_path = cam_working_template_path.apply_fields(path_fields)
-            cam_exports_dir = os.path.dirname(cam_output_path)
+        output_types = {'alembic': 'geo', 'camera': 'camera'}
 
-        self.logger.debug("Alembic Geo working template path: %s" % (abc_working_template_path))
-        self.logger.debug("Alembic Camera working template path: %s" % (cam_working_template_path))
+        for otype, name in output_types.iteritems():
 
-        self.logger.info(
-            "Processing alembic exports folder: %s" % (abc_exports_dir,),
-            extra={
-                "action_show_folder": {
-                    "path": abc_exports_dir
-                }
-            }
-        )
-        self.logger.info(
-            "Processing camera exports folder: %s" % (cam_exports_dir,),
-            extra={
-                "action_show_folder": {
-                    "path": cam_exports_dir
-                }
-            }
-        )
+            # get necessary templates
+            working_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_' + otype)
+            publish_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_pub_' + otype)
 
-        # check for geo dir
-        if os.path.exists(abc_exports_dir):
-            self.logger.debug('Alembic Geo directory exists')
+            output_path = working_template_path.apply_fields(path_fields)
+            exports_dir = os.path.dirname(output_path)
 
-        # look for alembic files in the cache folder
-            for filename in os.listdir(abc_exports_dir):
-                cache_path = os.path.join(abc_exports_dir, filename)
+            alembic_publish_path = publish_template_path.apply_fields(path_fields)
 
-                # # do some early pre-processing to ensure the file is of the right
-                # # type. use the base class item info method to see what the item
-                # # type would be.
-                # item_info = self._get_item_info(filename)
-                # if item_info["item_type"] != "file.alembic.geo":
-                #     continue
+            # check for dir
+            if os.path.exists(exports_dir):
 
-                self.logger.info('Adding Alembic Geo Item: %s' % (filename))
+                # look for alembic files in the cache folder
+                for filename in os.listdir(exports_dir):
+                    cache_path = os.path.join(exports_dir, filename)
 
-                # allow the base class to collect and create the item. it knows how
-                # to handle alembic files
-                # super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
+                    self.logger.info('Adding %s Item: %s' % (otype, filename))
 
-                mesh_item = parent_item.create_item(
-                    "file.alembic.geo",
-                    "Alembic Geo",
-                    filename
+                    mesh_item = parent_item.create_item(
+                        "file.alembic." + name,
+                        "Alembic " + name.capitalize(),
+                        filename
+                    )
+
+                    icon_path = os.path.join(
+                        self.disk_location,
+                        os.pardir,
+                        "icons",
+                        "abc_" + name + ".png"
+                    )
+
+                    # set the icon for the item
+                    mesh_item.set_icon_from_path(icon_path)
+
+                    # finally, add information to the mesh item that can be used
+                    # by the publish plugin to identify and export it properly
+                    mesh_item.properties["object"] = name
+                    mesh_item.properties["path"] = cache_path
+                    mesh_item.properties["alembic_template"] = working_template_path
+                    mesh_item.properties["publish_template"] = publish_template_path
+                    mesh_item.properties["publish_type"] = 'Alembic ' + name.capitalize()
+
+                    mesh_item.properties["publish_path"] = alembic_publish_path
+
+
+                self.logger.info(
+                    "Processing alembic exports folder: %s" % (exports_dir,),
+                    extra={
+                        "action_show_folder": {
+                            "path": exports_dir
+                        }
+                    }
                 )
 
-                icon_path = os.path.join(
-                    self.disk_location,
-                    os.pardir,
-                    "icons",
-                    "maps-pin.png"
-                )
 
-                # set the icon for the item
-                mesh_item.set_icon_from_path(icon_path)
-
-                # finally, add information to the mesh item that can be used
-                # by the publish plugin to identify and export it properly
-                mesh_item.properties["object"] = 'geo'
-                mesh_item.properties["path"] = cache_path
-                mesh_item.properties["alembic_template"] = abc_working_template_path
-                mesh_item.properties["publish_template"] = abc_publish_template_path
-                mesh_item.properties["publish_type"] = 'Alembic Geo'
-
-        # check for cam dir
-        if os.path.exists(cam_exports_dir):
-            self.logger.debug('Alembic Camera directory exists')
-
-        # look for Camera alembics files in the cache folder
-            for filename in os.listdir(cam_exports_dir):
-                self.logger.debug(filename)
-                cache_path = os.path.join(cam_exports_dir, filename)
-
-                # # do some early pre-processing to ensure the file is of the right
-                # # type. use the base class item info method to see what the item
-                # # type would be.
-                # item_info = self._get_item_info(filename)
-                # if item_info["item_type"] != "file.alembic.camera":
-                #     self.logger.debug('Not a camera')
-                #     continue
-
-                self.logger.info('Adding Alembic Camera Item: %s' % (filename))
-
-                # allow the base class to collect and create the item. it knows how
-                # to handle alembic files
-                # super(MayaSessionCollector, self)._collect_file(parent_item, cache_path)
-
-                mesh_item = parent_item.create_item(
-                    "file.alembic.camera",
-                    "Alembic Camera",
-                    filename
-                )
-
-                icon_path = os.path.join(
-                    self.disk_location,
-                    os.pardir,
-                    "icons",
-                    "camera-flash.png"
-
-                )
-
-                # set the icon for the item
-                mesh_item.set_icon_from_path(icon_path)
-
-                # finally, add information to the mesh item that can be used
-                # by the publish plugin to identify and export it properly
-                mesh_item.properties["object"] = 'camera'
-                mesh_item.properties["path"] = cache_path
-                mesh_item.properties["alembic_template"] = cam_working_template_path
-                mesh_item.properties["publish_template"] = cam_publish_template_path
-                mesh_item.properties["publish_type"] = 'Alembic Camera'
-
-        self.logger.debug('-----Finished with collecting Alembics -----')
-
-    def collect_alembic_caches(self, parent_item, project_root):
-        """
-        Creates items for alembic caches
-
-        Looks for a 'project_root' property on the parent item, and if such
-        exists, look for alembic caches in a 'cache/alembic' subfolder.
-
-        :param parent_item: Parent Item instance
-        :param str project_root: The maya project root to search for alembics
-        """
-
-        # ensure the alembic cache dir exists
-        cache_dir = os.path.join(project_root, "cache", "alembic")
-        if not os.path.exists(cache_dir):
-            return
-
-        self.logger.info(
-            "Processing alembic cache folder: %s" % (cache_dir,),
-            extra={
-                "action_show_folder": {
-                    "path": cache_dir
-                }
-            }
-        )
-
-        # look for alembic files in the cache folder
-        for filename in os.listdir(cache_dir):
-            cache_path = os.path.join(cache_dir, filename)
-
-            # do some early pre-processing to ensure the file is of the right
-            # type. use the base class item info method to see what the item
-            # type would be.
-            item_info = self._get_item_info(filename)
-            if item_info["item_type"] != "file.alembic":
-                continue
-
-            # allow the base class to collect and create the item. it knows how
-            # to handle alembic files
-            super(MayaSessionCollector, self)._collect_file(
-                parent_item,
-                cache_path
-            )
-
-    def _collect_session_geometry(self, parent_item):
-        """
-        Creates items for session geometry to be exported.
-
-        :param parent_item: Parent Item instance
-        """
-
-        geo_item = parent_item.create_item(
-            "maya.session.geometry",
-            "Geometry",
-            "All Session Geometry"
-        )
-
-        # get the icon path to display for this item
-        icon_path = os.path.join(
-            self.disk_location,
-            os.pardir,
-            "icons",
-            "geometry.png"
-        )
-
-        geo_item.set_icon_from_path(icon_path)
+        self.logger.debug('----- Finished with collecting Alembics -----')
 
     def collect_playblasts(self, parent_item, project_root):
         """
@@ -466,147 +377,56 @@ class MayaSessionCollector(HookBaseClass):
         :param str project_root: The maya project root to search for playblasts
         """
 
-        movie_dir_name = None
+        self.logger.debug('-----Start collecting Playblast -----')
 
-        # try to query the file rule folder name for movies. This will give
-        # us the directory name set for the project where movies will be
-        # written
-        if "movie" in cmds.workspace(fileRuleList=True):
-            # this could return an empty string
-            movie_dir_name = cmds.workspace(fileRuleEntry='movie')
+        # get entity type
+        entity_type = self.parent.context.entity['type'].lower()
 
-        if not movie_dir_name:
-            # fall back to the default
-            movie_dir_name = "movies"
+        # get necessary templates
+        maya_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_work')
+        playblast_working_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_playblast')
+        playblast_publish_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_pub_playblast')
 
-        # ensure the movies dir exists
-        movies_dir = os.path.join(project_root, movie_dir_name)
-        if not os.path.exists(movies_dir):
-            return
+        # get current maya file path
+        current_file_path = cmds.file(query=True, sn=True)
+
+        # validate and get all the fields we need for writing out the working file
+        path_fields = maya_template_path.validate_and_get_fields(current_file_path)
+
+        playblast_output_path = playblast_working_template_path.apply_fields(path_fields)
+        playblast_exports_dir = os.path.dirname(playblast_output_path)
+        playblast_publish_path = playblast_publish_template_path.apply_fields(path_fields)
 
         self.logger.info(
-            "Processing movies folder: %s" % (movies_dir,),
+            "Processing Playblasts exports folder: %s" % (playblast_exports_dir,),
             extra={
                 "action_show_folder": {
-                    "path": movies_dir
+                    "path": playblast_exports_dir
                 }
             }
         )
 
-        # look for movie files in the movies folder
-        for filename in os.listdir(movies_dir):
+        if os.path.exists(playblast_output_path):
+            # item_info = self._get_item_info(os.path.basename(playblast_output_path))
 
-            # do some early pre-processing to ensure the file is of the right
-            # type. use the base class item info method to see what the item
-            # type would be.
-            item_info = self._get_item_info(filename)
-            if item_info["item_type"] != "file.video":
-                continue
-
-            movie_path = os.path.join(movies_dir, filename)
-
+            # self.logger.debug(item_info)
 
             # allow the base class to collect and create the item. it knows how
             # to handle movie files
-            item = super(MayaSessionCollector, self)._collect_file(
-                parent_item,
-                movie_path
-            )
+            # item = super(MayaSessionCollector, self)._collect_file(
+            #     parent_item,
+            #     playblast_output_path
+            # )
+            item = parent_item.create_item("file.video", "Playblast", os.path.basename(playblast_output_path))
 
             # the item has been created. update the display name to include
             # the an indication of what it is and why it was collected
             self.logger.debug('Movie Name: %s' % item.name)
             item.name = "%s (%s)" % (item.name, "playblast")
 
-    def collect_rendered_images(self, parent_item):
-        """
-        Creates items for any rendered images that can be identified by
-        render layers in the file.
+            item.properties["publish_template"] = playblast_publish_template_path
+            item.properties["publish_path"] = playblast_publish_path
+            item.properties["path"] = playblast_output_path
 
-        :param parent_item: Parent Item instance
-        :return:
-        """
-
-        # iterate over defined render layers and query the render settings for
-        # information about a potential render
-        for layer in cmds.ls(type="renderLayer"):
-
-            self.logger.info("Processing render layer: %s" % (layer,))
-
-            # use the render settings api to get a path where the frame number
-            # spec is replaced with a '*' which we can use to glob
-            (frame_glob,) = cmds.renderSettings(
-                genericFrameImageName="*",
-                fullPath=True,
-                layer=layer
-            )
-
-            # see if there are any files on disk that match this pattern
-            rendered_paths = glob.glob(frame_glob)
-
-            if rendered_paths:
-                # we only need one path to publish, so take the first one and
-                # let the base class collector handle it
-                item = super(MayaSessionCollector, self)._collect_file(
-                    parent_item,
-                    rendered_paths[0],
-                    frame_sequence=True
-                )
-
-                # the item has been created. update the display name to include
-                # the an indication of what it is and why it was collected
-                item.name = "%s (Render Layer: %s)" % (item.name, layer)
-
-    def _collect_meshes(self, parent_item):
-        """
-        Collect mesh definitions and create publish items for them.
-
-        Added this function from
-        https://support.shotgunsoftware.com/hc/en-us/articles/219039938-Pipeline-Tutorial#Create%20a%20shader%20publish%20plugin
-
-        :param parent_item: The maya session parent item
-        """
-
-        # build a path for the icon to use for each item. the disk
-        # location refers to the path of this hook file. this means that
-        # the icon should live one level above the hook in an "icons"
-        # folder.
-
-        icon_path = os.path.join(
-            self.disk_location,
-            os.pardir,
-            "icons",
-            "mesh.png"
-        )
-
-        # iterate over all top-level transforms and create mesh items
-        # for any mesh.
-
-        for object in cmds.ls(assemblies=True):
-
-            if not cmds.ls(object, dag=True, type="mesh"):
-                # ignore non-meshes
-                continue
-
-            # create a new item parented to the supplied session item. We
-            # define an item type (maya.session.mesh) that will be
-            # used by an associated shader publish plugin as it searches for
-            # items to act upon. We also give the item a display type and
-            # display name (the group name). In the future, other publish
-            # plugins might attach to these mesh items to publish other things
-
-            mesh_item = parent_item.create_item(
-                "maya.session.mesh",
-                "Mesh",
-                object
-            )
-
-            # set the icon for the item
-            mesh_item.set_icon_from_path(icon_path)
-
-            # finally, add information to the mesh item that can be used
-            # by the publish plugin to identify and export it properly
-            mesh_item.properties["object"] = object
-
-
+        self.logger.debug('-----End collecting Playblast -----')
 

@@ -260,6 +260,8 @@ settings.tk-multi-publish2.maya.shot_step:
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
 
+  post_phase: "{config}/tk-multi-publish2/maya/post_phase.py"
+
 ################################################################################
 
 # ---- Nuke
