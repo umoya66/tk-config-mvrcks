@@ -106,23 +106,23 @@ keys:
     track:
         type: str
 
-    plate_extension:
-        type: str
-        choices:
-            dpx: DPX
-            exr: EXR
-            tif: Tiff
-            png: PNG
-            jpg: Jpeg
-            DNG: dng
-        default: exr
+    # plate_extension:
+    #     type: str
+    #     choices:
+    #         dpx: DPX
+    #         exr: EXR
+    #         tif: Tiff
+    #         png: PNG
+    #         jpg: Jpeg
+    #         DNG: dng
+    #     default: exr
 
-    qt_extension:
-        type: str
-        choices:
-            mov: Mov
-            m4v: M4V
-        default: mov
+    # qt_extension:
+    #     type: str
+    #     choices:
+    #         mov: Mov
+    #         m4v: M4V
+    #     default: mov
 
 
     # These are used for the Mari UDIM pipeline:
@@ -450,9 +450,9 @@ paths:
 
     # export of shot asset data from hiero
     hiero_plate_path:
-        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.{plate_extension}'
+        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.exr'
     hiero_render_path:
-        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{qt_extension}'
+        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.mov'
 
     ##########################################################################################
     # Asset pipeline
