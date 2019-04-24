@@ -330,6 +330,31 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         # # stash the version info in the item just in case
         # item.properties["sg_publish_data"] = version
 
+    def finalize(self, settings, item):
+        """
+        Execute the finalization pass. This pass executes once all the publish
+        tasks have completed, and can for example be used to version up files.
+
+        :param settings: Dictionary of Settings. The keys are strings, matching
+            the keys returned in the settings property. The values are `Setting`
+            instances.
+        :param item: Item to process
+        """
+
+        path = item.properties["path"]
+        version = item.properties["sg_publish_data"]
+
+        self.logger.info(
+            "Version uploaded for file: %s" % (path,),
+            extra={
+                "action_show_in_shotgun": {
+                    "label": "Show Version",
+                    "tooltip": "Reveal the version in Shotgun.",
+                    "entity": version
+                }
+            }
+        )
+
     def _get_version_entity(self, item):
         """
         Returns the best entity to link the version to.

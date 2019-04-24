@@ -416,6 +416,9 @@ class UploadVersionPlugin(HookBaseClass):
         path = item.properties["path"]
         version = item.properties["sg_publish_data"]
 
+        self.logger.info('-------SG_PUBLISH_DATA-------------')
+        self.logger.info(version)
+
         self.logger.info(
             "Version uploaded for file: %s" % (path,),
             extra={
