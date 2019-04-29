@@ -1,4 +1,4 @@
-# Copyright (c) 2018 Shotgun Software Inc.
+    # Copyright (c) 2018 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -125,6 +125,7 @@ class PostPhaseHook(HookBaseClass):
         self.logger.debug("Executing post finalize hook method...")
 
         published_files = []
+        playblast = None
 
         for item in publish_tree:
 
@@ -143,6 +144,7 @@ class PostPhaseHook(HookBaseClass):
             #       'thumbnail_enabled', 'thumbnail_explicit', 'to_dict', 'type', 'type_display', 'type_spec']
 
             for task in item.tasks:
+                # go through all the tasks on each publish item
                 # self.logger.debug('--------------Task: %s -------------------' % task)
                 # task =  ['__class__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__',
                 #         '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',
@@ -155,26 +157,35 @@ class PostPhaseHook(HookBaseClass):
 
                 if task.name == 'Publish Playblast':
                     self.logger.debug('Post Phase / Post Finalize / Publish Playblast')
-                    # self.logger.debug('publish template: %s' % item.properties.publish_template)
-                    # self.logger.debug('publish path: %s' % item.properties.publish_path)
-                    # get version to update publish parameters - ublished_files
+                    # We have a playblast to publish, so the filess need to be attached to the version
                     playblast = item.properties.sg_publish_data
 
                 elif task.name == 'Publish Exported Alembics':
                     self.logger.debug('Post Phase / Post Finalize / Publish Exported Alembics')
-                    # self.logger.debug('publish type: %s' % item.properties.publish_type)
-                    # self.logger.debug('publish name: %s' % item.name)
-                    # get id and name of publish
                     published_files.append({'type': 'PublishedFile', 'id': item.properties['sg_publish_data']['id'], 'name': item.name})
 
                 elif task.name == 'Publish Session to Shotgun':
                     self.logger.debug('Post Phase / Post Finalize / Publish Session to Shotgun')
-                    # self.logger.debug('project root: %s' % item.properties.project_root)
                     published_files.append({'type': 'PublishedFile', 'id': item.properties['sg_publish_data']['id'], 'name': item.name})
 
-        self.logger.info('Linking Published Files to Playblast Version')
-        publisher = self.parent
+        # only process if we have a playblast to publish
+        if playblast:
 
-        data = {'published_files': published_files}
-        publisher.shotgun.update("Version", playblast['id'], data)
+            self.logger.info('Linking Published Files to Playblast Version')
+            publisher = self.parent
 
+            data = {'published_files': published_files}
+            publisher.shotgun.update("Version", playblast['id'], data)
+
+            self.logger.info(
+                "Playblast Version uploaded: %s" % (playblast['code'],),
+                extra={
+                    "action_show_in_shotgun": {
+                        "label": "Show Version",
+                        "tooltip": "Reveal the playblast version in Shotgun.",
+                        "entity": playblast
+                    }
+                }
+            )
+
+        self.logger.debug("...finished post finalize hook method")
