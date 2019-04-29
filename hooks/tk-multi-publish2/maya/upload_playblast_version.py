@@ -417,6 +417,13 @@ class UploadVersionPlugin(HookBaseClass):
         version = item.properties["sg_publish_data"]
 
         self.logger.info('-------SG_PUBLISH_DATA-------------')
+        data = {
+            'sg_path_to_movie': '/mav/stor/prod/SandBox/sequences/Seq001/Shot001/comp/publish/maya/movies/Shot001_comp_cone_v032_playblast.mov',
+            'code': 'Shot001_comp_cone_v032_playblast.mov', 'description': None,
+            'entity': {'type': 'Shot', 'id': 10559, 'name': 'Shot001'},
+            'project': {'type': 'Project', 'id': 321, 'name': 'SandBox'}, 'type': 'Version', 'id': 59704,
+            'sg_task': {'type': 'Task', 'id': 125080, 'name': '2hrcomp'}}
+
         self.logger.info(version)
 
         self.logger.info(

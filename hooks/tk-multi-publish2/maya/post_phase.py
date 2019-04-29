@@ -151,22 +151,25 @@ class PostPhaseHook(HookBaseClass):
                 #         'finalize', 'from_dict', 'is_same_task_type', 'item', 'name', 'plugin', 'publish', 'settings',
                 #         'to_dict', 'validate', 'visible']
 
+                self.logger.debug('Post Phase / Post Finalize')
+
                 if task.name == 'Publish Playblast':
-                    # self.logger.debug('path: %s' % item.properties.path)
+                    self.logger.debug('Post Phase / Post Finalize / Publish Playblast')
                     # self.logger.debug('publish template: %s' % item.properties.publish_template)
                     # self.logger.debug('publish path: %s' % item.properties.publish_path)
                     # get version to update publish parameters - ublished_files
                     playblast = item.properties.sg_publish_data
 
                 elif task.name == 'Publish Exported Alembics':
+                    self.logger.debug('Post Phase / Post Finalize / Publish Exported Alembics')
                     # self.logger.debug('publish type: %s' % item.properties.publish_type)
                     # self.logger.debug('publish name: %s' % item.name)
                     # get id and name of publish
                     published_files.append({'type': 'PublishedFile', 'id': item.properties['sg_publish_data']['id'], 'name': item.name})
 
                 elif task.name == 'Publish Session to Shotgun':
+                    self.logger.debug('Post Phase / Post Finalize / Publish Session to Shotgun')
                     # self.logger.debug('project root: %s' % item.properties.project_root)
-                    # self.logger.debug('path: %s' % item.properties.path)
                     published_files.append({'type': 'PublishedFile', 'id': item.properties['sg_publish_data']['id'], 'name': item.name})
 
         self.logger.info('Linking Published Files to Playblast Version')
