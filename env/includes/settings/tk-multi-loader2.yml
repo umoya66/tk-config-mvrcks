@@ -114,17 +114,21 @@ settings.tk-multi-loader2.mari:
 settings.tk-multi-loader2.maya:
   action_mappings:
     Alembic Cache: [reference, import]
+    Alembic Geo: [reference, import]
+    Alembic Camera: [reference, import]
     Image: [texture_node, image_plane]
     Maya Scene: [reference, import]
     Photoshop Image: [texture_node, image_plane]
     Rendered Image: [texture_node, image_plane]
     Texture: [texture_node, image_plane]
   entities:
+
   - caption: Assets
     entity_type: Asset
     filters:
     - [project, is, "{context.project}"]
     hierarchy: [sg_asset_type, code]
+
   - caption: Shots
     entity_type: Shot
     filters:
