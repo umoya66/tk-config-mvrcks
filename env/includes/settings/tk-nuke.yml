@@ -41,6 +41,8 @@ settings.tk-nuke.hiero.project:
     tk-multi-workfiles2: "@settings.tk-multi-workfiles2.hiero"
     tk-hiero-openinshotgun:
       location: "@apps.tk-hiero-openinshotgun.location"
+    tk-hiero-annotations:
+      location: "@apps.tk-hiero-annotations.location"
     tk-hiero-export: "@settings.tk-hiero-export"
     tk-multi-breakdown: "@settings.tk-multi-breakdown.nukestudio"
     tk-multi-loader2: "@settings.tk-multi-loader2.nukestudio.project"
@@ -71,6 +73,10 @@ settings.tk-nuke.hiero.project:
   - app_instance: tk-hiero-openinshotgun
     keep_in_menu: false
     name: "Open in Shotgun"
+    requires_selection: true
+  - app_instance: tk-hiero-annotations
+    keep_in_menu: false
+    name: "Publish Annotations"
     requires_selection: true
   menu_favourites:
   - app_instance: tk-multi-workfiles2
@@ -143,7 +149,7 @@ settings.tk-nuke.project:
   location: "@engines.tk-nuke.location"
   
   # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}
+  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: linear}
 
 # sequence
 settings.tk-nuke.sequence:

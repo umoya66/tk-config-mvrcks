@@ -180,6 +180,13 @@ apps.tk-hiero-openinshotgun.location:
   name: tk-hiero-openinshotgun
   version: v0.3.4
 
+# hiero openinshotgun
+apps.tk-hiero-annotations.location:
+  type: path
+  name: tk-hiero-annotations
+  path: /array/users/mhatton/dev/mvrcks/tk-hiero-annotations
+
+  
 # ---- Houdini apps
 
 # houdini alembicnode
