@@ -202,23 +202,7 @@ settings.tk-multi-publish2.maya.asset_step:
 
   - name: Publish Exported Alembics
     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-    # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     settings: {}
-
-#   - name: Publish Exported Geo Alembics
-#     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-#     settings:
-#       Publish Template: maya_asset_pub_alembic
-#       Alembic Template: maya_asset_alembic
-
-#   - name: Publish Exported Camera Alembics
-#     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
-#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_cameras.py"
-#     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-#     settings:
-#       Publish Template: maya_asset_pub_camera
-#       Alembic Template: maya_asset_camera
 
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
@@ -256,6 +240,12 @@ settings.tk-multi-publish2.maya.shot_step:
     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     settings: {}
+
+  - name: Publish Renders
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_renders.py"
+    settings:
+      Publish Template: maya_shot_render_pub_exr
+      Work Template: maya_shot_render_exr
 
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"

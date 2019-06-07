@@ -103,7 +103,7 @@ class MayaSessionCollector(HookBaseClass):
         # update the base settings with these settings
         collector_settings.update(maya_session_settings)
 
-        icon_path = os.path.join( self.disk_location, os.pardir, "icons", "alembic.png")
+        icon_path = self._get_icon_path("image_sequence.png")
 
         self.common_file_info['Alembic Geo'] = {'item_type': 'file.alembic.geo',
                                                 'extensions': ['abc'],
@@ -111,6 +111,10 @@ class MayaSessionCollector(HookBaseClass):
         self.common_file_info['Alembic Camera'] = {'item_type': 'file.alembic.camera',
                                                    'extensions': ['abc'],
                                                    'icon': icon_path}
+        self.common_file_info['Rendered Image'] = { "extensions": ["dpx", "exr"], 
+                "icon": self._get_icon_path("image_sequence.png"),
+                "item_type": "file.image", 
+                }
 
         return collector_settings
 
@@ -160,7 +164,7 @@ class MayaSessionCollector(HookBaseClass):
             )
 
         # look at the render layers to find rendered images on disk
-        # self.collect_rendered_images(item)
+        self.collect_rendered_images(item)
         # self._collect_meshes(item)
 
     def collect_current_maya_session(self, settings, parent_item):
