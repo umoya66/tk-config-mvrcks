@@ -148,7 +148,9 @@ class MayaSessionCollector(HookBaseClass):
 
             self.collect_playblasts(item, project_root)
             self.collect_alembic_exports(item, project_root)
-            # self.collect_alembic_caches(item, project_root)
+            
+            # look at the render layers to find rendered images on disk
+            self.collect_rendered_images(item, project_root)
 
         else:
 
@@ -163,8 +165,6 @@ class MayaSessionCollector(HookBaseClass):
                 }
             )
 
-        # look at the render layers to find rendered images on disk
-        self.collect_rendered_images(item)
         # self._collect_meshes(item)
 
     def collect_current_maya_session(self, settings, parent_item):
@@ -393,49 +393,6 @@ class MayaSessionCollector(HookBaseClass):
 
         self.logger.debug('-----Finished with collecting Alembics -----')
 
-    def collect_alembic_caches(self, parent_item, project_root):
-        """
-        Creates items for alembic caches
-
-        Looks for a 'project_root' property on the parent item, and if such
-        exists, look for alembic caches in a 'cache/alembic' subfolder.
-
-        :param parent_item: Parent Item instance
-        :param str project_root: The maya project root to search for alembics
-        """
-
-        # ensure the alembic cache dir exists
-        cache_dir = os.path.join(project_root, "cache", "alembic")
-        if not os.path.exists(cache_dir):
-            return
-
-        self.logger.info(
-            "Processing alembic cache folder: %s" % (cache_dir,),
-            extra={
-                "action_show_folder": {
-                    "path": cache_dir
-                }
-            }
-        )
-
-        # look for alembic files in the cache folder
-        for filename in os.listdir(cache_dir):
-            cache_path = os.path.join(cache_dir, filename)
-
-            # do some early pre-processing to ensure the file is of the right
-            # type. use the base class item info method to see what the item
-            # type would be.
-            item_info = self._get_item_info(filename)
-            if item_info["item_type"] != "file.alembic":
-                continue
-
-            # allow the base class to collect and create the item. it knows how
-            # to handle alembic files
-            super(MayaSessionCollector, self)._collect_file(
-                parent_item,
-                cache_path
-            )
-
     def _collect_session_geometry(self, parent_item):
         """
         Creates items for session geometry to be exported.
@@ -526,9 +483,12 @@ class MayaSessionCollector(HookBaseClass):
             item.properties["publish_template"] = playblast_publish_template_path
             item.properties["publish_path"] = playblast_publish_path
 
+            self.logger.debug('publish_path: %s' % item.properties['publish_path'])
+            
+
         self.logger.info('-----End collecting Playblast -----')
 
-    def collect_rendered_images(self, parent_item):
+    def collect_rendered_images(self, parent_item, project_root):
         """
         Creates items for any rendered images that can be identified by
         render layers in the file.
@@ -536,6 +496,11 @@ class MayaSessionCollector(HookBaseClass):
         :param parent_item: Parent Item instance
         :return:
         """
+        
+        #TODO: copy code frm playblast publish - although it needs to be fixed first
+        # TODO: it seems that playblast and render collection data is being shared, files from both collections are showing up in the other.
+
+        self.logger.info('-----Start collecting Renders -----')
 
         # iterate over defined render layers and query the render settings for
         # information about a potential render
