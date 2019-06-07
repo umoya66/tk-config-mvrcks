@@ -57,19 +57,6 @@ settings.tk-nuke-writenode.shot:
     tank_type: Rendered Image
     tile_color: [26,26,256]
 
-    set cut_paste_input [stack 0]
-version 11.2 v4
-push $cut_paste_input
-Write {
- file_type exr
- compression none
- first_part none
- name Write1
- selected true
- xpos -978
- ypos -264
-}
-
   - file_type: mov
     name: Quicktime
     proxy_publish_template:
