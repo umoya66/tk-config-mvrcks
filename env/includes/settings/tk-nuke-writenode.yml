@@ -42,7 +42,7 @@ settings.tk-nuke-writenode.shot:
     proxy_render_template:
     publish_template: nuke_shot_render_pub_mono_exr
     render_template: nuke_shot_render_mono_exr
-    settings: {datatype: 16 bit half, colorspace: linear}
+    settings: {datatype: 16 bit half, colorspace: linear, compression: none}
     tank_type: Rendered Image
     tile_color: [26,26,256]
 
@@ -56,6 +56,19 @@ settings.tk-nuke-writenode.shot:
     settings: {datatype: 8 bit, colorspace: sRGB, channels: rgba }
     tank_type: Rendered Image
     tile_color: [26,26,256]
+
+    set cut_paste_input [stack 0]
+version 11.2 v4
+push $cut_paste_input
+Write {
+ file_type exr
+ compression none
+ first_part none
+ name Write1
+ selected true
+ xpos -978
+ ypos -264
+}
 
   - file_type: mov
     name: Quicktime
