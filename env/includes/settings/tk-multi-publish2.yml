@@ -213,8 +213,8 @@ settings.tk-multi-publish2.maya.shot_step:
   # collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
   collector_settings:
       Work Template: maya_shot_work
-  publish_plugins:
 
+  publish_plugins:
   # - name: Publish to Shotgun
   #   hook: "{self}/publish_file.py"
   #   settings: {}
@@ -244,8 +244,10 @@ settings.tk-multi-publish2.maya.shot_step:
   - name: Publish Renders
     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_renders.py"
     settings:
-      Publish Template: maya_shot_render_pub_exr
-      Work Template: maya_shot_render_exr
+      Publish Template: maya_shot_render_pub
+      Work Template: maya_shot_render
+      File Extensions: exr, dpx, xyz
+      Move Files: True
 
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"

@@ -156,6 +156,16 @@ keys:
         default: ma
         alias: extension
 
+    render_extension:
+        type: str
+        choices: 
+            exr: EXR
+            dpx: DPX
+            jpg: JPEG
+            png: PNG
+        default: exr
+        alias: render
+
     layer:
         type: str
 
@@ -276,24 +286,28 @@ paths:
 
 
     # The location of maya work renders
-    maya_shot_render_exr:
-        definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
-    maya_shot_render_jpg:
-        definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
     maya_shot_render_mov:
         definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.mov'
-    maya_shot_render_dpx:
-        definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
+    maya_shot_render:
+        definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.{render_extension}'
+    # maya_shot_render_exr:
+    #     definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
+    # maya_shot_render_jpg:
+    #     definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
+    # maya_shot_render_dpx:
+    #     definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
 
     # The location of maya publish renders
-    maya_shot_render_pub_exr:
-        definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
-    maya_shot_render_pub_jpg:
-        definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
     maya_shot_render_pub_mov:
         definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.mov'
-    maya_shot_render_pub_dpx:
-        definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
+    maya_shot_render_pub:
+        definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.{render_extension}'
+     # maya_shot_render_pub_exr:
+     #     definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
+     # maya_shot_render_pub_jpg:
+     #     definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
+    # maya_shot_render_pub_dpx:
+    #     definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
 
     maya_shot_alembic:
         definition: '@shot_root/work/maya/alembic/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].abc'
