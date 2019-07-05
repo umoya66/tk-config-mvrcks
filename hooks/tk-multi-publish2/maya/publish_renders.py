@@ -1,7 +1,7 @@
 # Copyright (c) 2017 Shotgun Software Inc.
-# 
+
 # CONFIDENTIAL AND PROPRIETARY
-# 
+
 # This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
 # Source Code License included in this distribution package. See LICENSE.
 # By accessing, using, copying or modifying this work you indicate your 
@@ -10,12 +10,11 @@
 
 # this was the original "upload_version.py" from tk-multi-publish2/hooks
 
+import traceback
 import os
 import pprint
-import sys
 import sgtk
 import tank as sgtk
-import traceback
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -59,36 +58,32 @@ class RenderPublish(HookBaseClass):
         The type string should be one of the data types that toolkit accepts as
         part of its environment configuration.
         """
-        maya_publish_settings = { 
-                "Publish Template": { 
-                    "type": "template", 
+
+        maya_publish_settings = {
+                "Render Publish Template": {
+                    "type": "template",
                     "default": None,
                     "description": "Template path for published work files. Should"
                                "correspond to a template defined in "
-                               "templates.yml.", 
-                               }, 
-                "Work Template": { 
+                               "templates.yml.",
+                               },
+                "Render Work Template": {
                     "type": "template",
                     "default": None,
                     "description": "Template path for work files. Should"
                                "correspond to a template defined in "
                                "templates.yml.",
                                }, 
-                "File Extensions": {
-                    "type": "str",
-                    "default": None,
-                    "description": "File Extensions of files to include" 
-                    }, 
+                # "File Extensions": {
+                #     "type": "str",
+                #     "default": None,
+                #     "description": "File Extensions of files to include" 
+                #     }, 
                 "Move Files": {
                     "type": "bool",
                     "default": False,
                     "description": "Move files instead of copying them" 
                     }, 
-                "Link Local File": {
-                    "type": "bool",
-                    "default": True,
-                    "description": "Should the local file be referenced by Shotgun" 
-                    },
                 }
 
         return maya_publish_settings
@@ -133,53 +128,81 @@ class RenderPublish(HookBaseClass):
         :returns: dictionary with boolean keys accepted, required and enabled
         """
 
-        publisher = self.parent
-        
-        # self.logger.debug(dir(item))
+        # We need to check to see if we've labelled this as a rendered image in teh collecotr as
+        # playblasts can get caught by this plugin
+        if 'publish_type' in item.properties:
+            if item.properties['publish_type'] != 'Rendered Image':
+                self.logger.info('This is not a Rendered Image')
+                return {
+                    'accepted': False,
+                    'checked': False,
+                    'visible': False
+                    }
 
-        publish_path = item.properties['publish_path']
-        publish_template = item.properties['publish_template']
 
-        if os.path.exists(publish_path):
-            error_msg = 'Published File already exists: %s' % (publish_path)
-            self.logger.error(error_msg)
-            return {
-                "accepted": False,
-                "checked": False,
-                'visible': False
-                }
+        render_work_template = self.parent.get_template_by_name(settings['Render Work Template'].value)
+        publish_template = self.parent.get_template_by_name(settings['Render Publish Template'].value)
+
+        path_fields = render_work_template.validate_and_get_fields(item.properties['path'])
+
+        # publish_template = item.properties['publish_template']
+        self.publish_path = publish_template.apply_fields(path_fields)
 
         # check that file is of correct type
         file_path = item.properties["path"]
 
-        file_info = publisher.util.get_file_path_components(file_path)
-        self.logger.debug("file_info: %s " % file_info)
-        extension = file_info["extension"].lower()
-
-        self.logger.debug("File extensions: %s" % settings['File Extensions'].value)
-
-        if extension in settings["File Extensions"].value:
-            # log the accepted file and display a button to reveal it in the fs
+        if os.path.exists(self.publish_path):
+            error_msg = 'Published File already exists: %s' % (self.publish_path)
+            self.logger.error(error_msg)
+            return {
+                "accepted": True,
+                "checked": False,
+                'visible': True
+                }
+        else:
             self.logger.info(
                 "Version upload plugin accepted: %s" % (file_path,),
                 extra={
                     "action_show_folder": {
                         "path": file_path
+                        }
                     }
-                }
-            )
+                )
 
             # return the accepted info
             return {'accepted': True,
                     'checked': True,
                     'visible': True
-                    }
-        else:
-            self.logger.debug(
-                "%s is not in the valid extensions list for Version creation" %
-                (extension,)
-            )
-            return {"accepted": False}
+                   }
+
+
+        # file_info = publisher.util.get_file_path_components(file_path)
+        # self.logger.debug("file_info: %s ", file_info)
+        # extension = file_info["extension"].lower()
+
+        # self.logger.debug("File extensions: %s", settings['File Extensions'].value)
+
+        # if extension in settings["File Extensions"].value:
+        #     # log the accepted file and display a button to reveal it in the fs
+        #     self.logger.info(
+        #         "Version upload plugin accepted: %s" % (file_path,),
+        #         extra={
+        #             "action_show_folder": {
+        #                 "path": file_path
+        #             }
+        #         }
+        #     )
+
+        #     # return the accepted info
+        #     return {'accepted': True,
+        #             'checked': True,
+        #             'visible': True
+        #            }
+        # else:
+        #     self.logger.debug(
+        #         "%s is not in the valid extensions list for Version creation", extension
+        #     )
+        #     return {"accepted": False}
 
     def validate(self, settings, item):
         """
@@ -194,8 +217,21 @@ class RenderPublish(HookBaseClass):
 
         :returns: True if item is valid, False otherwise.
         """
+        self.logger.debug('---Items---')
+        for prop, value in item.properties.iteritems():
+            self.logger.debug('\t%s: %s' % (prop, value))
+
+        self.logger.debug('---Settings---')
+        self.logger.debug(settings)
+        for setting, value in settings.iteritems():
+            self.logger.debug('\t%s: %s' % (setting, value.value))
+
+        self.thumb = item.get_thumbnail_as_path()
+        print self.thumb
+
 
         return True
+
 
     def publish(self, settings, item):
         """
@@ -209,26 +245,26 @@ class RenderPublish(HookBaseClass):
 
         publisher = self.parent
 
-        # allow the publish name to be supplied via the item properties. this is
-        # useful for collectors that have access to templates and can determine
-        # publish information about the item that doesn't require further, fuzzy
-        # logic to be used here (the zero config way)
-
-        publish_name = item.properties.get("publish_name")
-
         work_path = item.properties["path"]
-        publish_path = item.properties["publish_path"]
 
-        if not publish_name:
+        self.logger.debug("Using path info hook to determine publish name.")
 
-            self.logger.debug("Using path info hook to determine publish name.")
+        # use the path's filename as the publish name
+        path_components = publisher.util.get_file_path_components(work_path)
+        publish_name = path_components["filename"]
 
-            # use the path's filename as the publish name
-            path_components = publisher.util.get_file_path_components(work_path)
-            publish_name = path_components["filename"]
+        self.logger.debug("Publish name: %s", (publish_name,))
 
-        self.logger.debug("Publish name: %s" % (publish_name,))
+        # get the thumbnail that the user selected
+        self.thumb = item.get_thumbnail_as_path()
 
+        # set up for PublishedFile publish
+        published_file = self.publishPublishedFiles(item)
+
+        # move or copy the published files
+        self.moveOrCopyFiles(settings, item)
+
+        # set up for Version publish
         self.logger.info("Creating Version...")
 
         version_data = {
@@ -236,18 +272,10 @@ class RenderPublish(HookBaseClass):
             "code": publish_name,
             "description": item.description,
             "entity": self._get_version_entity(item),
-            "sg_task": item.context.task
+            "sg_task": item.context.task,
+            'published_files': [published_file],
+            "sg_path_to_frames": self.publish_path,
         }
-
-        # if "sg_publish_data" in item.properties:
-        # publish_data = item.properties["publish_path"]
-
-        # TODO: Need to add full enity hash for "published_files"
-
-        version_data["published_files"] = [item.properties["publish_path"]]
-
-        if settings["Link Local File"].value:
-            version_data["sg_path_to_frames"] = publish_path
 
         # log the version data for debugging
         self.logger.debug(
@@ -263,16 +291,74 @@ class RenderPublish(HookBaseClass):
 
         # Create the version
         version = publisher.shotgun.create("Version", version_data)
-        self.logger.info("Version created!")
+
+        self.logger.info("Version %s created!", publish_name)
+
+        self.uploadThumbnail(self.thumb, version['id'], "Version")
 
         # stash the version info in the item just in case
         item.properties["sg_version_data"] = version
 
-        thumb = item.get_thumbnail_as_path()
-        publish_folder = os.path.dirname(publish_path)
-        work_folder = os.path.dirname(work_path)
+        self.logger.info("Render Layer Version publish complete!")
 
-        #####################
+
+    def uploadThumbnail(self, path, entity_id, entity_type):
+        """Uploads thumbnail to shotgunfor specified entity
+        return: id of Attachment
+        """
+        if self.thumb is not None:
+            if os.path.exists(path):
+
+                try:
+                    self.logger.info("Uploading thumbnail...")
+                    thumbnail_id = self.parent.shotgun.upload_thumbnail(
+                        entity_type,
+                        entity_id,
+                        path
+                    )
+                except sgtk.TankError:
+                    self.logger.warn('Error uploading thumbnail to Shotgun: %s' % sgtk.TankError)
+
+            else:
+                self.logger.warn('Thumbnail path does not exist: %s' % path)
+        else:
+            self.logger.info('No thumbnail selected')
+
+
+    def publishPublishedFiles(self, item):
+        """publish all associated files and return a published file entity"""
+        publisher = self.parent
+
+        published_file_type = {'type': 'PublishedFileType', 'id': 2}
+        published_file_path = {'type': 'Attachment',
+                               'link_type': 'local',
+                               'local_path': self.publish_path,
+                              }
+
+        published_file_data = {
+            'project': item.context.project,
+            'entity':  item.context.entity,
+            'code': os.path.basename(self.publish_path),
+            'name': os.path.basename(self.publish_path),
+            'description': item.description,
+            'path': published_file_path,
+            'published_file_type': published_file_type,
+            'version_number': item.properties['version'],
+            }
+
+        sg_published_file = publisher.shotgun.create("PublishedFile", published_file_data)
+
+        self.uploadThumbnail(self.thumb, sg_published_file['id'], 'PublishedFile')
+
+        return sg_published_file
+
+
+    def moveOrCopyFiles(self, settings, item):
+        """Move or copy folders depending on settings """
+
+        work_folder = os.path.dirname(item.properties['path'])
+        publish_folder = os.path.dirname(self.publish_path)
+
         # Move or copy the work folders to publish area
         if settings["Move Files"].value:
             self.logger.info("Moving Folder...")
@@ -283,7 +369,7 @@ class RenderPublish(HookBaseClass):
                 sgtk.util.filesystem.move_folder(work_folder, publish_folder, folder_permissions=0755)
             except Exception, e:
                 raise Exception(
-                    "Failed to move work ffolder from '%s' to '%s'.\n%s" %
+                    "Failed to move work folder from '%s' to '%s'.\n%s" %
                     (work_folder, publish_folder, traceback.format_exc())
                 )
         else:
@@ -299,20 +385,7 @@ class RenderPublish(HookBaseClass):
                     "Failed to copy work folder from '%s' to '%s'.\n%s" %
                     (work_folder, publish_folder, traceback.format_exc())
                 )
-                
-        #####################
-        # Upload thumbnail if there is one created
-        if thumb:
-            # only upload thumb if we are not uploading the content. with
-            # uploaded content, the thumb is automatically extracted.
-            self.logger.info("Uploading thumbnail...")
-            self.parent.shotgun.upload_thumbnail(
-                "Version",
-                version["id"],
-                thumb
-            )
 
-        self.logger.info("Upload complete!")
 
     def finalize(self, settings, item):
         """
@@ -325,19 +398,30 @@ class RenderPublish(HookBaseClass):
         :param item: Item to process
         """
 
-        path = item.properties["path"]
+
         version = item.properties["sg_version_data"]
+        path = version['sg_path_to_frames']
 
         self.logger.info(
-            "Version uploaded for file: %s" % (path,),
+            "Version data: %s" % version,
             extra={
                 "action_show_in_shotgun": {
                     "label": "Show Version",
                     "tooltip": "Reveal the version in Shotgun.",
-                    "entity": version
+                    "entity": version}
                 }
+            )
+        self.logger.info(
+            "Version path: %s" % (path,),
+            extra={
+                "action_show_folder": {
+                    "label": "Show Folder",
+                    "tooltip": "Reveal the version in filesystem.",
+                    "path": path
+                    }
             }
         )
+
 
     def _get_version_entity(self, item):
         """

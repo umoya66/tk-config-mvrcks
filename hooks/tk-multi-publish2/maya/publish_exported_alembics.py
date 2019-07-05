@@ -73,14 +73,28 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
 
         # settings specific to this class
         maya_publish_settings = {
-            "Publish Template": {
+            "Camera Publish Template": {
                 "type": "template",
                 "default": None,
                 "description": "Template path for published work files. Should"
                                "correspond to a template defined in "
                                "templates.yml.",
             },
-            "Alembic Template": {
+            "Camera Working Template": {
+                "type": "template",
+                "default": None,
+                "description": "Template path for published work files. Should"
+                               "correspond to a template defined in "
+                               "templates.yml.",
+            },
+            "Alembic Publish Template": {
+                "type": "template",
+                "default": None,
+                "description": "Template path for work files. Should"
+                               "correspond to a template defined in "
+                               "templates.yml.",
+            },
+            "Alembic Working Template": {
                 "type": "template",
                 "default": None,
                 "description": "Template path for work files. Should"

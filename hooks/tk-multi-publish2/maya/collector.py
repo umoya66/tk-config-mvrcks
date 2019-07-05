@@ -63,7 +63,7 @@ class MayaSessionCollector(HookBaseClass):
                                "to publish plugins via the collected item's "
                                "properties. ",
             },
-            "Alembic Template": {
+            "Camera Work Template": {
                 "type": "template",
                 "default": None,
                 "description": "Template path for artist Alembic export work files. Should "
@@ -72,32 +72,50 @@ class MayaSessionCollector(HookBaseClass):
                                "to publish plugins via the collected item's "
                                "properties. ",
             },
-            "Publish Template": {
+            "Alembic Work Template": {
                 "type": "template",
                 "default": None,
-                "description": "Template path for published Alembic files. Should"
+                "description": "Template path for artist Alembic export work files. Should "
                                "correspond to a template defined in "
-                               "templates.yml.",
+                               "templates.yml. If configured, is made available"
+                               "to publish plugins via the collected item's "
+                               "properties. ",
             },
-            "File Types": {
-                "type": "list",
-                "default": [
-                    ["Alembic Cache", "abc"],
-                    ["Alembic Camera", "abc"],
-                    ["Alembic Geo", "abc"],
-                    ["Maya Scene", "ma", "mb"],
-                    ["Rendered Image", "dpx", "exr"],
-                    ["Texture", "tiff", "tx", "tga", "dds"],
-                    ["Image", "jpeg", "jpg", "png"],
-                    ["Movie", "mov", "mp4"],
-                ],
-                "description": (
-                    "List of file types to include. Each entry in the list "
-                    "is a list in which the first entry is the Shotgun "
-                    "published file type and subsequent entries are file "
-                    "extensions that should be associated."
-                )
+            "Render Work Template": {
+                "type": "template",
+                "default": None,
+                "description": "Template path for artist Alembic export work files. Should "
+                               "correspond to a template defined in "
+                               "templates.yml. If configured, is made available"
+                               "to publish plugins via the collected item's "
+                               "properties. ",
             },
+            # "Publish Template": {
+            #     "type": "template",
+            #     "default": None,
+            #     "description": "Template path for published Alembic files. Should"
+            #                    "correspond to a template defined in "
+            #                    "templates.yml.",
+            # },
+            # "File Types": {
+            #     "type": "list",
+            #     "default": [
+            #         ["Alembic Cache", "abc"],
+            #         ["Alembic Camera", "abc"],
+            #         ["Alembic Geo", "abc"],
+            #         ["Maya Scene", "ma", "mb"],
+            #         ["Rendered Image", "dpx", "exr"],
+            #         ["Texture", "tiff", "tx", "tga", "dds"],
+            #         ["Image", "jpeg", "jpg", "png"],
+            #         ["Movie", "mov", "mp4"],
+            #     ],
+            #     "description": (
+            #         "List of file types to include. Each entry in the list "
+            #         "is a list in which the first entry is the Shotgun "
+            #         "published file type and subsequent entries are file "
+            #         "extensions that should be associated."
+            #     )
+            # },
         }
 
         # update the base settings with these settings
@@ -128,9 +146,15 @@ class MayaSessionCollector(HookBaseClass):
 
         """
 
+        self.logger.debug('Collector Settings ---')
+        for k,v in settings.iteritems():
+            self.logger.debug('\t%s: %s' % (k, v.value))
+
         # create an item representing the current maya session
         item = self.collect_current_maya_session(settings, parent_item)
         project_root = item.properties["project_root"]
+
+
 
         # if we can determine a project root, collect other files to publish
         if project_root:
@@ -145,13 +169,17 @@ class MayaSessionCollector(HookBaseClass):
                     }
                 }
             )
+            
+            self.logger.debug('Collector Settings ---')
+            for k,v in settings.iteritems():
+                self.logger.debug('\t%s: %s' % (k, v.value))
 
             self.collect_playblasts(item, project_root)
             self.collect_alembic_exports(item, project_root)
             
             # look at the render layers to find rendered images on disk
             # self.collect_rendered_images(item, project_root)
-            self.collect_renders(item, project_root)
+            self.collect_renders(item, project_root, settings)
 
         else:
 
@@ -417,29 +445,32 @@ class MayaSessionCollector(HookBaseClass):
 
         geo_item.set_icon_from_path(icon_path)
 
-    def collect_renders(self, parent_item, project_root):
+    def collect_renders(self, parent_item, project_root, settings):
         """
         Creates items for Renders - ported from collect_playblasts.
 
         Looks for a 'project_root' property on the parent item, and if such
-        exists, look for movie files in a 'movies' subfolder.
+        exists, look for rendered sequences in the subfolder.
 
         :param parent_item: Parent Item instance
-        :param str project_root: The maya project root to search for playblasts
+        :param str project_root: The maya project root to search for renders
         """
 
         self.logger.info('-----Start collecting Renders -----')
 
         # get context
-        ctx = self.parent.context
+        # ctx = self.parent.context
 
         # get entity type
-        entity_type = ctx.entity['type'].lower()
+        # entity_type = ctx.entity['type'].lower()
 
         # get necessary templates
-        maya_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_work')
-        render_working_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_render')
-        render_publish_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_render_pub')
+        # maya_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_work')
+        maya_template_path = self.parent.get_template_by_name(settings["Work Template"].value)
+        # render_working_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_render')
+        render_working_template_path = self.parent.get_template_by_name(settings['Render Work Template'].value)
+        # render_publish_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_render_pub')
+        # render_publish_template_path = self.parent.get_template_by_name(settings.get('Render Publish Template'))
 
         # get current maya file path
         current_file_path = cmds.file(query=True, sn=True)
@@ -448,69 +479,42 @@ class MayaSessionCollector(HookBaseClass):
         path_fields = maya_template_path.validate_and_get_fields(current_file_path)
 
         seq = self.parent.get_template_by_name('SEQ')
-        self.logger.info('SEQ: %s' % seq)
+        self.logger.info('SEQ: %s', seq)
 
         self.logger.debug('Path fields: %s ' % path_fields)
-        # DEBUG: path_fields = {'Shot': u'Shot001', 'name': u'cone', 'extension': u'ma', 'Sequence': u'Seq001', 'Step': u'comp', 'version': 43} 
 
         if path_fields is None:
             self.logger.warn('No valid template paths')
             return
 
-        # self.logger.debug("Playblast working template path: %s" % (render_working_template_path))
-        # self.logger.debug(render_output_path)
-
-        # self.logger.info(
-        #         "Processing Playblasts exports folder: %s" % (render_exports_dir,),
-        #         extra={
-        #         "action_show_folder": {
-        #             "path": render_exports_dir
-        #         }
-        #     }
-        # )
-
-
         # process each render layer
         for layer in cmds.ls(type="renderLayer"):
 
-            self.logger.info("Processing render layer: %s" % (layer,))
+            self.logger.info("Processing render layer: %s", (layer,))
 
-            # # WARNING: This doesnt seem to properly transalate VRay render paths properly
-            # # use the render settings api to get a path where the frame number
-            # # spec is replaced with a '*' which we can use to glob
-            # (frame_glob,) = cmds.renderSettings(
-            #     genericFrameImageName="*",
-            #     fullPath=True,
-            #     layer=layer
-            # )
-
-            # see if there are any files on disk that match this pattern
-            # rendered_paths = glob.glob(frame_glob)
-           
             path_fields['layer'] = layer
-            # change SEQ value for file globbing
-            # path_fields['SEQ'] = "*"
 
             render_output_path = render_working_template_path.apply_fields(path_fields)
-            SEQ_key = render_working_template_path.keys['SEQ'].str_from_value()  # get the SEQ key value from tempate eg. "%04d"
 
-            self.logger.debug('SEQ: %s' % SEQ_key)
-        
-            render_exports_dir = os.path.dirname(render_output_path)
-            render_publish_path = render_publish_template_path.apply_fields(path_fields)
+            # get the SEQ key value from tempate eg. "%04d"
+            SEQ_key = render_working_template_path.keys['SEQ'].str_from_value()
 
-            self.logger.info('Render PAth: %s' % render_output_path)
-            # Render PAth: /mav/stor/prod/SandBox/sequences/Seq001/Shot001/comp/work/maya/images/Shot001_comp_cone_v044/RL_OCC/Shot001_comp_cone_v044_RL_OCC.%04d.exr
+            self.logger.debug('SEQ: %s', SEQ_key)
 
-            # need to replace the SEQ ke for proper file globbing
-            self.logger.debug('glob path: %s' % render_output_path.replace(SEQ_key, "*"))
+            # render_exports_dir = os.path.dirname(render_output_path)
+            # render_publish_path = render_publish_template_path.apply_fields(path_fields)
+
+            self.logger.info('Render Path: %s', render_output_path)
+
+            # we need to replace the SEQ key for proper file globbing
+            self.logger.debug('glob path: %s', render_output_path.replace(SEQ_key, "*"))
             frame_glob = glob.glob(render_output_path.replace(SEQ_key, "*"))
-            
-            self.logger.debug('frame glob: %s' % frame_glob)
+
+            self.logger.debug('frame glob: %s', frame_glob)
 
             # set up for publishing if we find frames
             if frame_glob:
-                item_info = self._get_item_info(os.path.basename(frame_glob[0]))
+                # item_info = self._get_item_info(os.path.basename(frame_glob[0]))
 
                 # allow the base class to collect and create the item. it knows how
                 # to handle movie files
@@ -525,16 +529,18 @@ class MayaSessionCollector(HookBaseClass):
                 item.name = "%s (Render Layer: %s)" % (item.name, layer)
                 # self.logger.debug('Render Name: %s' % item.name)
 
-                item.properties["publish_template"] = render_publish_template_path
-                item.properties["publish_path"] = render_publish_path
+                # item.properties["publish_template"] = render_publish_template_path
+                # item.properties["publish_path"] = render_publish_path
                 item.properties["frame_list"] = frame_glob
+                item.properties["publish_type"] = 'Rendered Image'
+                item.properties["version"] = path_fields['version']
+                item.properties["path"] = render_output_path
 
-                self.logger.debug('publish_path: %s' % item.properties['publish_path'])
+                # self.logger.debug('publish_path: %s' % item.properties['publish_path'])
             else:
                 self.logger.debug('No frames found')
 
         self.logger.info('-----End collecting Renders -----')
-
 
     def collect_playblasts(self, parent_item, project_root):
         """
@@ -600,108 +606,12 @@ class MayaSessionCollector(HookBaseClass):
             self.logger.debug('Movie Name: %s' % item.name)
             item.name = "%s (%s)" % (item.name, "playblast")
 
-            item.properties["publish_template"] = playblast_publish_template_path
-            item.properties["publish_path"] = playblast_publish_path
+            # item.properties["publish_template"] = playblast_publish_template_path
+            # item.properties["publish_path"] = playblast_publish_path
+            item.properties["publish_type"] = "Playblast"
 
-            self.logger.debug('publish_path: %s' % item.properties['publish_path'])
+            # self.logger.debug('publish_path: %s' % item.properties['publish_path'])
             
 
         self.logger.info('-----End collecting Playblast -----')
-
-#     def collect_rendered_images(self, parent_item, project_root):
-#         """
-#         Creates items for any rendered images that can be identified by
-#         render layers in the file.
-# 
-#         :param parent_item: Parent Item instance
-#         :return:
-#         """
-#         
-#         # TODO: copy code from playblast publish - although it needs to be fixed first
-#         # TODO: it seems that playblast and render collection data is being shared, files from both collections are showing up in the other.
-# 
-#         self.logger.info('-----Start collecting Renders -----')
-# 
-#         # iterate over defined render layers and query the render settings for
-#         # information about a potential render
-#         for layer in cmds.ls(type="renderLayer"):
-# 
-#             self.logger.info("Processing render layer: %s" % (layer,))
-# 
-#             # use the render settings api to get a path where the frame number
-#             # spec is replaced with a '*' which we can use to glob
-#             (frame_glob,) = cmds.renderSettings(
-#                 genericFrameImageName="*",
-#                 fullPath=True,
-#                 layer=layer
-#             )
-# 
-#             # see if there are any files on disk that match this pattern
-#             rendered_paths = glob.glob(frame_glob)
-# 
-#             if rendered_paths:
-#                 # we only need one path to publish, so take the first one and
-#                 # let the base class collector handle it
-#                 item = super(MayaSessionCollector, self)._collect_file(
-#                     parent_item,
-#                     rendered_paths[0],
-#                     frame_sequence=True
-#                 )
-# 
-#                 # the item has been created. update the display name to include
-#                 # the an indication of what it is and why it was collected
-#                 item.name = "%s (Render Layer: %s)" % (item.name, layer)
-
-#     def _collect_meshes(self, parent_item):
-#         """
-#         Collect mesh definitions and create publish items for them.
-# 
-#         Added this function from
-#         https://support.shotgunsoftware.com/hc/en-us/articles/219039938-Pipeline-Tutorial#Create%20a%20shader%20publish%20plugin
-# 
-#         :param parent_item: The maya session parent item
-#         """
-# 
-#         # build a path for the icon to use for each item. the disk
-#         # location refers to the path of this hook file. this means that
-#         # the icon should live one level above the hook in an "icons"
-#         # folder.
-# 
-#         icon_path = os.path.join(
-#             self.disk_location,
-#             os.pardir,
-#             "icons",
-#             "mesh.png"
-#         )
-# 
-#         # iterate over all top-level transforms and create mesh items
-#         # for any mesh.
-# 
-#         for object in cmds.ls(assemblies=True):
-# 
-#             if not cmds.ls(object, dag=True, type="mesh"):
-#                 # ignore non-meshes
-#                 continue
-# 
-#             # create a new item parented to the supplied session item. We
-#             # define an item type (maya.session.mesh) that will be
-#             # used by an associated shader publish plugin as it searches for
-#             # items to act upon. We also give the item a display type and
-#             # display name (the group name). In the future, other publish
-#             # plugins might attach to these mesh items to publish other things
-# 
-#             mesh_item = parent_item.create_item(
-#                 "maya.session.mesh",
-#                 "Mesh",
-#                 object
-#             )
-# 
-#             # set the icon for the item
-#             mesh_item.set_icon_from_path(icon_path)
-# 
-#             # finally, add information to the mesh item that can be used
-#             # by the publish plugin to identify and export it properly
-#             mesh_item.properties["object"] = object
-
-
 
