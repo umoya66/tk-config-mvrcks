@@ -227,6 +227,7 @@ settings.tk-multi-publish2.maya.shot_step:
       Camera Work Template: maya_shot_camera
       Alembic Work Template: maya_shot_alembic
       Render Work Template: maya_shot_render
+      Playblast Work Template: maya_shot_playblast
 
   publish_plugins:
   # - name: Publish to Shotgun

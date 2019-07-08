@@ -74,11 +74,6 @@ class RenderPublish(HookBaseClass):
                                "correspond to a template defined in "
                                "templates.yml.",
                                }, 
-                # "File Extensions": {
-                #     "type": "str",
-                #     "default": None,
-                #     "description": "File Extensions of files to include" 
-                #     }, 
                 "Move Files": {
                     "type": "bool",
                     "default": False,

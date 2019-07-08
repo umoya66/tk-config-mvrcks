@@ -80,7 +80,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
                                "correspond to a template defined in "
                                "templates.yml.",
             },
-            "Camera Working Template": {
+            "Camera Work Template": {
                 "type": "template",
                 "default": None,
                 "description": "Template path for published work files. Should"
@@ -94,12 +94,17 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
                                "correspond to a template defined in "
                                "templates.yml.",
             },
-            "Alembic Working Template": {
+            "Alembic Work Template": {
                 "type": "template",
                 "default": None,
                 "description": "Template path for work files. Should"
                                "correspond to a template defined in "
                                "templates.yml.",
+            },
+            "Move Files": {
+                "type": "bool",
+                "default": True,
+                "description": "Move or copy files to publish",
             }
         }
 
@@ -156,7 +161,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
             }
 
         else:
-            self.logger.info('No viable items')
+            self.logger.info('No viable Alembic files')
             return {
                 "accepted": False,
                 "checked": False,
@@ -175,8 +180,16 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         :returns: True if item is valid, False otherwise.
         """
 
+        self.logger.debug('---Items---')
+        for prop, value in item.properties.iteritems():
+            self.logger.debug('\t%s: %s' % (prop, value))
+
+        self.logger.debug('---Settings---')
+        for setting, value in settings.iteritems():
+            self.logger.debug('\t%s: %s' % (setting, value.value))
+
+
         publish_type = self.get_publish_type(settings, item)
-        self.logger.debug('Validate Publish Type: %s' % publish_type)
 
         # Get path of current maya file
         path = _session_path()
@@ -199,8 +212,15 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         alembic_path = sgtk.util.ShotgunPath.normalize(alembic_path)
 
         # get the configured work file template
-        work_template = item.properties.get("alembic_template")
-        publish_template = item.properties.get("publish_template")
+        if publish_type == 'Alembic Geo':
+            work_template = self.parent.get_template_by_name(settings['Alembic Work Template'].value)
+            publish_template = self.parent.get_template_by_name(settings['Alembic Publish Template'].value)
+        elif publish_type == 'Alembic Camera':
+            work_template = self.parent.get_template_by_name(settings['Camera Work Template'].value)
+            publish_template = self.parent.get_template_by_name(settings['Camera Publish Template'].value)
+        else:
+            self.logger.debug('Not valid Alembic')
+            return False
 
         # get the current scene path and extract fields from it using the work template:
         work_fields = work_template.get_fields(alembic_path)
@@ -217,6 +237,7 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         # properties. This is the path we'll create and then publish in the base
         # publish plugin. Also set the publish_path to be explicit.
         publish_path = publish_template.apply_fields(work_fields)
+        # set the properties for the next publish function
         item.properties["publish_path"] = publish_path
 
         # Check if published files exist
@@ -225,11 +246,11 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
             self.logger.error(error_msg)
             raise Exception(error_msg)
 
-        self.logger.debug("Work Path: %s" % (alembic_path))
-        self.logger.debug("Publish Path: %s" % (publish_path))
+        # self.logger.debug("Work Path: %s" % (alembic_path))
+        # self.logger.debug("Publish Path: %s" % (publish_path))
 
-        self.logger.debug("working template path: %s" % (work_template))
-        self.logger.debug("publish template path: %s" % (publish_template))
+        # self.logger.debug("working template path: %s" % (work_template))
+        # self.logger.debug("publish template path: %s" % (publish_template))
 
         return True
 

@@ -284,7 +284,6 @@ paths:
     maya_shot_publish:
         definition: '@shot_root/publish/maya/v{version}/scenes/{Shot}_{Step}_{name}_v{version}.{maya_extension}'
 
-
     # The location of maya work renders
     maya_shot_render_mov:
         definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.mov'
