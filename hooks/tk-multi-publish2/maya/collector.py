@@ -497,34 +497,35 @@ class MayaSessionCollector(HookBaseClass):
             playblast_exports_dir = os.path.dirname(playblast_output_path)
             # playblast_publish_path = playblast_publish_template_path.apply_fields(path_fields)
 
-        self.logger.info(
-            "Processing Playblasts exports folder: %s" % (playblast_exports_dir,),
-            extra={
-                "action_show_folder": {
-                    "path": playblast_exports_dir
+            self.logger.info(
+                "Processing Playblasts exports folder: %s" % (playblast_exports_dir,),
+                extra={
+                    "action_show_folder": {
+                        "path": playblast_exports_dir
+                    }
                 }
-            }
-        )
+            )
 
-        if os.path.exists(playblast_output_path):
-            # item_info = self._get_item_info(os.path.basename(playblast_output_path))
+            if os.path.exists(playblast_output_path):
+                # item_info = self._get_item_info(os.path.basename(playblast_output_path))
 
-            # self.logger.debug(item_info)
+                # self.logger.debug(item_info)
 
-            # allow the base class to collect and create the item. it knows how
-            # to handle movie files
-            # item = super(MayaSessionCollector, self)._collect_file(
-            #     parent_item,
-            #     playblast_output_path
-            # )
-            item = parent_item.create_item("file.video", "Playblast", os.path.basename(playblast_output_path))
+                # allow the base class to collect and create the item. it knows how
+                # to handle movie files
+                # item = super(MayaSessionCollector, self)._collect_file(
+                #     parent_item,
+                #     playblast_output_path
+                # )
+                item = parent_item.create_item("file.video", "Playblast", os.path.basename(playblast_output_path))
 
-            # the item has been created. update the display name to include
-            # the an indication of what it is and why it was collected
-            self.logger.debug('Playblast Movie Name: %s' % item.name)
-            item.name = "%s (%s)" % (item.name, "playblast")
+                # the item has been created. update the display name to include
+                # the an indication of what it is and why it was collected
+                self.logger.debug('Playblast Movie Name: %s' % item.name)
+                item.name = "%s (%s)" % (item.name, "playblast")
 
-            item.properties["publish_type"] = "Playblast"
+                item.properties["publish_type"] = "Playblast"
+                item.properties["path"] = playblast_output_path
 
         self.logger.info('-----End collecting Playblast -----')
 

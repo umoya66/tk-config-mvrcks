@@ -152,17 +152,6 @@ class MayaAlembicGeometryPublishPlugin(HookBaseClass):
         """
 
         publish_type = self.get_publish_type(settings, item)
-        publish_path = item.properties['publish_path']
-
-        if os.path.exists(publish_path):
-            error_msg = 'Published File already exists: %s' % (publish_path)
-            self.logger.error(error_msg,
-                              extra={"action_show_folder": {"path": os.path.dirname(publish_path)}})
-            return {
-                "accepted": False,
-                "checked": False,
-                'visible': True
-            }
 
         if publish_type == 'Alembic Geo' or publish_type == 'Alembic Camera':
             return {

@@ -175,10 +175,9 @@ class UploadVersionPlugin(HookBaseClass):
 
         playblast_work_template = self.parent.get_template_by_name(settings['Playblast Work Template'].value)
         publish_template = self.parent.get_template_by_name(settings['Playblast Publish Template'].value)
-
+        
         path_fields = playblast_work_template.validate_and_get_fields(item.properties['path'])
 
-        # publish_path = publish_template.apply_fields(path_fields)
         self.publish_path = publish_template.apply_fields(path_fields)
 
         file_path = item.properties["path"]
@@ -194,10 +193,10 @@ class UploadVersionPlugin(HookBaseClass):
         else:
             # log the accepted file and display a button to reveal it in the fs
             self.logger.info(
-                "Version upload plugin accepted: %s" % (path,),
+                "Version upload plugin accepted: %s" % (file_path,),
                 extra={
                     "action_show_folder": {
-                        "path": path
+                        "path": file_path
                     }
                 }
             )
@@ -248,8 +247,6 @@ class UploadVersionPlugin(HookBaseClass):
 
         publisher = self.parent
         path = item.properties["path"]
-        publish_path = item.properties['publish_path']
-        publish_name = item.properties.get("publish_name")
 
         # allow the publish name to be supplied via the item properties. this is
         # useful for collectors that have access to templates and can determine
@@ -262,7 +259,6 @@ class UploadVersionPlugin(HookBaseClass):
         path_components = publisher.util.get_file_path_components(path)
         publish_name = path_components["filename"]
 
-
         self.logger.info("Creating Version...")
         version_data = {
             "project": item.context.project,
@@ -272,12 +268,6 @@ class UploadVersionPlugin(HookBaseClass):
             "sg_task": item.context.task,
             'sg_path_to_movie': path
         }
-
-        # if "sg_publish_data" in item.properties:
-        #     publish_data = item.properties["sg_publish_data"]
-        #     version_data["published_files"] = [publish_data]
-
-        # version_data["sg_path_to_movie"] = path
 
         # log the version data for debugging
         self.logger.debug(
