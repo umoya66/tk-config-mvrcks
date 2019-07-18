@@ -1,7 +1,7 @@
 # Copyright (c) 2017 Shotgun Software Inc.
-# 
+
 # CONFIDENTIAL AND PROPRIETARY
-# 
+
 # This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
 # Source Code License included in this distribution package. See LICENSE.
 # By accessing, using, copying or modifying this work you indicate your 
@@ -10,40 +10,21 @@
 
 # this was the original "upload_version.py" from tk-multi-publish2/hooks
 
+import traceback
 import os
 import pprint
-import sys
-import traceback
 import sgtk
 import tank as sgtk
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
 
-class UploadVersionPlugin(HookBaseClass):
+class RenderPublish(HookBaseClass):
     """
     Plugin for sending quicktimes and images to shotgun for review.
     """
+    # NOTE: The plugin icon and name are defined by the base file plugin.
 
-    @property
-    def icon(self):
-        """
-        Path to an png icon on disk
-        """
-
-        # look for icon one level up from this hook's folder in "icons" folder
-        return os.path.join(
-            self.disk_location,
-            "icons",
-            "review.png"
-        )
-
-    @property
-    def name(self):
-        """
-        One line display name describing the plugin
-        """
-        return "Upload for review"
 
     @property
     def description(self):
@@ -52,23 +33,11 @@ class UploadVersionPlugin(HookBaseClass):
         contain simple html for formatting.
         """
 
-        publisher = self.parent
-
-        shotgun_url = publisher.sgtk.shotgun_url
-
-        media_page_url = "%s/page/media_center" % (shotgun_url,)
-        review_url = "https://www.shotgunsoftware.com/features/#review"
-
         return """
-        Upload a Maya Playblast to Shotgun for review.<br><br>
-
-        A <b>Version</b> entry will be created in Shotgun and a transcoded
-        copy of the file will be attached to it. The file can then be reviewed
-        via the project's <a href='%s'>Media</a> page, <a href='%s'>RV</a>, or
-        the <a href='%s'>Shotgun Review</a> mobile app.
-        """ % (media_page_url, review_url, review_url)
-
-        # TODO: when settings editable, describe upload vs. link
+        <p>This plugin publishes previously rendered Images for the current session. Please 
+        render your layers to the correct shotgun template in order for them to be published 
+        </p>
+        """
 
     @property
     def settings(self):
@@ -89,32 +58,31 @@ class UploadVersionPlugin(HookBaseClass):
         The type string should be one of the data types that toolkit accepts as
         part of its environment configuration.
         """
-        return {
-            "Upload": {
-                "type": "bool",
-                "default": True,
-                "description": "Upload content to Shotgun?"
-            },
-            "Playblast Publish Template": {
-                "type": "template",
-                "default": None,
-                "description": "Template path for published work files. Should"
+
+        maya_publish_settings = {
+                "Render Publish Template": {
+                    "type": "template",
+                    "default": None,
+                    "description": "Template path for published work files. Should"
                                "correspond to a template defined in "
                                "templates.yml.",
-            },
-            "Playblast Work Template": {
-                "type": "template",
-                "default": None,
-                "description": "Template path for work files. Should"
+                               },
+                "Render Work Template": {
+                    "type": "template",
+                    "default": None,
+                    "description": "Template path for work files. Should"
                                "correspond to a template defined in "
                                "templates.yml.",
-            },
-            "Move Files": {
-                "type": "bool",
-                "default": False,
-                "description": "Move files instead of copying them" 
-            }, 
-}
+                               }, 
+                "Move Files": {
+                    "type": "bool",
+                    "default": False,
+                    "description": "Move files instead of copying them" 
+                    }, 
+                }
+
+        return maya_publish_settings
+
 
     @property
     def item_filters(self):
@@ -126,8 +94,8 @@ class UploadVersionPlugin(HookBaseClass):
         ["maya.*", "file.maya"]
         """
 
-        # we use "video" since that's the mimetype category.
-        return ["file.video"]
+        # we use "image" since that's the mimetype category.
+        return ["file.image"]
 
     def accept(self, settings, item):
         """
@@ -155,51 +123,46 @@ class UploadVersionPlugin(HookBaseClass):
         :returns: dictionary with boolean keys accepted, required and enabled
         """
 
+        # We need to check to see if we've labelled this as a rendered image in teh collecotr as
+        # playblasts can get caught by this plugin
         if 'publish_type' in item.properties:
-            if item.properties['publish_type'] != 'Playblast':
-                self.logger.info('This is not a playblast')
+            if item.properties['publish_type'] != 'Rendered Image':
+                self.logger.info('This is not a Rendered Image')
                 return {
                     'accepted': False,
                     'checked': False,
                     'visible': False
                     }
 
-        self.logger.debug('---Items---')
-        for prop, value in item.properties.iteritems():
-            self.logger.debug('\t%s: %s' % (prop, value))
 
-        self.logger.debug('---Settings---')
-        for setting, value in settings.iteritems():
-            self.logger.debug('\t%s: %s' % (setting, value.value))
+        render_work_template = self.parent.get_template_by_name(settings['Render Work Template'].value)
+        publish_template = self.parent.get_template_by_name(settings['Render Publish Template'].value)
 
-        playblast_work_template = self.parent.get_template_by_name(settings['Playblast Work Template'].value)
-        publish_template = self.parent.get_template_by_name(settings['Playblast Publish Template'].value)
+        path_fields = render_work_template.validate_and_get_fields(item.properties['path'])
 
-        path_fields = playblast_work_template.validate_and_get_fields(item.properties['path'])
-
-        # publish_path = publish_template.apply_fields(path_fields)
+        # publish_template = item.properties['publish_template']
         self.publish_path = publish_template.apply_fields(path_fields)
 
+        # check that file is of correct type
         file_path = item.properties["path"]
 
         if os.path.exists(self.publish_path):
             error_msg = 'Published File already exists: %s' % (self.publish_path)
             self.logger.error(error_msg)
             return {
-                "accepted": False,
+                "accepted": True,
                 "checked": False,
-                'visible': False
+                'visible': True
                 }
         else:
-            # log the accepted file and display a button to reveal it in the fs
             self.logger.info(
                 "Version upload plugin accepted: %s" % (file_path,),
                 extra={
                     "action_show_folder": {
                         "path": file_path
+                        }
                     }
-                }
-            )
+                )
 
             # return the accepted info
             return {'accepted': True,
@@ -207,6 +170,34 @@ class UploadVersionPlugin(HookBaseClass):
                     'visible': True
                    }
 
+
+        # file_info = publisher.util.get_file_path_components(file_path)
+        # self.logger.debug("file_info: %s ", file_info)
+        # extension = file_info["extension"].lower()
+
+        # self.logger.debug("File extensions: %s", settings['File Extensions'].value)
+
+        # if extension in settings["File Extensions"].value:
+        #     # log the accepted file and display a button to reveal it in the fs
+        #     self.logger.info(
+        #         "Version upload plugin accepted: %s" % (file_path,),
+        #         extra={
+        #             "action_show_folder": {
+        #                 "path": file_path
+        #             }
+        #         }
+        #     )
+
+        #     # return the accepted info
+        #     return {'accepted': True,
+        #             'checked': True,
+        #             'visible': True
+        #            }
+        # else:
+        #     self.logger.debug(
+        #         "%s is not in the valid extensions list for Version creation", extension
+        #     )
+        #     return {"accepted": False}
 
     def validate(self, settings, item):
         """
@@ -230,7 +221,12 @@ class UploadVersionPlugin(HookBaseClass):
         for setting, value in settings.iteritems():
             self.logger.debug('\t%s: %s' % (setting, value.value))
 
+        self.thumb = item.get_thumbnail_as_path()
+        print self.thumb
+
+
         return True
+
 
     def publish(self, settings, item):
         """
@@ -243,39 +239,38 @@ class UploadVersionPlugin(HookBaseClass):
         """
 
         publisher = self.parent
-        path = item.properties["path"]
 
-        # allow the publish name to be supplied via the item properties. this is
-        # useful for collectors that have access to templates and can determine
-        # publish information about the item that doesn't require further, fuzzy
-        # logic to be used here (the zero config way)
-        # publish_name = item.properties.get("publish_name")
-        # if not publish_name:
+        work_path = item.properties["path"]
 
         self.logger.debug("Using path info hook to determine publish name.")
 
         # use the path's filename as the publish name
-        path_components = publisher.util.get_file_path_components(path)
+        path_components = publisher.util.get_file_path_components(work_path)
         publish_name = path_components["filename"]
 
+        self.logger.debug("Publish name: %s", (publish_name,))
 
-        self.logger.debug("Publish name: %s" % (publish_name,))
+        # get the thumbnail that the user selected
+        self.thumb = item.get_thumbnail_as_path()
 
+        # set up for PublishedFile publish
+        published_file = self.publishPublishedFiles(item)
+
+        # move or copy the published files
+        self.moveOrCopyFiles(settings, item)
+
+        # set up for Version publish
         self.logger.info("Creating Version...")
+
         version_data = {
             "project": item.context.project,
             "code": publish_name,
             "description": item.description,
             "entity": self._get_version_entity(item),
             "sg_task": item.context.task,
-            'sg_path_to_movie': path
+            'published_files': [published_file],
+            "sg_path_to_frames": self.publish_path,
         }
-
-        # if "sg_publish_data" in item.properties:
-        #     publish_data = item.properties["sg_publish_data"]
-        #     version_data["published_files"] = [publish_data]
-
-        # version_data["sg_path_to_movie"] = path
 
         # log the version data for debugging
         self.logger.debug(
@@ -291,42 +286,101 @@ class UploadVersionPlugin(HookBaseClass):
 
         # Create the version
         version = publisher.shotgun.create("Version", version_data)
-        self.logger.info("Version created!")
+
+        self.logger.info("Version %s created!", publish_name)
+
+        self.uploadThumbnail(self.thumb, version['id'], "Version")
 
         # stash the version info in the item just in case
         item.properties["sg_version_data"] = version
 
-        thumb = item.get_thumbnail_as_path()
+        self.logger.info("Render Layer Version publish complete!")
 
-        if settings["Upload"].value:
-            self.logger.info("Uploading content...")
 
-            # on windows, ensure the path is utf-8 encoded to avoid issues with
-            # the shotgun api
-            if sys.platform.startswith("win"):
-                upload_path = path.decode("utf-8")
+    def uploadThumbnail(self, path, entity_id, entity_type):
+        """Uploads thumbnail to shotgunfor specified entity
+        return: id of Attachment
+        """
+        if self.thumb is not None:
+            if os.path.exists(path):
+
+                try:
+                    self.logger.info("Uploading thumbnail...")
+                    thumbnail_id = self.parent.shotgun.upload_thumbnail(
+                        entity_type,
+                        entity_id,
+                        path
+                    )
+                except sgtk.TankError:
+                    self.logger.warn('Error uploading thumbnail to Shotgun: %s' % sgtk.TankError)
+
             else:
-                upload_path = path
+                self.logger.warn('Thumbnail path does not exist: %s' % path)
+        else:
+            self.logger.info('No thumbnail selected')
 
-            self.parent.shotgun.upload(
-                "Version",
-                version["id"],
-                upload_path,
-                "sg_uploaded_movie"
-            )
-        elif thumb:
-            # only upload thumb if we are not uploading the content. with
-            # uploaded content, the thumb is automatically extracted.
-            self.logger.info("Uploading thumbnail...")
-            self.parent.shotgun.upload_thumbnail(
-                "Version",
-                version["id"],
-                thumb
-            )
 
-        self.moveOrCopyFile(settings, item)
+    def publishPublishedFiles(self, item):
+        """publish all associated files and return a published file entity"""
+        publisher = self.parent
 
-        self.logger.info("Upload complete!")
+        published_file_type = {'type': 'PublishedFileType', 'id': 2}
+        published_file_path = {'type': 'Attachment',
+                               'link_type': 'local',
+                               'local_path': self.publish_path,
+                              }
+
+        published_file_data = {
+            'project': item.context.project,
+            'entity':  item.context.entity,
+            'code': os.path.basename(self.publish_path),
+            'name': os.path.basename(self.publish_path),
+            'description': item.description,
+            'path': published_file_path,
+            'published_file_type': published_file_type,
+            'version_number': item.properties['version'],
+            }
+
+        sg_published_file = publisher.shotgun.create("PublishedFile", published_file_data)
+
+        self.uploadThumbnail(self.thumb, sg_published_file['id'], 'PublishedFile')
+
+        return sg_published_file
+
+
+    def moveOrCopyFiles(self, settings, item):
+        """Move or copy folders depending on settings """
+
+        work_folder = os.path.dirname(item.properties['path'])
+        publish_folder = os.path.dirname(self.publish_path)
+
+        # Move or copy the work folders to publish area
+        if settings["Move Files"].value:
+            self.logger.info("Moving Folder...")
+
+            # move the directory
+            try:
+                sgtk.util.filesystem.ensure_folder_exists(publish_folder, permissions=0755)
+                sgtk.util.filesystem.move_folder(work_folder, publish_folder, folder_permissions=0755)
+            except Exception, e:
+                raise Exception(
+                    "Failed to move work folder from '%s' to '%s'.\n%s" %
+                    (work_folder, publish_folder, traceback.format_exc())
+                )
+        else:
+            self.logger.info("Copying Folder...")
+
+            # copy the directory
+            # util leaves the source directory empty
+            try:
+                sgtk.util.filesystem.ensure_folder_exists(publish_folder, permissions=0755)
+                sgtk.util.filesystem.copy_folder(work_folder, publish_folder, folder_permissions=0755)
+            except Exception, e:
+                raise Exception(
+                    "Failed to copy work folder from '%s' to '%s'.\n%s" %
+                    (work_folder, publish_folder, traceback.format_exc())
+                )
+
 
     def finalize(self, settings, item):
         """
@@ -339,19 +393,30 @@ class UploadVersionPlugin(HookBaseClass):
         :param item: Item to process
         """
 
-        path = item.properties["path"]
+
         version = item.properties["sg_version_data"]
+        path = version['sg_path_to_frames']
 
         self.logger.info(
-            "Version uploaded for file: %s" % (path,),
+            "Version data: %s" % version,
             extra={
                 "action_show_in_shotgun": {
                     "label": "Show Version",
                     "tooltip": "Reveal the version in Shotgun.",
-                    "entity": version
+                    "entity": version}
                 }
+            )
+        self.logger.info(
+            "Version path: %s" % (path,),
+            extra={
+                "action_show_folder": {
+                    "label": "Show Folder",
+                    "tooltip": "Reveal the version in filesystem.",
+                    "path": path
+                    }
             }
         )
+
 
     def _get_version_entity(self, item):
         """
@@ -364,40 +429,3 @@ class UploadVersionPlugin(HookBaseClass):
             return item.context.project
         else:
             return None
-
-
-    def moveOrCopyFile(self, settings, item):
-        """Move or copy folders depending on settings """
-
-        work_folder = os.path.dirname(item.properties['path'])
-        work_file = item.properties['path']
-        publish_folder = os.path.dirname(self.publish_path)
-
-        # Move or copy the work folders to publish area
-        if settings["Move Files"].value:
-            self.logger.info("Moving Folder...")
-
-            # move the directory
-            try:
-                sgtk.util.filesystem.ensure_folder_exists(publish_folder, permissions=0755)
-                sgtk.util.filesystem.copy_file(work_file, publish_folder, permissions=0755)
-                sgtk.util.filesystem.safe_delete_file(work_file)
-            except Exception, e:
-                raise Exception(
-                    "Failed to move work file from '%s' to '%s'.\n%s" %
-                    (work_file, publish_folder, traceback.format_exc())
-                )
-        else:
-            self.logger.info("Copying Folder...")
-
-            # copy the directory
-            # util leaves the source directory empty
-            try:
-                sgtk.util.filesystem.ensure_folder_exists(publish_folder, permissions=0755)
-                sgtk.util.filesystem.copy_file(work_file, publish_folder, permissions=0755)
-            except Exception, e:
-                raise Exception(
-                    "Failed to copy work folder from '%s' to '%s'.\n%s" %
-                    (work_folder, publish_folder, traceback.format_exc())
-                )
-
