@@ -106,23 +106,23 @@ keys:
     track:
         type: str
 
-    plate_extension:
-        type: str
-        choices:
-            dpx: DPX
-            exr: EXR
-            tif: Tiff
-            png: PNG
-            jpg: Jpeg
-            DNG: dng
-        default: exr
+        # plate_extension:
+        #     type: str
+        #     choices:
+        #         dpx: DPX
+        #         exr: EXR
+        #         tif: Tiff
+        #         png: PNG
+        #         jpg: Jpeg
+        #         DNG: dng
+        #     default: exr
 
-    qt_extension:
-        type: str
-        choices:
-            mov: Mov
-            m4v: M4V
-        default: mov
+        # qt_extension:
+        #     type: str
+        #     choices:
+        #         mov: Mov
+        #         m4v: M4V
+        #     default: mov
 
 
     # These are used for the Mari UDIM pipeline:
@@ -155,6 +155,16 @@ keys:
             mb: Maya Binary (.mb)
         default: ma
         alias: extension
+
+    render_extension:
+        type: str
+        choices: 
+            exr: EXR
+            dpx: DPX
+            jpg: JPEG
+            png: PNG
+        default: exr
+        alias: render
 
     layer:
         type: str
@@ -274,26 +284,29 @@ paths:
     maya_shot_publish:
         definition: '@shot_root/publish/maya/v{version}/scenes/{Shot}_{Step}_{name}_v{version}.{maya_extension}'
 
-
     # The location of maya work renders
-    maya_shot_render_exr:
-        definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
-    maya_shot_render_jpg:
-        definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
     maya_shot_render_mov:
         definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.mov'
-    maya_shot_render_dpx:
-        definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
+    maya_shot_render:
+        definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.{render_extension}'
+    # maya_shot_render_exr:
+    #     definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
+    # maya_shot_render_jpg:
+    #     definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
+    # maya_shot_render_dpx:
+    #     definition: '@shot_root/work/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
 
     # The location of maya publish renders
-    maya_shot_render_pub_exr:
-        definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
-    maya_shot_render_pub_jpg:
-        definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
     maya_shot_render_pub_mov:
         definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.mov'
-    maya_shot_render_pub_dpx:
-        definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
+    maya_shot_render_pub:
+        definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.{render_extension}'
+     # maya_shot_render_pub_exr:
+     #     definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.exr'
+     # maya_shot_render_pub_jpg:
+     #     definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.jpg'
+    # maya_shot_render_pub_dpx:
+    #     definition: '@shot_root/publish/maya/images/{Shot}_{Step}_{name}_v{version}/{layer}/{Shot}_{Step}_{name}_v{version}_{layer}.{SEQ}.dpx'
 
     maya_shot_alembic:
         definition: '@shot_root/work/maya/alembic/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].abc'
@@ -462,9 +475,9 @@ paths:
 
     # export of shot asset data from hiero
     hiero_plate_path:
-        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.{plate_extension}'
+        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.exr'
     hiero_render_path:
-        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.{qt_extension}'
+        definition: 'sequences/{Sequence}/{Shot}/plates/publish/{track}/v{version}/{Shot}_plates_{track}_v{version}.mov'
 
     ##########################################################################################
     # Asset pipeline

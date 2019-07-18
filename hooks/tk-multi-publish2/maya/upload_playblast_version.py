@@ -13,9 +13,9 @@
 import os
 import pprint
 import sys
-import sgtk
 import traceback
-import maya.cmds as cmds
+import sgtk
+import tank as sgtk
 
 HookBaseClass = sgtk.get_hook_baseclass()
 
@@ -90,23 +90,31 @@ class UploadVersionPlugin(HookBaseClass):
         part of its environment configuration.
         """
         return {
-            "File Extensions": {
-                "type": "str",
-                "default": "jpeg, jpg, png, mov, mp4",
-                "description": "File Extensions of files to include"
-            },
             "Upload": {
                 "type": "bool",
                 "default": True,
                 "description": "Upload content to Shotgun?"
             },
-            "Link Local File": {
-                "type": "bool",
-                "default": True,
-                "description": "Should the local file be referenced by Shotgun"
+            "Playblast Publish Template": {
+                "type": "template",
+                "default": None,
+                "description": "Template path for published work files. Should"
+                               "correspond to a template defined in "
+                               "templates.yml.",
             },
-
-        }
+            "Playblast Work Template": {
+                "type": "template",
+                "default": None,
+                "description": "Template path for work files. Should"
+                               "correspond to a template defined in "
+                               "templates.yml.",
+            },
+            "Move Files": {
+                "type": "bool",
+                "default": False,
+                "description": "Move files instead of copying them" 
+            }, 
+}
 
     @property
     def item_filters(self):
@@ -119,7 +127,7 @@ class UploadVersionPlugin(HookBaseClass):
         """
 
         # we use "video" since that's the mimetype category.
-        return ["file.image", "file.video"]
+        return ["file.video"]
 
     def accept(self, settings, item):
         """
@@ -147,94 +155,42 @@ class UploadVersionPlugin(HookBaseClass):
         :returns: dictionary with boolean keys accepted, required and enabled
         """
 
-        publisher = self.parent
-        # self.logger.debug(publisher)
-        # self.logger.debug(dir(publisher))
-        # publisher = ['_Application__engine', '_Application__instance_name', '_TankBundle__cache_location',
-        #               '_TankBundle__context', '_TankBundle__descriptor', '_TankBundle__environment',
-        #               '_TankBundle__frameworks', '_TankBundle__log', '_TankBundle__module_uid',
-        #               '_TankBundle__resolve_hook_expression', '_TankBundle__resolve_hook_path',
-        #               '_TankBundle__resolve_setting_value', '_TankBundle__settings', '_TankBundle__sg',
-        #               '_TankBundle__tk', '__class__', '__delattr__', '__dict__', '__doc__', '__format__',
-        #               '__getattribute__', '__hash__', '__init__', '__module__', '__new__', '__reduce__',
-        #               '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__',
-        #               '__weakref__', '_base_hooks', '_destroy_frameworks', '_get_engine_name', '_get_instance_name',
-        #               '_manager_class', '_set_context', '_set_instance_name', '_set_settings', '_util', 'base_hooks',
-        #               'cache_location', 'change_context', 'context', 'context_change_allowed', 'create_hook_instance',
-        #               'create_publish_manager', 'description', 'descriptor', 'destroy_app', 'disk_location',
-        #               'display_name', 'documentation_url', 'engine', 'ensure_folder_exists', 'event_engine',
-        #               'event_file_close', 'event_file_open', 'execute_hook', 'execute_hook_by_name',
-        #               'execute_hook_expression', 'execute_hook_method', 'frameworks', 'get_metrics_properties',
-        #               'get_project_cache_location', 'get_setting', 'get_setting_from', 'get_template',
-        #               'get_template_by_name', 'get_template_from', 'icon_256', 'import_module', 'init_app',
-        #               'instance_name', 'log_debug', 'log_error', 'log_exception', 'log_info', 'log_metric',
-        #               'log_warning', 'logger', 'name', 'post_context_change', 'post_engine_init',
-        #               'pre_context_change', 'settings', 'sgtk', 'shotgun', 'site_cache_location', 'style_constants',
-        #               'support_url', 'tank', 'util', 'version']
+        if 'publish_type' in item.properties:
+            if item.properties['publish_type'] != 'Playblast':
+                self.logger.info('This is not a playblast')
+                return {
+                    'accepted': False,
+                    'checked': False,
+                    'visible': False
+                    }
 
-        # self.logger.debug('settings: %s' % publisher.settings)
-        # settings = {'collector_settings': {'Work Template': 'maya_shot_work'},
+        self.logger.debug('---Items---')
+        for prop, value in item.properties.iteritems():
+            self.logger.debug('\t%s: %s' % (prop, value))
 
-        #             'publish_plugins': [{'hook': '{engine}/tk-multi-publish2/basic/start_version_control.py',
-        #                                  'name': 'Begin file versioning',
-        #                                  'settings': {}},
+        self.logger.debug('---Settings---')
+        for setting, value in settings.iteritems():
+            self.logger.debug('\t%s: %s' % (setting, value.value))
 
-        #                        {'hook': '{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session.py',
-        #                                  'name': 'Publish Session to Shotgun',
-        #                                  'settings': {'Publish Template': 'maya_shot_publish'}},
+        playblast_work_template = self.parent.get_template_by_name(settings['Playblast Work Template'].value)
+        publish_template = self.parent.get_template_by_name(settings['Playblast Publish Template'].value)
 
-        #                                 {'hook': '{config}/tk-multi-publish2/maya/upload_playblast_version.py',
-        #                                  'name': 'Publish Playblast',
-        #                                  'settings': {}},
+        path_fields = playblast_work_template.validate_and_get_fields(item.properties['path'])
 
-        #               {'hook': '{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py',
-        #                                  'name': 'Publish Exported Alembics',
-        #                                  'settings': {}}],
+        # publish_path = publish_template.apply_fields(path_fields)
+        self.publish_path = publish_template.apply_fields(path_fields)
 
-        #             'collector': '{self}/collector.py:{config}/tk-multi-publish2/maya/collector.py',
-        #             'help_url':
-        # 'https://support.shotgunsoftware.com/hc/en-us/articles/115000068574-Integrations-User-Guide#The%20Publisher'}
+        file_path = item.properties["path"]
 
-        # item = ['__class__', '__del__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__',
-        #         '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__',
-        #         '__sizeof__', '__slots__', '__str__', '__subclasshook__', '_active', '_allows_context_change',
-        #         '_children', '_context', '_created_temp_files', '_current_temp_file_path', '_description', '_enabled',
-        #         '_expanded', '_get_image', '_get_local_properties', '_get_type', '_global_properties', '_icon_path',
-        #         '_icon_pixmap', '_local_properties', '_name', '_parent', '_persistent', '_set_type', '_tasks',
-        #         '_thumbnail_enabled', '_thumbnail_explicit', '_thumbnail_path', '_thumbnail_pixmap', '_traverse_item',
-        #         '_type_display', '_type_spec', '_validate_image', '_visit_recursive',
-        #         'active', 'add_task', 'checked',
-        #         'children', 'clear_tasks', 'context', 'context_change_allowed', 'create_item', 'descendants',
-        #         'description', 'display_type', 'enabled', 'expanded', 'from_dict', 'get_property',
-        #         'get_thumbnail_as_path', 'icon', 'is_root', 'local_properties', 'name', 'parent', 'persistent',
-        #         'properties', 'remove_item', 'set_icon_from_path', 'set_thumbnail_from_path', 'tasks', 'thumbnail',
-        #         'thumbnail_enabled', 'thumbnail_explicit', 'to_dict', 'type', 'type_display', 'type_spec']
-
-        publish_path = item.properties['publish_path']
-        path = item.properties["path"]
-
-        if os.path.exists(publish_path):
-            error_msg = 'Published File already exists: %s' % publish_path
-            self.logger.error(error_msg,
-                              extra={"action_show_folder": {"path": os.path.dirname(publish_path)}})
+        if os.path.exists(self.publish_path):
+            error_msg = 'Published File already exists: %s' % (self.publish_path)
+            self.logger.error(error_msg)
             return {
                 "accepted": False,
                 "checked": False,
                 'visible': True
                 }
-
-        file_info = publisher.util.get_file_path_components(path)
-        extension = file_info["extension"].lower()
-
-        valid_extensions = []
-
-        for ext in settings["File Extensions"].value.split(","):
-            ext = ext.strip().lstrip(".")
-            valid_extensions.append(ext)
-
-        self.logger.debug("Valid extensions: %s" % valid_extensions)
-
-        if extension in valid_extensions:
+        else:
             # log the accepted file and display a button to reveal it in the fs
             self.logger.info(
                 "Version upload plugin accepted: %s" % (path,),
@@ -249,13 +205,8 @@ class UploadVersionPlugin(HookBaseClass):
             return {'accepted': True,
                     'checked': True,
                     'visible': True
-                    }
-        else:
-            self.logger.debug(
-                "%s is not in the valid extensions list for Version creation" %
-                (extension,)
-            )
-            return {"accepted": False}
+                   }
+
 
     def validate(self, settings, item):
         """
@@ -270,9 +221,14 @@ class UploadVersionPlugin(HookBaseClass):
 
         :returns: True if item is valid, False otherwise.
         """
+        self.logger.debug('---Items---')
+        for prop, value in item.properties.iteritems():
+            self.logger.debug('\t%s: %s' % (prop, value))
 
-        # TODO: Check that the file hasnt already been copied to the publish dir
-        # TODO: Check that the directory is writeable in this context
+        self.logger.debug('---Settings---')
+        self.logger.debug(settings)
+        for setting, value in settings.iteritems():
+            self.logger.debug('\t%s: %s' % (setting, value.value))
 
         return True
 
@@ -295,13 +251,17 @@ class UploadVersionPlugin(HookBaseClass):
         # useful for collectors that have access to templates and can determine
         # publish information about the item that doesn't require further, fuzzy
         # logic to be used here (the zero config way)
-        if not publish_name:
+        # publish_name = item.properties.get("publish_name")
+        # if not publish_name:
 
-            self.logger.debug("Using path info hook to determine publish name.")
+        self.logger.debug("Using path info hook to determine publish name.")
 
-            # use the path's filename as the publish name
-            path_components = publisher.util.get_file_path_components(path)
-            publish_name = path_components["filename"]
+        # use the path's filename as the publish name
+        path_components = publisher.util.get_file_path_components(path)
+        publish_name = path_components["filename"]
+
+
+        self.logger.debug("Publish name: %s" % (publish_name,))
 
         self.logger.info("Creating Version...")
         version_data = {
@@ -310,29 +270,14 @@ class UploadVersionPlugin(HookBaseClass):
             "description": item.description,
             "entity": self._get_version_entity(item),
             "sg_task": item.context.task,
+            'sg_path_to_movie': path
         }
 
-        self.logger.debug('version_data: %s' % version_data)
+        # if "sg_publish_data" in item.properties:
+        #     publish_data = item.properties["sg_publish_data"]
+        #     version_data["published_files"] = [publish_data]
 
-        # version_data = {
-        #     'project': {'type': 'Project',
-        #                 'name': 'SandBox',
-        #                 'id': 321},
-        #     'code': u'Shot001_comp_cone_v010_playblast.mov',
-        #     'sg_task': {'type': 'Task',
-        #                 'name': '2hrcomp',
-        #                 'id': 125080},
-        #     'description': None,
-        #     'entity': {'type': 'Shot',
-        #                'name': 'Shot001',
-        #                'id': 10559},
-        #     "published_files":  [
-        #         {'type': 'PublishedFile',
-        #          'id': 92936,
-        #          'name': 'Shot001_comp_cone_v002.ma'},
-        #         {'type': 'PublishedFile',
-        #          'id': 107144,
-        #          'name': 'Shot001_comp_cone_v011.ma'}]
+        # version_data["sg_path_to_movie"] = path
 
         # copy file to publish location
 
@@ -400,6 +345,8 @@ class UploadVersionPlugin(HookBaseClass):
                 thumb
             )
 
+        self.moveOrCopyFile(settings, item)
+
         self.logger.info("Upload complete!")
 
     def finalize(self, settings, item):
@@ -450,14 +397,38 @@ class UploadVersionPlugin(HookBaseClass):
             return None
 
 
-def _session_path():
-    """
-    Return the path to the current session
-    :return:
-    """
-    path = cmds.file(query=True, sn=True)
+    def moveOrCopyFile(self, settings, item):
+        """Move or copy folders depending on settings """
 
-    if isinstance(path, unicode):
-        path = path.encode("utf-8")
+        work_folder = os.path.dirname(item.properties['path'])
+        work_file = item.properties['path']
+        publish_folder = os.path.dirname(self.publish_path)
 
-    return path
+        # Move or copy the work folders to publish area
+        if settings["Move Files"].value:
+            self.logger.info("Moving Folder...")
+
+            # move the directory
+            try:
+                sgtk.util.filesystem.ensure_folder_exists(publish_folder, permissions=0755)
+                sgtk.util.filesystem.copy_file(work_file, publish_folder, permissions=0755)
+                sgtk.util.filesystem.safe_delete_file(work_file)
+            except Exception, e:
+                raise Exception(
+                    "Failed to move work file from '%s' to '%s'.\n%s" %
+                    (work_file, publish_folder, traceback.format_exc())
+                )
+        else:
+            self.logger.info("Copying Folder...")
+
+            # copy the directory
+            # util leaves the source directory empty
+            try:
+                sgtk.util.filesystem.ensure_folder_exists(publish_folder, permissions=0755)
+                sgtk.util.filesystem.copy_file(work_file, publish_folder, permissions=0755)
+            except Exception, e:
+                raise Exception(
+                    "Failed to copy work folder from '%s' to '%s'.\n%s" %
+                    (work_folder, publish_folder, traceback.format_exc())
+                )
+
