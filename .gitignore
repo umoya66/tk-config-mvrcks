@@ -7,6 +7,8 @@
 # core/shotgun.yml
 # tk-metadata
 
+# vim swp files
+*.swp
 
 # compiled python files
 *.py[co]
