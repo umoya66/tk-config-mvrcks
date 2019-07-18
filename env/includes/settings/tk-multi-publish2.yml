@@ -186,14 +186,31 @@ settings.tk-multi-publish2.maya.asset_step:
     settings:
         Publish Template: maya_asset_publish
 
+  # - name: Publish Session Geo to Shotgun
+  #   hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session_geometry.py"
+  #   settings:
+  #       Publish Template: asset_alembic_cache
+
+  # - name: Publish Shaders
+  #   hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_shader_network.py"
+  #   settings:
+  #     Publish Template: maya_shader_network_publish
+
   - name: Publish Playblast
     hook: "{config}/tk-multi-publish2/maya/upload_playblast_version.py"
     settings: {}
 
   - name: Publish Exported Alembics
     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-    # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     settings: {}
+
+  - name: Publish Renders
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_renders.py"
+    settings:
+      Publish Template: maya_asset_render_pub
+      Work Template: maya_asset_render
+      File Extensions: exr, dpx, tif
+      Move Files: True
 
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
@@ -202,10 +219,17 @@ settings.tk-multi-publish2.maya.asset_step:
 settings.tk-multi-publish2.maya.shot_step:
   collector: "{self}/collector.py:{config}/tk-multi-publish2/maya/collector.py"
   # collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
+  # These are the settings that the collector needs to find all the items it needs to.
+  # The publish plugins will take a similar set, but will have more settngs for its publishing 
+  # needs
   collector_settings:
       Work Template: maya_shot_work
-  publish_plugins:
+      Camera Work Template: maya_shot_camera
+      Alembic Work Template: maya_shot_alembic
+      Render Work Template: maya_shot_render
+      Playblast Work Template: maya_shot_playblast
 
+  publish_plugins:
   # - name: Publish to Shotgun
   #   hook: "{self}/publish_file.py"
   #   settings: {}
@@ -225,17 +249,33 @@ settings.tk-multi-publish2.maya.shot_step:
 
   - name: Publish Playblast
     hook: "{config}/tk-multi-publish2/maya/upload_playblast_version.py"
-    settings: {}
+    settings: 
+        Playblast Work Template: maya_shot_playblast
+        Playblast Publish Template: maya_shot_pub_playblast
+        Move Files: True
+        Upload: True
 
   - name: Publish Exported Alembics
     hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
     # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
-    settings: {}
+    settings: 
+        Camera Work Template: maya_shot_camera
+        Camera Publish Template: maya_shot_pub_camera
+        Alembic Work Template: maya_shot_alembic
+        Alembic Publish Template: maya_shot_pub_alembic
+        Move Files: True
+
+  - name: Publish Renders
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_renders.py"
+    settings:
+        Render Work Template: maya_shot_render
+        Render Publish Template: maya_shot_render_pub
+        Move Files: True
 
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
 
-  post_phase: "{config}/tk-multi-publish2/maya/post_phase.py"
+  # post_phase: "{config}/tk-multi-publish2/maya/post_phase.py"
 
 ################################################################################
 
