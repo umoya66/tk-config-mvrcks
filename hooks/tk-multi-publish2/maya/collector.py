@@ -319,7 +319,7 @@ class MayaSessionCollector(HookBaseClass):
                 # mesh_item.properties["publish_template"] = abc_publish_template_path
                 mesh_item.properties["publish_type"] = 'Alembic Geo'
 
-                    mesh_item.properties["publish_path"] = alembic_publish_path
+                mesh_item.properties["publish_path"] = alembic_publish_path
 
 
                 self.logger.info(
