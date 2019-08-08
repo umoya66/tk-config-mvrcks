@@ -11,7 +11,7 @@
 # Metadata defining the behaviour and requirements for this configuration
 
 # More verbose description of this item
-display_name: "CJW Project Config"
+display_name: "AHT Project Config"
 description: "A VFX Example Config and our default configuration."
 
 # Required minimum versions for this item to run
