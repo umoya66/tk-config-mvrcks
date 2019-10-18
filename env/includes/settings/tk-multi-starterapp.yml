@@ -1,0 +1,13 @@
+includes:
+- ../app_locations.yml
+
+settings.tk-multi-starterapp:
+  foo: bar
+
+settings.tk-multi-starterapp.project:
+  apps:
+    tk-multi-about:
+      location: "@apps.tk-multi-about.location"
+
+
+
