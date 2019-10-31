@@ -39,3 +39,8 @@ pip-log.txt
 
 .idea/
 .vscode/
+
+# OSX cruft
+._*
+.DS_Store
+
