@@ -11,7 +11,13 @@
 # Metadata defining the behaviour and requirements for this configuration
 
 # More verbose description of this item
+<<<<<<< HEAD
 display_name: "DM1 Default Config"
+||||||| merged common ancestors
+display_name: "SandBox Project Config"
+=======
+display_name: "Remaster of Shotgun Project Config"
+>>>>>>> master
 description: "A VFX Example Config and our default configuration."
 
 # Required minimum versions for this item to run
