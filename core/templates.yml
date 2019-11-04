@@ -273,7 +273,7 @@ paths:
     shot_publish_area_photoshop:
         definition: '@shot_root/publish/photoshop'
     photoshop_shot_publish:
-        definition: '@shot_root/publish/photoshop/{name}.v{version}.psd'
+        definition: '@shot_root/publish/photoshop/{Shot}_{Step}_{name}_v{version}.psd'
 
     #
     # After Effects
@@ -547,7 +547,8 @@ paths:
     asset_publish_area_photoshop:
         definition: '@asset_root/publish/photoshop'
     photoshop_asset_publish:
-        definition: '@asset_root/publish/photoshop/{name}.v{version}.psd'
+        definition: '@asset_root/publish/photoshop/{Asset}_{Step}_{name}.v{version}.psd'
+
 
     #
     # after effects
