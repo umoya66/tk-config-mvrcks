@@ -8,7 +8,7 @@
 # tk-metadata
 
 # vim swp files
-*.swp
+*.sw[po]
 
 # compiled python files
 *.py[co]
@@ -40,4 +40,10 @@ pip-log.txt
 .mr.developer.cfg
 
 .idea/
+
 .vscode/
+
+# OSX cruft
+._*
+.DS_Store
+
