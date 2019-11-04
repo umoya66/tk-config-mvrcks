@@ -248,3 +248,5 @@ settings.tk-multi-shotgunpanel.aftereffects:
       filters: {}
   actions_hook: "{engine}/tk-multi-shotgunpanel/basic/scene_actions.py"
   location: "@apps.tk-multi-shotgunpanel.location"
+
+
