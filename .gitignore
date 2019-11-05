@@ -40,7 +40,6 @@ pip-log.txt
 .mr.developer.cfg
 
 .idea/
-
 .vscode/
 
 # OSX cruft
