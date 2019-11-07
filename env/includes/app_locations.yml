@@ -29,7 +29,7 @@ apps.tk-multi-about.location:
 apps.tk-multi-breakdown.location:
   type: app_store
   name: tk-multi-breakdown
-  version: v1.5.0
+  version: v1.6.1
 
 # demo
 apps.tk-multi-demo.location:
@@ -41,19 +41,19 @@ apps.tk-multi-demo.location:
 apps.tk-multi-launchapp.location:
   type: app_store
   name: tk-multi-launchapp
-  version: v0.10.2
+  version: v0.10.3
 
 # loader2
 apps.tk-multi-loader2.location:
   type: app_store
   name: tk-multi-loader2
-  version: v1.19.2
+  version: v1.19.3
 
 # publish2
 apps.tk-multi-publish2.location:
   type: app_store
   name: tk-multi-publish2
-  version: v2.2.2
+  version: v2.3.9
 
 # pythonconsole
 apps.tk-multi-pythonconsole.location:
@@ -71,19 +71,19 @@ apps.tk-multi-reviewsubmission.location:
 apps.tk-multi-screeningroom.location:
   type: app_store
   name: tk-multi-screeningroom
-  version: v0.3.3
+  version: v0.3.4
 
 # setframerange
 apps.tk-multi-setframerange.location:
   type: app_store
   name: tk-multi-setframerange
-  version: v0.3.0
+  version: v0.4.0
 
 # shotgun panel
 apps.tk-multi-shotgunpanel.location:
     # type: app_store
     # name: tk-multi-shotgunpanel
-    # version: v1.6.1
+    # version: v1.6.4
   # type: dev
   # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
   # type: git
@@ -113,7 +113,7 @@ apps.tk-multi-workfiles.location:
 apps.tk-multi-workfiles2.location:
   type: app_store
   name: tk-multi-workfiles2
-  version: v0.11.8
+  version: v0.11.14
 
 # dev utils
 apps.tk-multi-devutils.location:
@@ -127,7 +127,12 @@ apps.tk-multi-devutils.location:
 apps.tk-shotgun-folders.location:
   # type: app_store
   # name: tk-shotgun-folders
-  # version: v0.1.6
+  # version: v0.1.7
+
+  # type: path
+  # windows_path: c:\path\to\app
+  # linux_path: /mav/stor/studio/systems/_shotgun/apps/tk-shotgun-folders
+  # mac_path: /mav/stor/studio/systems/_shotgun/apps/tk-shotgun-folders
 
   # type: path
   # windows_path: c:\path\to\app
@@ -172,7 +177,7 @@ apps.tk-shotgun-launchpublish.location:
 apps.tk-hiero-export.location:
   type: app_store
   name: tk-hiero-export
-  version: v0.5.1
+  version: v0.5.3
 
 # hiero openinshotgun
 apps.tk-hiero-openinshotgun.location:
@@ -192,7 +197,7 @@ apps.tk-houdini-alembicnode.location:
 apps.tk-houdini-mantranode.location:
   type: app_store
   name: tk-houdini-mantranode
-  version: v0.3.1
+  version: v0.3.0
 
 # ---- Nuke apps
 
@@ -206,10 +211,9 @@ apps.tk-nuke-quickreview.location:
 apps.tk-nuke-writenode.location:
   # name: tk-nuke-writenode
   # type: app_store
-  # version: v1.3.2
+  # version: v1.4.2
 
   # type: path
-  # # path: /array/users/mhatton/dev/tk-natron-writenode
   # windows_path: c:\path\to\app
   # linux_path: /mav/stor/studio/systems/_shotgun/apps/tk-nuke-writenode
   # mac_path: /mav/stor/studio/systems/_shotgun/apps/nuke-writenode
@@ -227,7 +231,7 @@ apps.tk-nuke-writenode.location:
 apps.tk-flame-export.location:
   name: tk-flame-export
   type: app_store
-  version: v1.9.2
+  version: v1.9.3
 
 # flame review
 apps.tk-flame-review.location:
