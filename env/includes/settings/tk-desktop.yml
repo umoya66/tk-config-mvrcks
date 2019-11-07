@@ -54,6 +54,8 @@ settings.tk-desktop.project:
     - "*Motion*"
     - "*Nuke*"
     - "*Photoshop*"
+    - "*After*"
+    - "*Effects*"
     - "*Blend*"
     name: Creative Tools
   - matches:
