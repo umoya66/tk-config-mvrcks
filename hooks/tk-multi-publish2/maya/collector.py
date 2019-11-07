@@ -409,25 +409,6 @@ class MayaSessionCollector(HookBaseClass):
         # get entity type
         # entity_type = ctx.entity['type'].lower()
 
-    def collect_renders(self, parent_item, project_root, settings):
-        """
-        Creates items for Renders - ported from collect_playblasts.
-
-        Looks for a 'project_root' property on the parent item, and if such
-        exists, look for rendered sequences in the subfolder.
-
-        :param parent_item: Parent Item instance
-        :param str project_root: The maya project root to search for renders
-        """
-
-        self.logger.info('-----Start collecting Renders -----')
-
-        # get context
-        # ctx = self.parent.context
-
-        # get entity type
-        # entity_type = ctx.entity['type'].lower()
-
         # get necessary templates
         # maya_template_path = self.parent.get_template_by_name('maya_' + entity_type + '_work')
         maya_template_path = self.parent.get_template_by_name(settings["Work Template"].value)
@@ -565,5 +546,6 @@ class MayaSessionCollector(HookBaseClass):
             item.name = "%s (%s)" % (item.name, "playblast")
 
             item.properties["publish_type"] = "Playblast"
+
         self.logger.info('-----End collecting Playblast -----')
 
