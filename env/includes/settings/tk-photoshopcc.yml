@@ -20,6 +20,7 @@ includes:
 - ./tk-multi-shotgunpanel.yml
 - ./tk-multi-snapshot.yml
 - ./tk-multi-workfiles2.yml
+- ./tk-desktop-timecard.yml
 
 ################################################################################
 
@@ -50,6 +51,9 @@ settings.tk-photoshopcc.asset_step:
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel.photoshop"
     tk-multi-snapshot: "@settings.tk-multi-snapshot.photoshop.asset_step"
     tk-multi-workfiles2: "@settings.tk-multi-workfiles2.photoshop.asset_step"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.asset_step"
   shelf_favorites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}
@@ -67,6 +71,9 @@ settings.tk-photoshopcc.project:
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel"
     tk-multi-workfiles2: "@settings.tk-multi-workfiles2"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.project"
   shelf_favorites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-workfiles2, name: File Save...}
@@ -100,6 +107,9 @@ settings.tk-photoshopcc.shot_step:
     tk-multi-shotgunpanel: "@settings.tk-multi-shotgunpanel.photoshop"
     tk-multi-snapshot: "@settings.tk-multi-snapshot.photoshop.shot_step"
     tk-multi-workfiles2: "@settings.tk-multi-workfiles2.photoshop.shot_step"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.shot_step"
   shelf_favorites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}

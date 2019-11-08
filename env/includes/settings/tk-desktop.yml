@@ -17,6 +17,7 @@ includes:
 - ./tk-multi-launchapp.yml
 - ./tk-multi-publish2.yml
 - ./tk-multi-screeningroom.yml
+- ./tk-desktop-timecard.yml
 
 ################################################################################
 
@@ -31,12 +32,18 @@ settings.tk-desktop.project:
   apps:
     tk-multi-pythonconsole:
       location: "@apps.tk-multi-pythonconsole.location"
+    tk-multi-devutils:
+      location: "@apps.tk-multi-devutils.location"
     tk-multi-launchapp: "@settings.tk-multi-launchapp"
     tk-multi-launchhiero: "@settings.tk-multi-launchapp.hiero"
     tk-multi-launchmari: "@settings.tk-multi-launchapp.mari"
     tk-multi-launchmotionbuilder: "@settings.tk-multi-launchapp.motionbuilder"
     tk-multi-publish2: "@settings.tk-multi-publish2.standalone"
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
+
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.project"
   groups:
   - matches:
     - "*Fla*"
@@ -47,6 +54,8 @@ settings.tk-desktop.project:
     - "*Motion*"
     - "*Nuke*"
     - "*Photoshop*"
+    - "*After*"
+    - "*Effects*"
     - "*Blend*"
     name: Creative Tools
   - matches:

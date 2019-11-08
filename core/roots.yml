@@ -41,7 +41,7 @@
 # core, this requirement has been lifted and the root can be named anything.
 # ------------------------------------------------------------------------------
 
-MavStorProd:
+primary:
 
     description: A top-level root folder for production data. Project folders
         will be created beneath this location.
@@ -54,6 +54,9 @@ MavStorProd:
 
     # indicates that this is the default storage root
     default: true
+    # shotgun_storage_id: 3
+    # TODO: restore storage ID
+    # shotgun_storage_id: 36
 
 # ------------------------------------------------------------------------------
 # Below is an example of a second storage root. This root would require a local

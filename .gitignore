@@ -1,12 +1,14 @@
 # ---- ignore special files written during config setup
 
-core/app_store.yml
-core/install_location.yml
-core/interpreter_*.cfg
-core/pipeline_configuration.yml
-core/shotgun.yml
-tk-metadata
+# core/app_store.yml
+# core/install_location.yml
+# core/interpreter_*.cfg
+# core/pipeline_configuration.yml
+# core/shotgun.yml
+# tk-metadata
 
+# vim swp files
+*.sw[po]
 
 # compiled python files
 *.py[co]
@@ -38,4 +40,10 @@ pip-log.txt
 .mr.developer.cfg
 
 .idea/
+
 .vscode/
+
+# OSX cruft
+._*
+.DS_Store
+

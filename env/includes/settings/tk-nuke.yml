@@ -18,12 +18,15 @@ includes:
 - ./tk-multi-breakdown.yml
 - ./tk-multi-loader2.yml
 - ./tk-multi-publish2.yml
+- ./tk-multi-setframerange.yml
 - ./tk-multi-reviewsubmission.yml
 - ./tk-multi-screeningroom.yml
 - ./tk-multi-shotgunpanel.yml
 - ./tk-multi-snapshot.yml
 - ./tk-multi-workfiles2.yml
 - ./tk-nuke-writenode.yml
+
+- ./tk-desktop-timecard.yml
 
 ################################################################################
 # Hiero
@@ -74,9 +77,6 @@ settings.tk-nuke.hiero.project:
     name: "File Open..."
   location: "@engines.tk-nuke.location"
   
-  # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
-
 ################################################################################
 # Nuke
 
@@ -101,6 +101,9 @@ settings.tk-nuke.asset_step:
       location: "@apps.tk-multi-about.location"
     tk-multi-breakdown:
       location: "@apps.tk-multi-breakdown.location"
+    tk-multi-setframerange:
+      location: "@apps.tk-multi-setframerange.location"
+    tk-multi-setframerange: "@settings.tk-multi-setframerange.nuke.asset_step"
     tk-multi-loader2: "@settings.tk-multi-loader2.nuke"
     tk-multi-publish2: "@settings.tk-multi-publish2.nuke.asset_step"
     tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.nuke.asset"
@@ -111,6 +114,9 @@ settings.tk-nuke.asset_step:
     tk-nuke-quickreview:
       location: "@apps.tk-nuke-quickreview.location"
     tk-nuke-writenode: "@settings.tk-nuke-writenode.asset"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.asset_step"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}
@@ -128,10 +134,14 @@ settings.tk-nuke.project:
     tk-multi-workfiles2: "@settings.tk-multi-workfiles2"
     tk-nuke-quickreview:
       location: "@apps.tk-nuke-quickreview.location"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.project"
+
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   location: "@engines.tk-nuke.location"
-  
+
   # set up default project colour space for Nuke
   project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
 
@@ -172,6 +182,8 @@ settings.tk-nuke.shot_step:
       location: "@apps.tk-multi-breakdown.location"
     tk-multi-setframerange:
       location: "@apps.tk-multi-setframerange.location"
+    tk-multi-setframerange: "@settings.tk-multi-setframerange.nuke.shot_step"
+
     tk-multi-loader2: "@settings.tk-multi-loader2.nuke"
     tk-multi-publish2: "@settings.tk-multi-publish2.nuke.shot_step"
     tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.nuke.shot"
@@ -182,6 +194,9 @@ settings.tk-nuke.shot_step:
     tk-nuke-quickreview:
       location: "@apps.tk-nuke-quickreview.location"
     tk-nuke-writenode: "@settings.tk-nuke-writenode.shot"
+    tk-desktop-timecard:
+      location: "@apps.tk-desktop-timecard.location"
+    tk-desktop-timecard: "@settings.tk-desktop-timecard.shot_step"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}
@@ -200,6 +215,8 @@ settings.tk-nuke.nukestudio.asset_step:
     tk-multi-setframerange:
       location: "@apps.tk-multi-setframerange.location"
     tk-multi-breakdown: "@settings.tk-multi-breakdown.nukestudio"
+    tk-multi-setframerange: "@settings.tk-multi-setframerange.nukestudio"
+
     tk-multi-loader2: "@settings.tk-multi-loader2.nukestudio"
     tk-multi-publish2: "@settings.tk-multi-publish2.nukestudio"
     tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.nuke.asset"
@@ -279,9 +296,6 @@ settings.tk-nuke.nukestudio.project:
   - app_instance: tk-multi-workfiles2
     name: File Open...
   location: '@engines.tk-nuke.location'
-  
-  # set up default project colour space for Nuke
-  project_colorspace: {int8Lut: sRGB, int16Lut: sRGB, logLut: AlexaV3LogC, floatLut: AlexaV3LogC}    
 
 # shot_step
 settings.tk-nuke.nukestudio.shot_step:
@@ -290,6 +304,7 @@ settings.tk-nuke.nukestudio.shot_step:
       location: "@apps.tk-multi-about.location"
     tk-multi-setframerange:
       location: "@apps.tk-multi-setframerange.location"
+    tk-multi-setframerange: "@settings.tk-multi-setframerange.nukestudio"
     tk-multi-breakdown: "@settings.tk-multi-breakdown.nukestudio"
     tk-multi-loader2: "@settings.tk-multi-loader2.nukestudio"
     tk-multi-publish2: "@settings.tk-multi-publish2.nukestudio"

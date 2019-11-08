@@ -160,51 +160,122 @@ settings.tk-multi-publish2.mari.asset_step:
 
 # asset step
 settings.tk-multi-publish2.maya.asset_step:
-  collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
+  # revision from
+  # https://support.shotgunsoftware.com/hc/en-us/articles/219039938-Pipeline-Tutorial#Override%20the%20Maya%20collector
+  collector: "{self}/collector.py:{config}/tk-multi-publish2/maya/collector.py"
+  # Original
+  # collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
   collector_settings:
       Work Template: maya_asset_work
   publish_plugins:
-  - name: Publish to Shotgun
-    hook: "{self}/publish_file.py"
-    settings: {}
-  - name: Upload for review
-    hook: "{self}/upload_version.py"
-    settings: {}
+
+  # - name: Publish to Shotgun
+  #   hook: "{self}/publish_file.py"
+  #   settings: {}
+
+  # - name: Upload for review
+  #   hook: "{self}/upload_version.py"
+  #   settings: {}
+
   - name: Begin file versioning
     hook: "{engine}/tk-multi-publish2/basic/start_version_control.py"
     settings: {}
-  - name: Publish to Shotgun
+
+  - name: Publish Session to Shotgun
     hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session.py"
     settings:
         Publish Template: maya_asset_publish
-  - name: Publish to Shotgun
-    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session_geometry.py"
+
+  # - name: Publish Session Geo to Shotgun
+  #   hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session_geometry.py"
+  #   settings:
+  #       Publish Template: asset_alembic_cache
+
+  # - name: Publish Shaders
+  #   hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_shader_network.py"
+  #   settings:
+  #     Publish Template: maya_shader_network_publish
+
+  - name: Publish Playblast
+    hook: "{config}/tk-multi-publish2/maya/upload_playblast_version.py"
+    settings: {}
+
+  - name: Publish Exported Alembics
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    settings: {}
+
+  - name: Publish Renders
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_renders.py"
     settings:
-        Publish Template: asset_alembic_cache
+      Publish Template: maya_asset_render_pub
+      Work Template: maya_asset_render
+      File Extensions: exr, dpx, tif
+      Move Files: True
+
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
 
 # shot step
 settings.tk-multi-publish2.maya.shot_step:
-  collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
+  collector: "{self}/collector.py:{config}/tk-multi-publish2/maya/collector.py"
+  # collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
+  # These are the settings that the collector needs to find all the items it needs to.
+  # The publish plugins will take a similar set, but will have more settngs for its publishing 
+  # needs
   collector_settings:
       Work Template: maya_shot_work
+      Camera Work Template: maya_shot_camera
+      Alembic Work Template: maya_shot_alembic
+      Render Work Template: maya_shot_render
+      Playblast Work Template: maya_shot_playblast
+
   publish_plugins:
-  - name: Publish to Shotgun
-    hook: "{self}/publish_file.py"
-    settings: {}
-  - name: Upload for review
-    hook: "{self}/upload_version.py"
-    settings: {}
+  # - name: Publish to Shotgun
+  #   hook: "{self}/publish_file.py"
+  #   settings: {}
+
+  # - name: Upload for review
+  #   hook: "{self}/upload_version.py"
+  #   settings: {}
+
   - name: Begin file versioning
     hook: "{engine}/tk-multi-publish2/basic/start_version_control.py"
     settings: {}
-  - name: Publish to Shotgun
+
+  - name: Publish Session to Shotgun
     hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_session.py"
     settings:
         Publish Template: maya_shot_publish
+
+  - name: Publish Playblast
+    hook: "{config}/tk-multi-publish2/maya/upload_playblast_version.py"
+    settings: 
+        Playblast Work Template: maya_shot_playblast
+        Playblast Publish Template: maya_shot_pub_playblast
+        Move Files: True
+        Upload: True
+
+  - name: Publish Exported Alembics
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    # hook: "{config}/tk-multi-publish2/maya/publish_exported_alembics.py"
+    settings: 
+        Camera Work Template: maya_shot_camera
+        Camera Publish Template: maya_shot_pub_camera
+        Alembic Work Template: maya_shot_alembic
+        Alembic Publish Template: maya_shot_pub_alembic
+        Move Files: True
+
+  - name: Publish Renders
+    hook: "{self}/publish_file.py:{config}/tk-multi-publish2/maya/publish_renders.py"
+    settings:
+        Render Work Template: maya_shot_render
+        Render Publish Template: maya_shot_render_pub
+        Move Files: True
+
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+
+  # post_phase: "{config}/tk-multi-publish2/maya/post_phase.py"
 
 ################################################################################
 
@@ -345,6 +416,85 @@ settings.tk-multi-publish2.photoshop.shot_step:
 
 ################################################################################
 
+# ---- After Effects
+
+# asset step
+settings.tk-multi-publish2.aftereffects.asset_step:
+  collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
+  collector_settings:
+      Work Template: aftereffects_asset_work
+  publish_plugins:
+  - name: Publish to Shotgun
+    hook: "{self}/publish_file.py"
+    settings: {}
+  - name: Upload for review
+    hook: "{self}/upload_version.py"
+    settings: {}
+  - name: Begin file versioning
+    hook: "{engine}/tk-multi-publish2/basic/start_version_control.py"
+    settings: {}
+  - name: Render Render Queue Items
+    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/make_rendering.py"
+    settings: {}
+  - name: Copy Renderings to Publish Location
+    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/copy_rendering.py"
+    settings:
+        Publish Sequence Template: aftereffects_asset_render_pub_mono
+        Publish Movie Template: aftereffects_asset_render_movie
+        Default Sequence Output Module: TIFF Sequence with Alpha
+        Default Movie Output Module: Lossless with Alpha
+  - name: Publish Renderings to Shotgun
+    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_rendering.py"
+    settings: {}
+  - name: Publish to Shotgun
+    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_document.py"
+    settings:
+        Publish Template: aftereffects_asset_publish
+  - name: Upload for review
+    hook: "{self}/upload_version.py:{engine}/tk-multi-publish2/basic/upload_version.py"
+    settings:
+        Movie Output Module: Lossless with Alpha
+  help_url: *help_url
+  location: "@apps.tk-multi-publish2.location"
+
+# shot_step
+settings.tk-multi-publish2.aftereffects.shot_step:
+  collector: "{self}/collector.py:{engine}/tk-multi-publish2/basic/collector.py"
+  collector_settings:
+      Work Template: aftereffects_shot_work
+  publish_plugins:
+  - name: Publish to Shotgun
+    hook: "{self}/publish_file.py"
+    settings: {}
+  - name: Begin file versioning
+    hook: "{engine}/tk-multi-publish2/basic/start_version_control.py"
+    settings: {}
+  - name: Render Render Queue Items
+    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/make_rendering.py"
+    settings: {}
+  - name: Copy Renderings to Publish Location
+    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/copy_rendering.py"
+    settings:
+        Publish Sequence Template: aftereffects_shot_render_pub_mono
+        Publish Movie Template: aftereffects_shot_render_movie
+        Default Sequence Output Module: TIFF Sequence with Alpha
+        Default Movie Output Module: Lossless with Alpha
+  - name: Publish Renderings to Shotgun
+    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_rendering.py"
+    settings: {}
+  - name: Publish to Shotgun
+    hook: "{self}/publish_file.py:{engine}/tk-multi-publish2/basic/publish_document.py"
+    settings:
+        Publish Template: aftereffects_shot_publish
+  - name: Upload for review
+    hook: "{self}/upload_version.py:{engine}/tk-multi-publish2/basic/upload_version.py"
+    settings:
+        Movie Output Module: Lossless with Alpha
+  help_url: *help_url
+  location: "@apps.tk-multi-publish2.location"
+
+################################################################################
+
 # ---- Motion Builder
 
 # asset_step
@@ -390,5 +540,6 @@ settings.tk-multi-publish2.motion_builder.shot_step:
       Publish Template: mobu_shot_publish
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+
 
 
