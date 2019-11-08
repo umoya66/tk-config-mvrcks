@@ -35,27 +35,16 @@ settings.tk-nuke-writenode.asset:
 settings.tk-nuke-writenode.shot:
   template_script_work: nuke_shot_work
   write_nodes:
-  - file_type: dpx
-    name: Delivery DPX
+  - file_type: exr
+    name: Delivery EXR
     promote_write_knobs: []
     proxy_publish_template:
     proxy_render_template:
-    publish_template: nuke_shot_render_pub_mono_dpx
-    render_template: nuke_shot_render_mono_dpx
-    settings: {datatype: 16 bit half, colorspace: SLog3}
+    publish_template: nuke_shot_render_pub_mono_exr
+    render_template: nuke_shot_render_mono_exr
+    settings: {datatype: 16 bit half, colorspace: linear}
     tank_type: Rendered Image
     tile_color: [26,26,256]
-
-    #   - file_type: exr
-    #     name: Delivery EXR
-    #     promote_write_knobs: []
-    #     proxy_publish_template:
-    #     proxy_render_template:
-    #     publish_template: nuke_shot_render_pub_mono_exr
-    #     render_template: nuke_shot_render_mono_exr
-    #     settings: {datatype: 16 bit half, colorspace: Slog3}
-    #     tank_type: Rendered Image
-    #     tile_color: [26,26,256]
 
   - file_type: tiff
     name: Roto Matte Tiff
@@ -64,27 +53,21 @@ settings.tk-nuke-writenode.shot:
     proxy_render_template:
     publish_template: nuke_shot_render_pub_mono_tif
     render_template: nuke_shot_render_mono_tif
-    settings: {datatype: 8 bit, colorspace: sRGB, channels: rgba }
+    settings: {datatype: 8 bit, colorspace: sRGB }
     tank_type: Rendered Image
     tile_color: [26,26,256]
 
-  - file_type: mov
-    name: Quicktime
-    proxy_publish_template:
-    proxy_render_template:
-    publish_template: nuke_shot_render_pub_mono_qt
-    render_template: nuke_shot_render_mono_qt
-    settings:
-        colorspace: rec709
-        file_type: mov
-        mov64_codec: AVdn
-        mov64_dnxhd_codec_profile: DNxHD 422 8-bit 36Mbit
-        mov64_fps: 23.98
-        mov64_write_timecode: true
-    tank_type: Quicktime
-    tile_color: []
-    promote_write_knobs: []
-
+#   - file_type: exr
+#     name: Stereo Exr, 32 bit
+#     proxy_publish_template:
+#     proxy_render_template:
+#     publish_template: nuke_shot_render_pub_stereo
+#     render_template: nuke_shot_render_stereo
+#     settings:
+#       datatype: 32 bit float
+#     tank_type: Rendered Image
+#     tile_color: []
+#     promote_write_knobs: []
 #   - file_type: exr
 #     name: Stereo Exr, 16 bit
 #     promote_write_knobs: []
