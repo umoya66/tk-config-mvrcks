@@ -44,6 +44,7 @@ settings.tk-nuke-writenode.shot:
     render_template: nuke_shot_render_mono_dpx
     settings: {datatype: 16 bit, colorspace: SLog3}
     tank_type: Rendered Image
+    promote_write_knobs: [datatype]
     tile_color: [26,26,256]
 
     #   - file_type: exr
