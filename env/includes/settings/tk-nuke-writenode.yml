@@ -35,14 +35,14 @@ settings.tk-nuke-writenode.asset:
 settings.tk-nuke-writenode.shot:
   template_script_work: nuke_shot_work
   write_nodes:
-  - file_type: exr
-    name: Delivery EXR
+  - file_type: dpx
+    name: Delivery DPX
     promote_write_knobs: []
     proxy_publish_template:
     proxy_render_template:
-    publish_template: nuke_shot_render_pub_mono_exr
-    render_template: nuke_shot_render_mono_exr
-    settings: {datatype: 16 bit half, colorspace: linear}
+    publish_template: nuke_shot_render_pub_mono_dpx
+    render_template: nuke_shot_render_mono_dpx
+    settings: {datatype: 16 bit , colorspace: Log3G10}
     tank_type: Rendered Image
     tile_color: [26,26,256]
 
@@ -56,6 +56,7 @@ settings.tk-nuke-writenode.shot:
     settings: {datatype: 8 bit, colorspace: sRGB }
     tank_type: Rendered Image
     tile_color: [26,26,256]
+
 
 #   - file_type: exr
 #     name: Stereo Exr, 32 bit
