@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Copyright (c) 2017 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
@@ -41,6 +42,11 @@ settings.tk-multi-setframerange.3dsmax.shot_step:
   location: "@apps.tk-multi-setframerange.location"
   sg_in_frame_field: "sg_head_in"
   sg_out_frame_field: "sg_tail_out"
+
+# asset
+settings.tk-multi-setframerange.3dsmax:
+  hook_frame_operation: "{engine}/tk-multi-setframerange/basic/frame_operations.py"
+  location: "@apps.tk-multi-setframerange.location"
 
 ################################################################################
 
@@ -140,5 +146,4 @@ settings.tk-multi-setframerange.motion_builder.shot_step:
   location: "@apps.tk-multi-setframerange.location"
   sg_in_frame_field: "sg_head_in"
   sg_out_frame_field: "sg_tail_out"
-
 
