@@ -16,6 +16,7 @@ includes:
 - ../engine_locations.yml
 - ./tk-multi-loader2.yml
 - ./tk-multi-publish2.yml
+- ./tk-multi-reviewsubmission.yml
 - ./tk-multi-screeningroom.yml
 - ./tk-multi-shotgunpanel.yml
 - ./tk-multi-snapshot.yml
@@ -54,6 +55,8 @@ settings.tk-photoshopcc.asset_step:
     tk-desktop-timecard:
       location: "@apps.tk-desktop-timecard.location"
     tk-desktop-timecard: "@settings.tk-desktop-timecard.asset_step"
+    tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.photoshop"
+
   shelf_favorites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}
@@ -110,6 +113,7 @@ settings.tk-photoshopcc.shot_step:
     tk-desktop-timecard:
       location: "@apps.tk-desktop-timecard.location"
     tk-desktop-timecard: "@settings.tk-desktop-timecard.shot_step"
+    tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.photoshop"
   shelf_favorites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}

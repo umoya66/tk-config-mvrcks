@@ -17,6 +17,7 @@ includes:
 - ./tk-multi-loader2.yml
 - ./tk-multi-publish2.yml
 - ./tk-multi-setframerange.yml
+- ./tk-multi-reviewsubmission.yml
 - ./tk-multi-screeningroom.yml
 - ./tk-multi-shotgunpanel.yml
 - ./tk-multi-snapshot.yml
@@ -57,6 +58,7 @@ settings.tk-maya.asset_step:
     tk-desktop-timecard:
       location: "@apps.tk-desktop-timecard.location"
     tk-desktop-timecard: "@settings.tk-desktop-timecard.asset_step"
+    tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.maya"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}
@@ -123,6 +125,7 @@ settings.tk-maya.shot_step:
     tk-desktop-timecard:
       location: "@apps.tk-desktop-timecard.location"
     tk-desktop-timecard: "@settings.tk-desktop-timecard.shot_step"
+    tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.maya"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   - {app_instance: tk-multi-snapshot, name: Snapshot...}
