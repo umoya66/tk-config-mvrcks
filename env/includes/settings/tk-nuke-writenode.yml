@@ -96,4 +96,3 @@ settings.tk-nuke-writenode.shot:
 #     tank_type: Rendered Image
 #     tile_color: []
   location: "@apps.tk-nuke-writenode.location"
-
