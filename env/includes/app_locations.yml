@@ -84,18 +84,20 @@ apps.tk-multi-shotgunpanel.location:
     # type: app_store
     # name: tk-multi-shotgunpanel
     # version: v1.6.4
-  # type: dev
-  # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
-  # type: git
-  # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
-  # version: v0.0.2
 
-  # Uploaded Shotgun config
-  type: shotgun
-  name: tk-multi-shotgunpanel  # UploadedApp Name field
-  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
-  field: sg_uploaded_config  # attachment field where payload can be found
-  version:  457161           # attachment id of particular attachment
+    # type: dev
+    # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
+
+    # type: git
+    # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
+    # version: v0.0.2
+
+    # Uploaded Shotgun config
+    type: shotgun
+    name: tk-multi-shotgunpanel  # UploadedApp Name field
+    entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+    field: sg_uploaded_config  # attachment field where payload can be found
+    version:  505316  # attachment id of particular attachment
 
 # snapshot
 apps.tk-multi-snapshot.location:
