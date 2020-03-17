@@ -63,9 +63,21 @@ apps.tk-multi-pythonconsole.location:
 
 # reviewsubmission
 apps.tk-multi-reviewsubmission.location:
-  type: app_store
-  name: tk-multi-reviewsubmission
-  version: v1.0.0
+    # type: app_store
+    # name: tk-multi-reviewsubmission
+    # version: v1.0.0
+
+    # type: dev
+    # path: /home/mhatton/dev/mvrcks/tk-multi-reviewsubmission
+    # version: v0.0.1
+
+  # Uploaded Shotgun config
+  type: shotgun
+  name: tk-multi-reviewsubmission  # UploadedApp Name field
+  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  field: sg_uploaded_config  # attachment field where payload can be found
+  version: 509825  # attachment id of particular attachment
+  
 
 # screeningroom
 apps.tk-multi-screeningroom.location:
