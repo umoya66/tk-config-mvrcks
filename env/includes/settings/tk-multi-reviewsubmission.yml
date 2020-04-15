@@ -26,8 +26,11 @@ settings.tk-multi-reviewsubmission.nuke.asset:
 # shot
 settings.tk-multi-reviewsubmission.nuke.shot:
   movie_path_template: nuke_shot_render_movie
-  slate_logo: icons/review_submit_logo.png
+  slate_logo: icons/mvrcks_review_submit_logo.png
   location: "@apps.tk-multi-reviewsubmission.location"
+  movie_height: 1080
+  movie_width: 1920
+
 
 # Maya Playblast
 settings.tk-multi-reviewsubmission.maya:

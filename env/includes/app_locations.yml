@@ -29,7 +29,7 @@ apps.tk-multi-about.location:
 apps.tk-multi-breakdown.location:
   type: app_store
   name: tk-multi-breakdown
-  version: v1.6.2
+  version: v1.7.0
 
 # demo
 apps.tk-multi-demo.location:
@@ -41,67 +41,81 @@ apps.tk-multi-demo.location:
 apps.tk-multi-launchapp.location:
   type: app_store
   name: tk-multi-launchapp
-  version: v0.11.1
+  version: v0.11.2
 
 # loader2
 apps.tk-multi-loader2.location:
   type: app_store
   name: tk-multi-loader2
-  version: v1.19.6
+  version: v1.20.2
 
 # publish2
 apps.tk-multi-publish2.location:
   type: app_store
   name: tk-multi-publish2
-  version: v2.4.1
+  version: v2.5.0
 
 # pythonconsole
 apps.tk-multi-pythonconsole.location:
   type: app_store
   name: tk-multi-pythonconsole
-  version: v1.1.2
+  version: v1.2.2
 
 # reviewsubmission
 apps.tk-multi-reviewsubmission.location:
-  type: app_store
-  name: tk-multi-reviewsubmission
-  version: v1.0.0
+    type: app_store
+    name: tk-multi-reviewsubmission
+    version: v1.0.3
+
+    # type: dev
+    # path: /home/mhatton/dev/mvrcks/tk-multi-reviewsubmission
+    # version: v0.0.1
+
+    # # Uploaded Shotgun config
+    # type: shotgun
+    # name: tk-multi-reviewsubmission  # UploadedApp Name field
+    # entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+    # field: sg_uploaded_config  # attachment field where payload can be found
+    # version: 509825  # attachment id of particular attachment
+  
 
 # screeningroom
 apps.tk-multi-screeningroom.location:
   type: app_store
   name: tk-multi-screeningroom
-  version: v0.3.4
+  version: v0.4.0
 
 # setframerange
 apps.tk-multi-setframerange.location:
   type: app_store
   name: tk-multi-setframerange
-  version: v0.4.0
+  version: v0.4.1
 
 # shotgun panel
 apps.tk-multi-shotgunpanel.location:
     # type: app_store
     # name: tk-multi-shotgunpanel
-    # version: v1.6.4
-  # type: dev
-  # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
-  # type: git
-  # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
-  # version: v0.0.2
+    # version: v1.7.1
 
-  # Uploaded Shotgun config
-  type: shotgun
-  name: tk-multi-shotgunpanel  # UploadedApp Name field
-  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
-  field: sg_uploaded_config  # attachment field where payload can be found
-  version:  457161           # attachment id of particular attachment
+    # type: dev
+    # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
+
+    # type: git
+    # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-multi-shotgunpanel.git
+    # version: v0.0.2
+
+    # Uploaded Shotgun config
+    type: shotgun
+    name: tk-multi-shotgunpanel  # UploadedApp Name field
+    entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+    field: sg_uploaded_config  # attachment field where payload can be found
+    version:  505316  # attachment id of particular attachment
 
 # snapshot
 apps.tk-multi-snapshot.location:
   type: app_store
   name: tk-multi-snapshot
-  version: v0.7.5
+  version: v0.8.0
 
 # workfiles (required for Mari)
 apps.tk-multi-workfiles.location:
@@ -113,7 +127,7 @@ apps.tk-multi-workfiles.location:
 apps.tk-multi-workfiles2.location:
   type: app_store
   name: tk-multi-workfiles2
-  version: v0.11.15
+  version: v0.12.2
 
 # dev utils
 apps.tk-multi-devutils.location:
@@ -191,13 +205,13 @@ apps.tk-hiero-openinshotgun.location:
 apps.tk-houdini-alembicnode.location:
   type: app_store
   name: tk-houdini-alembicnode
-  version: v0.3.1
+  version: v0.4.0
 
 # houdini mantranode
 apps.tk-houdini-mantranode.location:
   type: app_store
   name: tk-houdini-mantranode
-  version: v0.3.0
+  version: v0.4.0
 
 # ---- Nuke apps
 
