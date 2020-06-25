@@ -235,9 +235,10 @@ paths:
     #
     # These don't require the standard formatting (with definition and root_name) because they
     # will be set within each template that uses the alias.
-    shot_root: sequences/{Sequence}/{Shot}/{Step}
+    # shot_root: sequences/{Sequence}/{Shot}/{Step}
+    shot_root: Episodes/{Episode}/{Sequence}/{Shot}/{Step}
     asset_root: assets/{sg_asset_type}/{Asset}/{Step}
-    sequence_root: sequences/{Sequence}
+    sequence_root: Episodes/{Episode}/{Sequence}
 
 
     ##########################################################################################
@@ -250,17 +251,21 @@ paths:
 
     # The location of WIP files
     hiero_project_work:
-        definition: 'editorial/work/{thisProject}_{name}_v{version}.hrox'
+        definition: 'editorial/{thisProject}_{name}_v{version}.hrox'
+        root_name: work
     hiero_project_work_area:
-        definition: 'editorial/work'
+        definition: 'editorial'
+        root_name: work
     # The location of backups of WIP files
     hiero_project_snapshot:
         definition: 'editorial/work/snapshots/{thisProject}_{name}_v{version}_{timestamp}.hrox'
     # The location of published hiero files
     hiero_project_publish:
-        definition: 'editorial/publish/{thisProject}_{name}_v{version}.hrox'
+        definition: 'editorial/{thisProject}_{name}_v{version}.hrox'
+        root_name: publish
     hiero_project_publish_area:
-        definition: 'editorial/publish'
+        definition: 'editorial'
+        root_name: publish
 
 
     ##########################################################################################
@@ -486,25 +491,32 @@ paths:
 
     # define the location of a work area
     shot_work_area_nuke:
-        definition: '@shot_root/work/nuke'
+        definition: '@shot_root/nuke'
+        root_name: work
     # define the location of a publish area
     shot_publish_area_nuke:
         definition: '@shot_root/publish/nuke'
+        root_name: publish
     # The location of WIP script files
     nuke_shot_work:
-        definition: '@shot_root/work/nuke/{Shot}_{Step}_{name}_v{version}.nk'
+        definition: '@shot_root/nuke/{Shot}_{Step}_{name}_v{version}.nk'
+        root_name: work
     # The location of backups of WIP files
     nuke_shot_snapshot:
-        definition: '@shot_root/work/nuke/snapshots/{Shot}_{Step}_{name}_v{version}.{timestamp}.nk'
+        definition: '@shot_root/nuke/snapshots/{Shot}_{Step}_{name}_v{version}.{timestamp}.nk'
+        root_name: work
     # The location of published nuke script files
     nuke_shot_publish:
         definition: '@shot_root/publish/nuke/{Shot}_{Step}_{name}_v{version}.nk'
+        root_name: publish
 
     # write node outputs
     nuke_shot_render_mono_dpx:
-        definition:  '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
+        definition:  '@shot_root/nuke/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
+        root_name: work
     nuke_shot_render_pub_mono_dpx:
-        definition: '@shot_root/publish/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
+        definition: '@shot_root/nuke/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dpx'
+        root_name: publish
 
     nuke_shot_render_mono_exr:
         definition:  '@shot_root/work/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
