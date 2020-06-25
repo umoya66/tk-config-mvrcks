@@ -29,7 +29,7 @@ apps.tk-multi-about.location:
 apps.tk-multi-breakdown.location:
   type: app_store
   name: tk-multi-breakdown
-  version: v1.7.0
+  version: v1.7.1
 
 # demo
 apps.tk-multi-demo.location:
@@ -53,19 +53,19 @@ apps.tk-multi-loader2.location:
 apps.tk-multi-publish2.location:
   type: app_store
   name: tk-multi-publish2
-  version: v2.5.0
+  version: v2.5.3
 
 # pythonconsole
 apps.tk-multi-pythonconsole.location:
   type: app_store
   name: tk-multi-pythonconsole
-  version: v1.2.2
+  version: v1.2.3
 
 # reviewsubmission
 apps.tk-multi-reviewsubmission.location:
     type: app_store
     name: tk-multi-reviewsubmission
-    version: v1.0.3
+    version: v1.1.1
 
     # type: dev
     # path: /home/mhatton/dev/mvrcks/tk-multi-reviewsubmission
@@ -77,7 +77,6 @@ apps.tk-multi-reviewsubmission.location:
     # entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
     # field: sg_uploaded_config  # attachment field where payload can be found
     # version: 509825  # attachment id of particular attachment
-  
 
 # screeningroom
 apps.tk-multi-screeningroom.location:
@@ -115,7 +114,7 @@ apps.tk-multi-shotgunpanel.location:
 apps.tk-multi-snapshot.location:
   type: app_store
   name: tk-multi-snapshot
-  version: v0.8.0
+  version: v0.8.1
 
 # workfiles (required for Mari)
 apps.tk-multi-workfiles.location:
@@ -133,7 +132,7 @@ apps.tk-multi-workfiles2.location:
 apps.tk-multi-devutils.location:
   type: app_store
   name: tk-multi-devutils
-  version: v1.0.0
+  version: v1.1.0
 
 # ---- Shotgun apps
 
@@ -205,13 +204,13 @@ apps.tk-hiero-openinshotgun.location:
 apps.tk-houdini-alembicnode.location:
   type: app_store
   name: tk-houdini-alembicnode
-  version: v0.4.0
+  version: v0.4.1
 
 # houdini mantranode
 apps.tk-houdini-mantranode.location:
   type: app_store
   name: tk-houdini-mantranode
-  version: v0.4.0
+  version: v0.4.1
 
 # ---- Nuke apps
 
