@@ -247,9 +247,9 @@ paths:
     sequence_root_wip: wip/sequences/{Sequence}
     sequence_root_tmp: tmp/sequences/{Sequence}
 
-    shot_root_pub: pub/sequences/{Sequence/{Shot}/{Step}
-    shot_root_wip: wip/sequences/{Sequence/{Shot}/{Step}
-    shot_root_tmp: tmp/sequences/{Sequence/{Shot}/{Step}
+    shot_root_pub: pub/sequences/{Sequence}/{Shot}/{Step}
+    shot_root_wip: wip/sequences/{Sequence}/{Shot}/{Step}
+    shot_root_tmp: tmp/sequences/{Sequence}/{Shot}/{Step}
     # shot_root: sequences/{Sequence}/{Shot}/{Step}
 
 
