@@ -1,0 +1,7 @@
+
+# Example of a .symlink.yml file
+
+# A target parameter is required.
+target: "../../../../../../../tmp/sequences/$Sequence/$Shot/$Step/tmp/houdini/ifds/"
+
+

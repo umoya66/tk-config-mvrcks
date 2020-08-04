@@ -370,7 +370,7 @@ paths:
         definition: '@shot_root_wip/work/maya/scenes/snapshots/{Shot}_{Step}_{name}_v{version}.{timestamp}.{maya_extension}'
     # The location of published maya files
     maya_shot_publish:
-        definition: '@shot_root_pub/publish/maya/v{version}/scenes/{Shot}_{Step}_{name}_v{version}.{maya_extension}'
+        definition: '@shot_root_pub/publish/maya/scenes/{Shot}_{Step}_{name}_v{version}.{maya_extension}'
 
     # The location of maya work renders
     maya_shot_render_mov:
