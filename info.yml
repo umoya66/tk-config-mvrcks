@@ -11,7 +11,7 @@
 # Metadata defining the behaviour and requirements for this configuration
 
 # More verbose description of this item
-display_name: "TWMD Project Config"
+display_name: "TWWMD Project Config"
 description: "A VFX Config and our default configuration - based on pubwip"
 
 # Required minimum versions for this item to run
