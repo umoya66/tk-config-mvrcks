@@ -406,6 +406,11 @@ paths:
     maya_shot_pub_camera:
         definition: '@shot_root_pub/publish/maya/alembic/{Shot}_{Step}_{name}_v{version}/camera/{Shot}_{Step}_{name}_v{version}[_{grp_name}].abc'
 
+	maya_shot_usd:
+        definition: '@shot_root_wip/work/maya/usd/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].usd'
+    maya_shot_pub_usd:
+        definition: '@shot_root_pub/publish/maya/usd/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].usd'
+
     # Maya playblasts
     maya_shot_playblast:
         definition: '@shot_root_wip/work/maya/movies/{Shot}_{Step}_{name}_v{version}_playblast.mov'
