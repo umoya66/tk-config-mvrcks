@@ -412,7 +412,7 @@ paths:
         definition: '@shot_root_pub/publish/maya/usd/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].usd'
 
     # Maya playblasts
-    maya_shot_playblast:
+    maya_shot_playblast:  
         definition: '@shot_root_wip/work/maya/movies/{Shot}_{Step}_{name}_v{version}_playblast.mov'
     maya_shot_pub_playblast:
         definition: '@shot_root_pub/publish/maya/movies/{Shot}_{Step}_{name}_v{version}_playblast.mov'
