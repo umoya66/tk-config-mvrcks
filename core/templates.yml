@@ -417,7 +417,6 @@ paths:
     maya_shot_pub_playblast:
         definition: '@shot_root_pub/publish/maya/movies/{Shot}_{Step}_{name}_v{version}_playblast.mov'
 
-
     #
     # Houdini
     #
