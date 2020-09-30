@@ -42,6 +42,7 @@ keys:
     name:
         type: str
         filter_by: alphanumeric
+
     iteration:
         type: int
     version:
@@ -406,17 +407,16 @@ paths:
     maya_shot_pub_camera:
         definition: '@shot_root_pub/publish/maya/alembic/{Shot}_{Step}_{name}_v{version}/camera/{Shot}_{Step}_{name}_v{version}[_{grp_name}].abc'
 
-	maya_shot_usd:
-        definition: '@shot_root_wip/work/maya/usd/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].usd'
-    maya_shot_pub_usd:
-        definition: '@shot_root_pub/publish/maya/usd/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].usd'
+    maya_shot_usd:
+        definition: '@shot_root_wip/work/maya/usd/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].usd'
+    maya_shot_pub_usd:
+        definition: '@shot_root_pub/publish/maya/usd/{Shot}_{Step}_{name}_v{version}/geo/{Shot}_{Step}_{name}_v{version}[_{grp_name}].usd'
 
     # Maya playblasts
     maya_shot_playblast:
         definition: '@shot_root_wip/work/maya/movies/{Shot}_{Step}_{name}_v{version}_playblast.mov'
     maya_shot_pub_playblast:
         definition: '@shot_root_pub/publish/maya/movies/{Shot}_{Step}_{name}_v{version}_playblast.mov'
-
 
     #
     # Houdini
@@ -566,6 +566,13 @@ paths:
         # root_name: work
     nuke_shot_render_pub_stereo:
         definition: '@shot_root_pub/publish/nuke/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_{eye}_v{version}.{SEQ}.exr'
+        # root_name: publish
+
+    nuke_shot_precomp_mono_exr:
+        definition:  '@shot_root_wip/work/nuke/renders/precomp/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
+        # root_name: work
+    nuke_shot_precomp_pub_mono_exr:
+        definition: '@shot_root_pub/publish/nuke/renders/precomp/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
         # root_name: publish
 
     # review output
