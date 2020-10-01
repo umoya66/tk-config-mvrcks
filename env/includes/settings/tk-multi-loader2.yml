@@ -33,7 +33,8 @@ settings.tk-multi-loader2.3dsmaxplus: &settings_tk-multi-loader2_3dsmaxplus
     entity_type: Shot
     filters:
     - [project, is, '{context.project}']
-    hierarchy: [sg_sequence, code]
+      # hierarchy: [sg_sequence, code]
+    hierarchy: [sg_episode, sg_sequence, code]
   - caption: My Tasks
     entity_type: Task
     filters:
@@ -95,7 +96,8 @@ settings.tk-multi-loader2.houdini:
     entity_type: Shot
     filters:
     - [project, is, '{context.project}']
-    hierarchy: [sg_sequence, code]
+      # hierarchy: [sg_sequence, code]
+    hierarchy: [sg_episode, sg_sequence, code]
   - caption: My Tasks
     entity_type: Task
     filters:
@@ -165,7 +167,8 @@ settings.tk-multi-loader2.maya:
     entity_type: Shot
     filters:
     - [project, is, "{context.project}"]
-    hierarchy: [sg_sequence, code]
+      # hierarchy: [sg_sequence, code]
+    hierarchy: [sg_episode, sg_sequence, code]
 
   - caption: My Tasks
     entity_type: Task
@@ -207,7 +210,8 @@ settings.tk-multi-loader2.nuke:
     entity_type: Shot
     filters:
     - [project, is, '{context.project}']
-    hierarchy: [sg_sequence, code]
+      # hierarchy: [sg_sequence, code]
+    hierarchy: [sg_episode, sg_sequence, code]
   - caption: My Tasks
     entity_type: Task
     filters:
@@ -241,7 +245,8 @@ settings.tk-multi-loader2.nukestudio.project:
     entity_type: Shot
     filters:
     - [project, is, '{context.project}']
-    hierarchy: [sg_sequence, code]
+      # hierarchy: [sg_sequence, code]
+    hierarchy: [sg_episode, sg_sequence, code]
   - caption: My Tasks
     entity_type: Task
     filters:
@@ -279,7 +284,8 @@ settings.tk-multi-loader2.nukestudio:
     entity_type: Shot
     filters:
     - [project, is, '{context.project}']
-    hierarchy: [sg_sequence, code]
+      # hierarchy: [sg_sequence, code]
+    hierarchy: [sg_episode, sg_sequence, code]
   - caption: My Tasks
     entity_type: Task
     filters:
@@ -313,7 +319,8 @@ settings.tk-multi-loader2.photoshop:
     entity_type: Shot
     filters:
     - [project, is, '{context.project}']
-    hierarchy: [sg_sequence, code]
+      # hierarchy: [sg_sequence, code]
+    hierarchy: [sg_episode, sg_sequence, code]
   - caption: My Tasks
     entity_type: Task
     filters:
@@ -349,7 +356,8 @@ settings.tk-multi-loader2.aftereffects:
     entity_type: Shot
     filters:
     - [project, is, '{context.project}']
-    hierarchy: [sg_sequence, code]
+      # hierarchy: [sg_sequence, code]
+    hierarchy: [sg_episode, sg_sequence, code]
   - caption: My Tasks
     entity_type: Task
     filters:
@@ -379,7 +387,8 @@ settings.tk-multi-loader2.motionbuilder:
     entity_type: Shot
     filters:
     - [project, is, '{context.project}']
-    hierarchy: [sg_sequence, code]
+      # hierarchy: [sg_sequence, code]
+    hierarchy: [sg_episode, sg_sequence, code]
   - caption: My Tasks
     entity_type: Task
     filters:
