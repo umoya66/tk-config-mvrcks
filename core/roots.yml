@@ -41,57 +41,19 @@
 # core, this requirement has been lifted and the root can be named anything.
 # ------------------------------------------------------------------------------
 
-projects:
+primary:
     description: "Main project root"
 
     # these paths will be populated by the associated local storage in Shotgun
     # at setup time.
     mac_path:
-    linux_path: /array/X/Library/multiroot/projects
+    linux_path: 
     windows_path:
 
     # indicates that this is the default storage root
     default: true
-    shotgun_storage_id: 1
+    shotgun_storage_id: 3
 
-# publish:
-#     description: "Folder for all published data for a show"
-# 
-#     # these paths will be populated by the associated local storage in Shotgun
-#     # at setup time.
-#     mac_path:
-#     linux_path: /array/X/Library/multiroot/publish
-#     windows_path:
-# 
-#     # indicates that this is the default storage root
-#     default: false
-#     shotgun_storage_id: 36
-# 
-# work:
-#     description: "Root folder for all work in progress."
-# 
-#     # these paths will be populated by the associated local storage in Shotgun
-#     # at setup time.
-#     mac_path:
-#     linux_path: /array/X/Library/multiroot/work
-#     windows_path:
-# 
-#     # indicates that this is the default storage root
-#     default: true
-#     shotgun_storage_id: 2
-# 
-# temp:
-#     description: "Temporary storage for particle caches etc"
-# 
-#     # these paths will be populated by the associated local storage in Shotgun
-#     # at setup time.
-#     mac_path:
-#     linux_path: /array/X/Library/multiroot/temp
-#     windows_path:
-# 
-#     # indicates that this is the default storage root
-#     default: false
-#     shotgun_storage_id: 1
 
 # ------------------------------------------------------------------------------
 # Below is an example of a second storage root. This root would require a local
