@@ -43,6 +43,8 @@ class PickEnvironment(Hook):
                 return "asset"
             if context.entity["type"] == "Sequence":
                 return "sequence"
+            if context.entity["type"] == "Episode": 
+                return "episode"
 
         if context.entity and context.step:
             # We have a step and an entity.
