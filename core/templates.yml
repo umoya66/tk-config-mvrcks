@@ -118,6 +118,13 @@ keys:
         shotgun_entity_type: Project
         shotgun_field_name: tank_name
 
+    precomp.name:
+        type: str
+
+    precomp.version:
+        type: int
+        format_spec: "03"
+
     track:
         type: str
 
@@ -539,6 +546,14 @@ paths:
         definition: '@shot_root_pub/publish/nuke/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
         # root_name: publish
 
+    nuke_shot_precomp_mono_exr:
+        definition:  '@shot_root_wip/work/nuke/precomp/{Shot}_{Step}_{name}_{precomp.name}_v{precomp.version}/{Shot}_{Step}_{name}_{precomp.name}_v{precomp.version}.{SEQ}.exr'
+        # root_name: work
+    nuke_shot_precomp_pub_mono_exr:
+        definition: '@shot_root_pub/publish/nuke/precomp/{Shot}_{Step}_{name}_{precomp.name}_v{precomp.version}/{Shot}_{Step}_{name}_{precomp.name}_v{precomp.version}.{SEQ}.exr'
+        # root_name: publish
+
+
     nuke_shot_render_mono_tif:
         definition:  '@shot_root_wip/work/nuke/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.tif'
         # root_name: work
@@ -785,9 +800,16 @@ paths:
         definition: '@asset_root_pub/publish'
     # outputs from the Shotgun Write Node for assets
     nuke_asset_render:
-        definition: '@asset_root_wip/work/renders/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
+        definition: '@asset_root_wip/work/nuke/renders/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
     nuke_asset_render_pub:
-        definition: '@asset_root_pub/publish/renders/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
+        definition: '@asset_root_pub/publish/nuke/renders/{Asset}_{Step}_{name}_v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
+    
+    # precomp 
+    nuke_asset_precomp_render:
+        definition: '@asset_root_wip/work/nuke/precomp/{Asset}_{Step}_{name}_{precomp.name}_v{precomp.version}/{Asset}_{Step}_{name}_{precomp.name}_v{precomp.version}.{SEQ}.exr'
+    nuke_asset_precomp_render_pub:
+        definition: '@asset_root_pub/publish/nuke/precomp/{Asset}_{Step}_{name}_{precomp.name}_v{precomp.version}/{Asset}_{Step}_{name}_{precomp.name}_v{precomp.version}.{SEQ}.exr'
+
     # review output
     nuke_asset_render_movie:
         definition: '@asset_root_pub/review/{Asset}_{Step}_{name}_v{version}.mov'
