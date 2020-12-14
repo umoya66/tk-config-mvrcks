@@ -205,6 +205,9 @@ settings.tk-nuke.shot_step:
   - {app_instance: tk-multi-publish2, name: Publish...}
   location: "@engines.tk-nuke.location"
   favourite_directories:
+  - display_name: "Shot Plate Path"
+    template_directory: "hiero_plate_dir"
+    icon: "icons/custom_publish_icon.png"
   - display_name: "Shot Publish Path"
     template_directory: "shot_publish_area_nuke"
     icon: "icons/custom_publish_icon.png"

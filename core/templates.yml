@@ -603,6 +603,8 @@ paths:
     #
 
     # export of shot asset data from hiero
+    hiero_plate_dir:
+        definition: '@shot_root_pub/plates/publish/'
     hiero_plate_path:
         definition: '@shot_root_pub/plates/publish/{track}/{Shot}_plates_{track}_v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.exr'
     hiero_render_path:
