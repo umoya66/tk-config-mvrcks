@@ -118,6 +118,13 @@ keys:
         shotgun_entity_type: Project
         shotgun_field_name: tank_name
 
+    precomp.name:
+        type: str
+
+    precomp.version:
+        type: int
+        format_spec: "03"
+
     track:
         type: str
 
