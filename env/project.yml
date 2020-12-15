@@ -31,7 +31,6 @@ includes:
 - ./includes/settings/tk-shell.yml
 - ./includes/settings/tk-shotgun.yml
 
-
 ################################################################################
 # configuration for all engines to load in a project context
 

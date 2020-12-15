@@ -19,8 +19,8 @@ includes:
 - ./tk-shotgun-folders.yml
 - ./tk-shotgun-launchfolder.yml
 - ./tk-shotgun-launchpublish.yml
+- ./tk-shotgun-launchvredreview.yml
 - ./tk-desktop-timecard.yml
-
 
 ################################################################################
 
@@ -65,13 +65,15 @@ settings.tk-shotgun.project:
     tk-desktop-timecard: "@settings.tk-desktop-timecard.project"
   location: "@engines.tk-shotgun.location"
 
-# publishedfile_version
+# version
 settings.tk-shotgun.version:
   apps:
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"
     tk-shotgun-launchpublish: "@settings.tk-shotgun-launchpublish"
+    tk-shotgun-launchvredreview: "@settings.tk-shotgun-launchvredreview"
   location: "@engines.tk-shotgun.location"
 
+# publishedfile
 settings.tk-shotgun.publishedfile:
   apps:
     tk-multi-screeningroom: "@settings.tk-multi-screeningroom.rv"

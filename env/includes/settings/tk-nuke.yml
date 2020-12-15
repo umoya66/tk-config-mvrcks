@@ -25,7 +25,6 @@ includes:
 - ./tk-multi-snapshot.yml
 - ./tk-multi-workfiles2.yml
 - ./tk-nuke-writenode.yml
-
 - ./tk-desktop-timecard.yml
 
 ################################################################################
@@ -137,7 +136,6 @@ settings.tk-nuke.project:
     tk-desktop-timecard:
       location: "@apps.tk-desktop-timecard.location"
     tk-desktop-timecard: "@settings.tk-desktop-timecard.project"
-
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
   location: "@engines.tk-nuke.location"
@@ -184,7 +182,6 @@ settings.tk-nuke.shot_step:
     tk-multi-setframerange:
       location: "@apps.tk-multi-setframerange.location"
     tk-multi-setframerange: "@settings.tk-multi-setframerange.nuke.shot_step"
-
     tk-multi-loader2: "@settings.tk-multi-loader2.nuke"
     tk-multi-publish2: "@settings.tk-multi-publish2.nuke.shot_step"
     tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.nuke.shot"
@@ -233,7 +230,6 @@ settings.tk-nuke.nukestudio.asset_step:
       location: "@apps.tk-multi-setframerange.location"
     tk-multi-breakdown: "@settings.tk-multi-breakdown.nukestudio"
     tk-multi-setframerange: "@settings.tk-multi-setframerange.nukestudio"
-
     tk-multi-loader2: "@settings.tk-multi-loader2.nukestudio"
     tk-multi-publish2: "@settings.tk-multi-publish2.nukestudio"
     tk-multi-reviewsubmission: "@settings.tk-multi-reviewsubmission.nuke.asset"
