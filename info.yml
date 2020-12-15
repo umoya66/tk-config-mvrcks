@@ -11,8 +11,8 @@
 # Metadata defining the behaviour and requirements for this configuration
 
 # More verbose description of this item
-display_name: "master Project Config"
-description: "A VFX Config and our default configuration."
+display_name: "DWR Project Config"
+description: "A VFX Config and our default configuration - based on pubwip"
 
 # Required minimum versions for this item to run
 requires_shotgun_version: "v7.2.0"
