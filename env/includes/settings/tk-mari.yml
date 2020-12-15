@@ -18,7 +18,7 @@ includes:
 - ./tk-multi-publish2.yml
 - ./tk-multi-setframerange.yml
 - ./tk-multi-shotgunpanel.yml
-- ./tk-multi-workfiles.yml
+- ./tk-multi-workfiles2.yml
 - ./tk-mari-projectmanager.yml
 - ./tk-desktop-timecard.yml
 
