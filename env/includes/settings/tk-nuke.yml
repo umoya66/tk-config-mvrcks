@@ -204,6 +204,22 @@ settings.tk-nuke.shot_step:
   - {app_instance: tk-multi-workfiles2, name: File Save...}
   - {app_instance: tk-multi-publish2, name: Publish...}
   location: "@engines.tk-nuke.location"
+  favourite_directories:
+  - display_name: "Shot Plate Path"
+    template_directory: "hiero_plate_dir"
+    icon: "icons/custom_publish_icon.png"
+  - display_name: "Shot Publish Path"
+    template_directory: "shot_publish_area_nuke"
+    icon: "icons/custom_publish_icon.png"
+  - display_name: "Shot Work Path"
+    template_directory: "shot_work_area_nuke"
+    icon: "icons/custom_work_icon.png"
+  - display_name: "Precomp Publish Path"
+    template_directory: "nuke_shot_precomp_pub_dir"
+    icon: "icons/custom_work_icon.png"
+  - display_name: "Precomp Work Path"
+    template_directory: "nuke_shot_precomp_dir"
+    icon: "icons/custom_work_icon.png"
 
 ################################################################################
 # NukeStudio
