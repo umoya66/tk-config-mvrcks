@@ -22,7 +22,3 @@ settings.tk-shotgun-launchvredreview:
   hook_launch_publish: "{self}/shotgun_launch_vred.py"
   location: "@apps.tk-shotgun-launchvredreview.location"
 
-# mari
-settings.tk-multi-workfiles.mari:
-  sg_entity_types: [Asset]
-  location: "@apps.tk-multi-workfiles.location"
