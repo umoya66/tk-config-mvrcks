@@ -2,6 +2,6 @@
 # Example of a .symlink.yml file
 
 # A target parameter is required.
-target: "../../../../../../../tmp/assets/$Asset.sg_asset_type/$Asset/$Step/tmp/maya/yeti/cache/"
+target: "../../../../../../../../tmp/assets/$Asset.sg_asset_type/$Asset/$Step/tmp/maya/yeti/cache/"
 
 
