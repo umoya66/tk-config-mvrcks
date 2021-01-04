@@ -284,6 +284,7 @@ settings.tk-multi-publish2.maya.shot_step:
   location: "@apps.tk-multi-publish2.location"
 
   # post_phase: "{config}/tk-multi-publish2/maya/post_phase.py"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
@@ -313,6 +314,7 @@ settings.tk-multi-publish2.nuke.asset_step:
     settings: {}
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 # shot step
 settings.tk-multi-publish2.nuke.shot_step:
@@ -342,6 +344,7 @@ settings.tk-multi-publish2.nuke.shot_step:
         Flame Clip Template: flame_shot_clip
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
