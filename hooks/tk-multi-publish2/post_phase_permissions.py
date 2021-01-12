@@ -130,11 +130,9 @@ class PostPhaseHook(HookBaseClass):
         published_files = []
         playblast = None
 
+        app = self.parent
 
-        print('zzzDEBUGzzz')
-        pprint.pprint(publish_tree)
-        print('zzzDEBUGzzz')
-
+        self.logger.debug(publish_tree)
 
         for item in publish_tree:
 
@@ -151,22 +149,37 @@ class PostPhaseHook(HookBaseClass):
             #       'get_thumbnail_as_path', 'icon', 'is_root', 'local_properties', 'name', 'parent', 'persistent',
             #       'properties', 'remove_item', 'set_icon_from_path', 'set_thumbnail_from_path', 'tasks', 'thumbnail',
             #       'thumbnail_enabled', 'thumbnail_explicit', 'to_dict', 'type', 'type_display', 'type_spec']
-            self.logger.debug('Item: %s' % item.name)
+            # self.logger.debug('Item: %s' % item.name)
             # self.logger.debug('Item properties publish data: %s' % item.properties.sg_publish_data)
-            print('xxxDEBUGxxx')
-            pprint.pprint(dir(item.properties))
-            print('xxxxxxxxxxx')
-            pprint.pprint(item.properties.sg_publish_data)
-            print('endDEBUGxxx')
+            # pprint.pprint(dir(item.properties))
+            # self.logger.debug(dir(item.properties))
+            # self.logger.debug(item.properties.sg_publish_data)
+            # self.logger.debug(item.properties.publish_template)
+            # for k in item.properties.keys:
+            #     self.logger.debug(k)
+            # self.logger.debug(item.properties.keys())
+            # self.logger.debug('Item path: %s' % item.properties.sg_publish_data['path']['local_path'])
 
-            self.logger.debug('Item path: %s' % item.properties.sg_publish_data['path']['local_path'])
-            self.logger.debug('Item type: %s' % item.properties.sg_publish_data['type'])
-            self.logger.debug('Item published_file_type: %s' % item.properties.sg_publish_data['published_file_type'])
-            try:
-                self.logger.debug('Locking permissions on: %s' % item.properties.sg_publish_data['path']['local_path'])
-                os.chmod(item.properties.sg_publish_data['path']['local_path'], 0444)
-            except OSError as error:
-                self.logger.error(error)
+            published_file_types = [2, 4, 40]  # 2 = 'Rendered Image', 4 = 'Plate', 40 = 'Hiero Plate'
+
+            # check for file type
+            if item.properties.sg_publish_data['published_file_type']['id'] in published_file_types:
+
+                # get file sequences - there may be multiple
+                sequences = app.util.get_frame_sequences(os.path.dirname(item.properties.sg_publish_data['path']['local_path']) )
+
+                self.logger.debug('Locking frame sequence permissions...')
+                for seq in sequences:
+                    for filepath in seq[1]:
+                        self.set_permission(filepath)
+
+            else:
+                self.logger.debug('Locking scene file permissions...')
+                filepath = item.properties.sg_publish_data['path']['local_path']
+                self.set_permission(filepath)
+
+            # self.logger.debug('Item type: %s' % item.properties.sg_publish_data['type'])
+            # self.logger.debug('Item published_file_type: %s' % item.properties.sg_publish_data['published_file_type'])
 
             # sg_publish_data = {
             #         'version_number': 4, 
@@ -213,32 +226,27 @@ class PostPhaseHook(HookBaseClass):
             #         'name': 'Shot001_lgt_scene.ma'}, 
             
 
-            # for task in item.tasks:
-            #     # go through all the tasks on each publish item
-            #     # self.logger.debug('--------------Task: %s -------------------' % task)
-            #     # task =  ['__class__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__',
-            #     #         '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',
-            #     #         '__slots__', '__str__', '__subclasshook__', '_active', '_description', '_enabled', '_item',
-            #     #         '_name', '_plugin', '_settings', '_visible', 'active', 'checked', 'description', 'enabled',
-            #     #         'finalize', 'from_dict', 'is_same_task_type', 'item', 'name', 'plugin', 'publish', 'settings',
-            #     #         'to_dict', 'validate', 'visible']
-
-            #     self.logger.debug('Task: %s' % task.name)
-            #     self.logger.debug('Task : %s' % task)
-
-            #     # if task.name == 'Publish Playblast':
-            #     #     self.logger.debug('Post Phase / Post Finalize / Publish Playblast')
-            #     #     # We have a playblast to publish, so the filess need to be attached to the version
-            #     #     playblast = item.properties.sg_publish_data
-
-            #     # elif task.name == 'Publish Exported Alembics':
-            #     #     self.logger.debug('Post Phase / Post Finalize / Publish Exported Alembics')
-            #     #     published_files.append({'type': 'PublishedFile', 'id': item.properties['sg_publish_data']['id'], 'name': item.name})
-
-            #     # elif task.name == 'Publish Session to Shotgun':
-            #     #     self.logger.debug('Post Phase / Post Finalize / Publish Session to Shotgun')
-            #     #     published_files.append({'type': 'PublishedFile', 'id': item.properties['sg_publish_data']['id'], 'name': item.name})
-
-
-
         self.logger.debug("...finished post finalize Permissions hook method")
+        
+
+    def set_permission(self, path):
+        """
+        Set file permissions to locked for the specified path
+
+        """
+        # TODO: cross platform file locking
+        # TODO: fully locked 
+
+        try:
+            self.logger.debug('Locking permissions on: %s' % path)
+            os.chmod(path, 0o644)
+
+        except OSError as error:
+            self.logger.error(error)
+
+
+        try:
+            self.logger.debug('Changing ownership on: %s' % path)
+            os.chown(path, 4567, 5000)
+        except OSError as error:
+            self.logger.error(error)
