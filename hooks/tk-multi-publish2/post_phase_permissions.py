@@ -239,14 +239,24 @@ class PostPhaseHook(HookBaseClass):
 
         try:
             self.logger.debug('Locking permissions on: %s' % path)
-            os.chmod(path, 0o644)
+            os.system('sudo /home/mhatton/dev/mvrcks/tk-config-mvrcks/hooks/tk-multi-publish2/shotgun_permissions.sh ' + path)
 
         except OSError as error:
             self.logger.error(error)
 
+        if sgtk.util.is_windows():
+            self.logger.debug("Changing permissions in windows is not implemented...")
+        else:
+            script_path = '/home/mhatton/dev/mvrcks/tk-config-mvrcks/hooks/tk-multi-publish2/shotgun_permissions.sh'
+            if os.path.exists(script_path):
+                try:
+                    self.logger.debug('Locking permissions on: %s' % path)
+                    os.system('sudo %s %s ' % (script_path, path))
+                except OSError as error:
+                    self.logger.error(error)
 
-        try:
-            self.logger.debug('Changing ownership on: %s' % path)
-            os.chown(path, 4567, 5000)
-        except OSError as error:
-            self.logger.error(error)
+            else:
+                self.logger.warning('Permission script path %s does not exist' % script_path)
+
+
+
