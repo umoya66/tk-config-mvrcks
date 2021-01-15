@@ -191,3 +191,30 @@ class BeforeAppLaunch(tank.Hook):
                 os.environ["BIFROST_HOME"] = os.environ["MAYA_RENDER_ENGINE"] + "/renderer/Arnold/bifrost/maya2018/2.0.5.1"
 
             
+        if engine_name == "tk-nuke":
+
+            # stop temp license expiry warning message - people get confused.
+            os.environ['FN_NUKE_DISABLE_TMPLIC_NOTIFY_DIALOG'] = 1
+            
+            # disable crash dumps to Foundry - do they even read them?
+            os.environ['NUKE_CRASH_HANDLING'] = 0
+            
+            # split out Nuke version naming
+            major, minorrelease = version.split('.')
+            minor, release = minorrelease.split('v')
+
+            nuke_version = major + '.' + minor
+
+            if nuke_version == '11.2':
+                print('[PIPELINE] Setting up Nuke %s' % nuke_version)
+
+            if nuke_version == '12.0':
+                print('[PIPELINE] Setting up Nuke %s' % nuke_version)
+
+            if nuke_version == '12.2':
+                print('[PIPELINE] Setting up Nuke %s' % nuke_version)
+
+            if nuke_version == '13.0':
+                print('[PIPELINE] Setting up Nuke %s' % nuke_version)
+
+
