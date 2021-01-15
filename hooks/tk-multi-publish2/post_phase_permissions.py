@@ -11,6 +11,8 @@
 import os
 import sgtk
 
+import logging
+
 import pprint
 
 HookBaseClass = sgtk.get_hook_baseclass()
@@ -132,33 +134,16 @@ class PostPhaseHook(HookBaseClass):
 
         app = self.parent
 
-        self.logger.debug(publish_tree)
+        # logging.basicConfig(filename='/array/X/Library/systems/logs/shotgun_permissions.log', 
+        #         encoding='utf-8', 
+        #         level=logging.DEBUG, 
+        #         format='%(asctime)s %(message)s')
+
+
+        # user = sgtk.get_authenticated_user()
+
 
         for item in publish_tree:
-
-            # item = ['__class__', '__del__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__',
-            #       '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__',
-            #       '__sizeof__', '__slots__', '__str__', '__subclasshook__', '_active', '_allows_context_change',
-            #       '_children', '_context', '_created_temp_files', '_current_temp_file_path', '_description', '_enabled',
-            #       '_expanded', '_get_image', '_get_local_properties', '_get_type', '_global_properties', '_icon_path',
-            #       '_icon_pixmap', '_local_properties', '_name', '_parent', '_persistent', '_set_type', '_tasks',
-            #       '_thumbnail_enabled', '_thumbnail_explicit', '_thumbnail_path', '_thumbnail_pixmap', '_traverse_item',
-            #       '_type_display', '_type_spec', '_validate_image', '_visit_recursive', 'active', 'add_task', 'checked',
-            #       'children', 'clear_tasks', 'context', 'context_change_allowed', 'create_item', 'descendants',
-            #       'description', 'display_type', 'enabled', 'expanded', 'from_dict', 'get_property',
-            #       'get_thumbnail_as_path', 'icon', 'is_root', 'local_properties', 'name', 'parent', 'persistent',
-            #       'properties', 'remove_item', 'set_icon_from_path', 'set_thumbnail_from_path', 'tasks', 'thumbnail',
-            #       'thumbnail_enabled', 'thumbnail_explicit', 'to_dict', 'type', 'type_display', 'type_spec']
-            # self.logger.debug('Item: %s' % item.name)
-            # self.logger.debug('Item properties publish data: %s' % item.properties.sg_publish_data)
-            # pprint.pprint(dir(item.properties))
-            # self.logger.debug(dir(item.properties))
-            # self.logger.debug(item.properties.sg_publish_data)
-            # self.logger.debug(item.properties.publish_template)
-            # for k in item.properties.keys:
-            #     self.logger.debug(k)
-            # self.logger.debug(item.properties.keys())
-            # self.logger.debug('Item path: %s' % item.properties.sg_publish_data['path']['local_path'])
 
             published_file_types = [2, 4, 40]  # 2 = 'Rendered Image', 4 = 'Plate', 40 = 'Hiero Plate'
 
@@ -171,60 +156,15 @@ class PostPhaseHook(HookBaseClass):
                 self.logger.debug('Locking frame sequence permissions...')
                 for seq in sequences:
                     for filepath in seq[1]:
+                        # it is possible to have multiple sequences published
+                        # TODO: publish multiple sequences
                         self.set_permission(filepath)
 
             else:
                 self.logger.debug('Locking scene file permissions...')
                 filepath = item.properties.sg_publish_data['path']['local_path']
+                # logging.debug('User %s locking file: %s' % (user['name'], filepath))
                 self.set_permission(filepath)
-
-            # self.logger.debug('Item type: %s' % item.properties.sg_publish_data['type'])
-            # self.logger.debug('Item published_file_type: %s' % item.properties.sg_publish_data['published_file_type'])
-
-            # sg_publish_data = {
-            #         'version_number': 4, 
-            #         'task': {
-            #             'type': 'Task', 
-            #             'id': 125080, 
-            #             'name': '2hrcomp'}, 
-            #         'description': None, 
-            #         'type': 'PublishedFile', 
-            #         'published_file_type': {
-            #             'type': 'PublishedFileType', 
-            #             'id': 5, 
-            #             'name': 'Maya Scene'}, 
-            #         'created_by': {
-            #             'type': 'HumanUser', 
-            #             'id': 17, 
-            #             'name': 'Michael Hatton'}, 
-            #         'entity': {
-            #             'type': 'Shot', 
-            #             'id': 10559, 
-            #             'name': 'Shot001'}, 
-            #         'project': {
-            #             'type': 'Project', 
-            #             'id': 321, 
-            #             'name': 'SandBox'}, 
-            #         'code': 'Shot001_lgt_scene_v004.ma', 
-            #         'path': {
-            #             'local_path_windows': 'P:\\SandBox\\pub\\episodes\\101\\Seq001\\Shot001\\lgt\\publish\\maya\\scenes\\Shot001_lgt_scene_v004.ma', 
-            #             'name': 'Shot001_lgt_scene_v004.ma', 
-            #             'local_path_linux': '/mav/stor/prod/SandBox/pub/episodes/101/Seq001/Shot001/lgt/publish/maya/scenes/Shot001_lgt_scene_v004.ma', 
-            #             'url': 'file:///mav/stor/prod/SandBox/pub/episodes/101/Seq001/Shot001/lgt/publish/maya/scenes/Shot001_lgt_scene_v004.ma', 
-            #             'local_storage': {
-            #                 'type': 'LocalStorage', 
-            #                 'id': 3, 
-            #                 'name': 'primary'}, 
-            #             'local_path': '/mav/stor/prod/SandBox/pub/episodes/101/Seq001/Shot001/lgt/publish/maya/scenes/Shot001_lgt_scene_v004.ma', 
-            #             'content_type': None, 
-            #             'local_path_mac': '/mav/stor/prod/SandBox/pub/episodes/101/Seq001/Shot001/lgt/publish/maya/scenes/Shot001_lgt_scene_v004.ma', 
-            #             'type': 'Attachment', 
-            #             'id': 606040, 
-            #             'link_type': 'local'}, 
-            #         'path_cache': 'SandBox/pub/episodes/101/Seq001/Shot001/lgt/publish/maya/scenes/Shot001_lgt_scene_v004.ma', 
-            #         'id': 172563, 
-            #         'name': 'Shot001_lgt_scene.ma'}, 
-            
 
         self.logger.debug("...finished post finalize Permissions hook method")
         
@@ -235,28 +175,28 @@ class PostPhaseHook(HookBaseClass):
 
         """
         # TODO: cross platform file locking
-        # TODO: fully locked 
+        #   TODO: test OSX permissions
 
-        try:
-            self.logger.debug('Locking permissions on: %s' % path)
-            os.system('sudo /home/mhatton/dev/mvrcks/tk-config-mvrcks/hooks/tk-multi-publish2/shotgun_permissions.sh ' + path)
-
-        except OSError as error:
-            self.logger.error(error)
 
         if sgtk.util.is_windows():
             self.logger.debug("Changing permissions in windows is not implemented...")
-        else:
-            script_path = '/home/mhatton/dev/mvrcks/tk-config-mvrcks/hooks/tk-multi-publish2/shotgun_permissions.sh'
+
+        if sgtk.util.is_macos():
+            self.logger.debug("Changing permissions in macos is not implemented...")
+
+        if sgtk.util.is_linux():
+            # script_path = '/home/mhatton/dev/mvrcks/tk-config-mvrcks/hooks/tk-multi-publish2/shotgun_permissions.sh'
+            script_path = '/array/X/Library/systems/scripts/shotgun_permissions.sh'
             if os.path.exists(script_path):
                 try:
                     self.logger.debug('Locking permissions on: %s' % path)
-                    os.system('sudo %s %s ' % (script_path, path))
+                    os.system('sudo -n %s %s ' % (script_path, path))
                 except OSError as error:
+                    self.logger.debug('Unable to lock permissions on: %s' % path)
                     self.logger.error(error)
 
             else:
-                self.logger.warning('Permission script path %s does not exist' % script_path)
+                self.logger.warning('Permission script path %s does not exist:' % script_path)
 
 
 

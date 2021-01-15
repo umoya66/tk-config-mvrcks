@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 
-# check script arguments
+# shotgun file permission locking script
+
+# set sudoers to:
+# %domain\ users ALL=(ALL) NOPASSWD: /array/X/Library/systems/scripts/shotgun_permissions.sh
+
+# run from shotgun with:
+# 
+# script_path = '/array/X/Library/systems/scripts/shotgun_permissions.sh'
+# os.system('sudo -n %s %s ' % (script_path, path))
+#
+# '-n' is dont prompt for password
 
 ARGS=1         # Script requires 3 arguments.
 
