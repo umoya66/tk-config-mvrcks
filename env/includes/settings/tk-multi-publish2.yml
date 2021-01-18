@@ -32,6 +32,7 @@ settings.tk-multi-publish2.standalone:
     settings: {}
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
@@ -62,6 +63,7 @@ settings.tk-multi-publish2.3dsmaxplus.asset_step: &settings_tk-multi-publish2_3d
         Publish Template: asset_alembic_cache
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 # shot step
 settings.tk-multi-publish2.3dsmaxplus.shot_step: &settings_tk-multi-publish2_3dsmaxplus_shot_step
@@ -84,6 +86,7 @@ settings.tk-multi-publish2.3dsmaxplus.shot_step: &settings_tk-multi-publish2_3ds
         Publish Template: max_shot_publish
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 
 # ---- 3dsMax
@@ -119,6 +122,7 @@ settings.tk-multi-publish2.houdini.asset_step:
         Publish Template: houdini_asset_publish
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 # shot step
 settings.tk-multi-publish2.houdini.shot_step:
@@ -141,6 +145,7 @@ settings.tk-multi-publish2.houdini.shot_step:
         Publish Template: houdini_shot_publish
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
@@ -162,6 +167,7 @@ settings.tk-multi-publish2.mari.asset_step:
     settings: {}
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
@@ -282,8 +288,7 @@ settings.tk-multi-publish2.maya.shot_step:
 
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
-
-  # post_phase: "{config}/tk-multi-publish2/maya/post_phase.py"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
@@ -313,6 +318,7 @@ settings.tk-multi-publish2.nuke.asset_step:
     settings: {}
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 # shot step
 settings.tk-multi-publish2.nuke.shot_step:
@@ -342,6 +348,7 @@ settings.tk-multi-publish2.nuke.shot_step:
         Flame Clip Template: flame_shot_clip
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
@@ -367,6 +374,7 @@ settings.tk-multi-publish2.nukestudio:
         Publish Template: hiero_project_publish
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
@@ -396,6 +404,7 @@ settings.tk-multi-publish2.photoshop.asset_step:
     settings: {}
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 # shot_step
 settings.tk-multi-publish2.photoshop.shot_step:
@@ -421,6 +430,7 @@ settings.tk-multi-publish2.photoshop.shot_step:
     settings: {}
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
@@ -464,6 +474,7 @@ settings.tk-multi-publish2.aftereffects.asset_step:
         Movie Output Module: Lossless with Alpha
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 # shot_step
 settings.tk-multi-publish2.aftereffects.shot_step:
@@ -500,6 +511,7 @@ settings.tk-multi-publish2.aftereffects.shot_step:
         Movie Output Module: Lossless with Alpha
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 ################################################################################
 
@@ -526,6 +538,7 @@ settings.tk-multi-publish2.motion_builder.asset_step:
       Publish Template: mobu_asset_publish
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 # shot_step
 settings.tk-multi-publish2.motion_builder.shot_step:
@@ -548,6 +561,7 @@ settings.tk-multi-publish2.motion_builder.shot_step:
       Publish Template: mobu_shot_publish
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 
 ################################################################################
@@ -589,6 +603,7 @@ settings.tk-multi-publish2.alias.asset_step:
      settings: {}
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
 
 
 ################################################################################
@@ -628,3 +643,5 @@ settings.tk-multi-publish2.vred.asset_step:
      settings: {}
   help_url: *help_url
   location: "@apps.tk-multi-publish2.location"
+  post_phase: "{config}/tk-multi-publish2/post_phase_permissions.py"
+

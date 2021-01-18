@@ -143,6 +143,7 @@ apps.tk-shotgun-folders.location:
   entity_type: UploadedApp  # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
   field: sg_uploaded_config            # attachment field where payload can be found
   version:  284923 # attachment id of particular attachment
+
   # type: app_store
   # name: tk-shotgun-folders
   # version: v0.1.7
@@ -169,8 +170,6 @@ apps.tk-shotgun-folders.location:
   # type: git
   # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
   # version: v0.0.1
-
-  # Uploaded Shotgun config
 
 # shotgun launchfolder
 apps.tk-shotgun-launchfolder.location:
@@ -228,6 +227,11 @@ apps.tk-nuke-quickreview.location:
 
 # writenode
 apps.tk-nuke-writenode.location:
+  type: shotgun
+  name: tk-nuke-writenode
+  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  field: sg_uploaded_config  # attachment field where payload can be found
+  version:  456629           # attachment id of particular attachment
   # name: tk-nuke-writenode
   # type: app_store
   # version: v1.4.2
@@ -237,15 +241,8 @@ apps.tk-nuke-writenode.location:
   # linux_path: /mav/stor/studio/systems/_shotgun/apps/tk-nuke-writenode
   # mac_path: /mav/stor/studio/systems/_shotgun/apps/nuke-writenode
 
-    # type: dev
-    # path: /home/mhatton/dev/mvrcks/tk-nuke-writenode
-
-  # Uploaded Shotgun config
-  type: shotgun
-  name: tk-nuke-writenode
-  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
-  field: sg_uploaded_config  # attachment field where payload can be found
-  version:  456629           # attachment id of particular attachment
+  # type: dev
+  # path: /home/mhatton/dev/mvrcks/tk-nuke-writenode
 
 # ---- Flame apps
 
@@ -272,7 +269,6 @@ apps.tk-mari-projectmanager.location:
 ################################################################################
 # reference all of the common frameworks
 frameworks: '@frameworks'
-
 
 # timecard
 apps.tk-desktop-timecard.location:
