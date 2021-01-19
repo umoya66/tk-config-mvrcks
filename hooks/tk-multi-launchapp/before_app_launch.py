@@ -223,3 +223,16 @@ class BeforeAppLaunch(tank.Hook):
                 self.logger.debug('[PIPELINE] Setting up Nuke %s' % nuke_version)
 
 
+        if engine_name == "tk-houdini":
+            self.logger.debug('[PIPELINE] Launching Houdini')
+            self.logger.debug('[PIPELINE] Houdini version: %s' % version)
+
+
+        if engine_name == "tk-photoshopcc":
+            self.logger.debug('[PIPELINE] Launching Photoshop')
+            self.logger.debug('[PIPELINE] Photoshop version: %s' % version)
+
+        if engine_name == "tk-mari":
+            self.logger.debug('[PIPELINE] Launching Mari')
+            self.logger.debug('[PIPELINE] Mari version: %s' % version)
+
