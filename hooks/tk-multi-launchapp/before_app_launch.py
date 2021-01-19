@@ -50,6 +50,9 @@ class BeforeAppLaunch(tank.Hook):
         # os.environ["MY_SETTING"] = "foo bar"
 
         if engine_name == "tk-maya":
+            self.logger.debug('[PIPELINE] Launching Maya')
+            self.logger.debug('[PIPELINE] Maya version: %s' % version)
+
             # disable Maya reporting
             os.environ["MAYA_DISABLE_CIP"] = "1"
             os.environ["MAYA_DISABLE_CER"] = "1"
@@ -75,7 +78,7 @@ class BeforeAppLaunch(tank.Hook):
             # mvrcks_SHOWmenu = cmds.menu('mvrcks_PROJmenu', parent=maya_main_window,tearOff=True, label=sgProject.upper())
 
             if version == "2020":
-                print("[PIPELINE] Setting up Maya 2020.x environment variables")
+                self.logger.debug("[PIPELINE] Setting up Maya 2020.x environment variables")
                 os.environ["MAYA_MODULE_PATH"]= "/opt/walter/maya:/array/X/Library/MayaScripts/modules/Yeti:/array/X/Library/MayaScripts/modules/Yeti/bin:/array/X/Library/MayaScripts/modules/HoudiniEngine"
 
                 # Arnold
@@ -147,7 +150,7 @@ class BeforeAppLaunch(tank.Hook):
                 # tank.util.append_path_to_env_var("PYTHONPATH", "/array/X/Library/scripts/zync-python:/array/X/Library/scripts/zync-maya")
 
             if version == "2018":
-                print("[PIPELINE] Setting up Maya 2018.x environment variables")
+                self.logger.debug("[PIPELINE] Setting up Maya 2018.x environment variables")
                 os.environ["MAYA_MODULE_PATH"]= "/opt/walter/maya:/array/X/Library/MayaScripts/modules/Yeti:/array/X/Library/MayaScripts/modules/Yeti/bin:/array/X/Library/MayaScripts/modules/HoudiniEngine"
 
                 # disable Maya Render Setup
@@ -192,12 +195,14 @@ class BeforeAppLaunch(tank.Hook):
 
             
         if engine_name == "tk-nuke":
+            self.logger.debug('[PIPELINE] Launching Nuke')
+            self.logger.debug('[PIPELINE] Nuke version: %s' % version)
 
             # stop temp license expiry warning message - people get confused.
-            os.environ['FN_NUKE_DISABLE_TMPLIC_NOTIFY_DIALOG'] = 1
+            os.environ['FN_NUKE_DISABLE_TMPLIC_NOTIFY_DIALOG'] = "1"
             
             # disable crash dumps to Foundry - do they even read them?
-            os.environ['NUKE_CRASH_HANDLING'] = 0
+            os.environ['NUKE_CRASH_HANDLING'] = "0"
             
             # split out Nuke version naming
             major, minorrelease = version.split('.')
@@ -206,15 +211,15 @@ class BeforeAppLaunch(tank.Hook):
             nuke_version = major + '.' + minor
 
             if nuke_version == '11.2':
-                print('[PIPELINE] Setting up Nuke %s' % nuke_version)
+                self.logger.debug('[PIPELINE] Setting up Nuke %s' % nuke_version)
 
             if nuke_version == '12.0':
-                print('[PIPELINE] Setting up Nuke %s' % nuke_version)
+                self.logger.debug('[PIPELINE] Setting up Nuke %s' % nuke_version)
 
             if nuke_version == '12.2':
-                print('[PIPELINE] Setting up Nuke %s' % nuke_version)
+                self.logger.debug('[PIPELINE] Setting up Nuke %s' % nuke_version)
 
             if nuke_version == '13.0':
-                print('[PIPELINE] Setting up Nuke %s' % nuke_version)
+                self.logger.debug('[PIPELINE] Setting up Nuke %s' % nuke_version)
 
 
