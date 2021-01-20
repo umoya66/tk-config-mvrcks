@@ -29,8 +29,8 @@
 keys:
     Sequence:
         type: str
-    Episode:
-        type: str
+        # Episode:
+        # type: str
     Shot:
         type: str
     Step:
@@ -250,16 +250,13 @@ paths:
     asset_root_wip: wip/assets/{sg_asset_type}/{Asset}/{Step}
     asset_root_tmp: tmp/assets/{sg_asset_type}/{Asset}/{Step}
     # sequence_root: Episodes/{Episode}/{Sequence}
-    # sequence_root_pub: pub/sequences/{Sequence}
-    # sequence_root_wip: wip/sequences/{Sequence}
-    # sequence_root_tmp: tmp/sequences/{Sequence}
-    sequence_root_pub: pub/episodes/{Episode}/{Sequence}
-    sequence_root_wip: wip/episodes/{Episode}/{Sequence}
-    sequence_root_tmp: tmp/episodes/{Episode}/{Sequence}
+    sequence_root_pub: pub/sequences/{Sequence}
+    sequence_root_wip: wip/sequences/{Sequence}
+    sequence_root_tmp: tmp/sequences/{Sequence}
 
-    shot_root_pub: pub/episodes/{Episode}/{Sequence}/{Shot}/{Step}
-    shot_root_wip: wip/episodes/{Episode}/{Sequence}/{Shot}/{Step}
-    shot_root_tmp: tmp/episodes/{Episode}/{Sequence}/{Shot}/{Step}
+    shot_root_pub: pub/sequences/{Sequence}/{Shot}/{Step}
+    shot_root_wip: wip/sequences/{Sequence}/{Shot}/{Step}
+    shot_root_tmp: tmp/sequences/{Sequence}/{Shot}/{Step}
     # shot_root: sequences/{Sequence}/{Shot}/{Step}
 
 
@@ -460,13 +457,13 @@ paths:
     houdini_shot_ifd:
         definition: '@shot_root_wip/work/houdini/ifds/{Shot}_{Step}_{name}_v{version}/{houdini.node}/v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.ifd'
 
-    # # Deep Camera Map
-    # houdini_shot_dcm:
-    #     definition: '@shot_root_wip/work/houdini/cache/dcms/{Shot}_{Step}_{name}_v{version}/{houdini.node}/v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dcm'
+    # Deep Camera Map
+    houdini_shot_dcm:
+        definition: '@shot_root_wip/work/houdini/cache/dcms/{Shot}_{Step}_{name}_v{version}/{houdini.node}/v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.dcm'
 
-    # # extra image planes (deep rasters)
-    # houdini_shot_extra_plane:
-    #     definition: '@shot_root_wip/work/houdini/renders/ips/{Shot}_{Step}_{name}_v{version}/{houdini.node}/{aov_name}/v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
+    # extra image planes (deep rasters)
+    houdini_shot_extra_plane:
+        definition: '@shot_root_wip/work/houdini/renders/ips/{Shot}_{Step}_{name}_v{version}/{houdini.node}/{aov_name}/v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.exr'
 
 
     #
@@ -605,7 +602,7 @@ paths:
     # export of shot asset data from hiero
     hiero_plate_dir:
         # TODO: this could be fixed with a proper Hiero publish
-        definition: 'pub/episodes/{Episode}/{Sequence}/{Shot}/plates/publish/'
+        definition: 'pub/sequences/{Sequence}/{Shot}/plates/publish/'
     hiero_plate_path:
         definition: '@shot_root_pub/plates/publish/{track}/{Shot}_plates_{track}_v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.exr'
     hiero_render_path:
@@ -750,11 +747,11 @@ paths:
     houdini_asset_ifd:
         definition: '@asset_root_wip/work/houdini/ifds/{Shot}_{Step}_{name}_v{version}/{houdini.node}/v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.ifd'
 
-    # houdini_asset_dcm:
-    #     definition: '@asset_root_wip/work/houdini/cache/dcms/{Shot}_{Step}_{name}_v{version}/{houdini.node}/v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.dcm'
+    houdini_asset_dcm:
+        definition: '@asset_root_wip/work/houdini/cache/dcms/{Shot}_{Step}_{name}_v{version}/{houdini.node}/v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.dcm'
 
-    # houdini_asset_extra_plane:
-    #     definition: '@asset_root_wip/work/houdini/renders/ips/{Shot}_{Step}_{name}_v{version}/{houdini.node}/{aov_name}/v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
+    houdini_asset_extra_plane:
+        definition: '@asset_root_wip/work/houdini/renders/ips/{Shot}_{Step}_{name}_v{version}/{houdini.node}/{aov_name}/v{version}/{Asset}_{Step}_{name}_v{version}.{SEQ}.exr'
 
 
     #
