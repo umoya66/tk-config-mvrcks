@@ -29,8 +29,8 @@
 keys:
     Sequence:
         type: str
-        # Episode:
-        # type: str
+    Episode:
+        type: str
     Shot:
         type: str
     Step:
@@ -250,13 +250,16 @@ paths:
     asset_root_wip: wip/assets/{sg_asset_type}/{Asset}/{Step}
     asset_root_tmp: tmp/assets/{sg_asset_type}/{Asset}/{Step}
     # sequence_root: Episodes/{Episode}/{Sequence}
-    sequence_root_pub: pub/sequences/{Sequence}
-    sequence_root_wip: wip/sequences/{Sequence}
-    sequence_root_tmp: tmp/sequences/{Sequence}
+    # sequence_root_pub: pub/sequences/{Sequence}
+    # sequence_root_wip: wip/sequences/{Sequence}
+    # sequence_root_tmp: tmp/sequences/{Sequence}
+    sequence_root_pub: pub/episodes/{Episode}/{Sequence}
+    sequence_root_wip: wip/episodes/{Episode}/{Sequence}
+    sequence_root_tmp: tmp/episodes/{Episode}/{Sequence}
 
-    shot_root_pub: pub/sequences/{Sequence}/{Shot}/{Step}
-    shot_root_wip: wip/sequences/{Sequence}/{Shot}/{Step}
-    shot_root_tmp: tmp/sequences/{Sequence}/{Shot}/{Step}
+    shot_root_pub: pub/episodes/{Episode}/{Sequence}/{Shot}/{Step}
+    shot_root_wip: wip/episodes/{Episode}/{Sequence}/{Shot}/{Step}
+    shot_root_tmp: tmp/episodes/{Episode}/{Sequence}/{Shot}/{Step}
     # shot_root: sequences/{Sequence}/{Shot}/{Step}
 
 
@@ -602,7 +605,7 @@ paths:
     # export of shot asset data from hiero
     hiero_plate_dir:
         # TODO: this could be fixed with a proper Hiero publish
-        definition: 'pub/sequences/{Sequence}/{Shot}/plates/publish/'
+        definition: 'pub/episodes/{Episode}/{Sequence}/{Shot}/plates/publish/'
     hiero_plate_path:
         definition: '@shot_root_pub/plates/publish/{track}/{Shot}_plates_{track}_v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.exr'
     hiero_render_path:
