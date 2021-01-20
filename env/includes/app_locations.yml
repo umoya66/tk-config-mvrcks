@@ -23,13 +23,13 @@ includes:
 apps.tk-multi-about.location:
   type: app_store
   name: tk-multi-about
-  version: v0.3.0
+  version: v0.3.2
 
 # breakdown
 apps.tk-multi-breakdown.location:
   type: app_store
   name: tk-multi-breakdown
-  version: v1.7.1
+  version: v1.7.3
 
 # demo
 apps.tk-multi-demo.location:
@@ -53,30 +53,30 @@ apps.tk-multi-loader2.location:
 apps.tk-multi-publish2.location:
   type: app_store
   name: tk-multi-publish2
-  version: v2.5.3
+  version: v2.5.5
 
 # pythonconsole
 apps.tk-multi-pythonconsole.location:
   type: app_store
   name: tk-multi-pythonconsole
-  version: v1.2.3
+  version: v1.2.5
 
 # reviewsubmission
 apps.tk-multi-reviewsubmission.location:
-    type: app_store
-    name: tk-multi-reviewsubmission
-    version: v1.1.1
+  type: app_store
+  name: tk-multi-reviewsubmission
+  version: v1.1.1
 
-    # type: dev
-    # path: /home/mhatton/dev/mvrcks/tk-multi-reviewsubmission
-    # version: v0.0.1
+  # type: dev
+  # path: /home/mhatton/dev/mvrcks/tk-multi-reviewsubmission
+  # version: v0.0.1
 
-    # # Uploaded Shotgun config
-    # type: shotgun
-    # name: tk-multi-reviewsubmission  # UploadedApp Name field
-    # entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
-    # field: sg_uploaded_config  # attachment field where payload can be found
-    # version: 509825  # attachment id of particular attachment
+  # # Uploaded Shotgun config
+  # type: shotgun
+  # name: tk-multi-reviewsubmission  # UploadedApp Name field
+  # entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  # field: sg_uploaded_config  # attachment field where payload can be found
+  # version: 509825  # attachment id of particular attachment
 
 # screeningroom
 apps.tk-multi-screeningroom.location:
@@ -92,9 +92,9 @@ apps.tk-multi-setframerange.location:
 
 # shotgun panel
 apps.tk-multi-shotgunpanel.location:
-    # type: app_store
-    # name: tk-multi-shotgunpanel
-    # version: v1.7.1
+  # type: app_store
+  # name: tk-multi-shotgunpanel
+  # version: v1.7.1
 
     # type: dev
     # path: /home/mhatton/dev/mvrcks/tk-multi-shotgunpanel
@@ -117,16 +117,16 @@ apps.tk-multi-snapshot.location:
   version: v0.8.1
 
 # workfiles (required for Mari)
-apps.tk-multi-workfiles.location:
-  type: app_store
-  name: tk-multi-workfiles
-  version: v0.7.4
+# apps.tk-multi-workfiles.location:
+#   type: app_store
+#   name: tk-multi-workfiles
+#   version: v0.7.4
 
 # workfiles2
 apps.tk-multi-workfiles2.location:
   type: app_store
   name: tk-multi-workfiles2
-  version: v0.12.3
+  version: v0.12.6
 
 # dev utils
 apps.tk-multi-devutils.location:
@@ -138,6 +138,12 @@ apps.tk-multi-devutils.location:
 
 # shotgun folders
 apps.tk-shotgun-folders.location:
+  type: shotgun
+  name: tk-shotgun-folders
+  entity_type: UploadedApp  # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  field: sg_uploaded_config            # attachment field where payload can be found
+  version:  284923 # attachment id of particular attachment
+
   # type: app_store
   # name: tk-shotgun-folders
   # version: v0.1.7
@@ -165,13 +171,6 @@ apps.tk-shotgun-folders.location:
   # path: https://go.mvrcks.com/bitbucket/scm/shot/tk-shotgun-folders.git
   # version: v0.0.1
 
-  # Uploaded Shotgun config
-  type: shotgun
-  name: tk-shotgun-folders
-  entity_type: UploadedApp  # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
-  field: sg_uploaded_config            # attachment field where payload can be found
-  version:  284923 # attachment id of particular attachment
-
 # shotgun launchfolder
 apps.tk-shotgun-launchfolder.location:
   type: app_store
@@ -182,7 +181,13 @@ apps.tk-shotgun-launchfolder.location:
 apps.tk-shotgun-launchpublish.location:
   type: app_store
   name: tk-shotgun-launchpublish
-  version: v0.3.2
+  version: v0.4.1
+
+# shotgun launchvredreview
+apps.tk-shotgun-launchvredreview.location:
+  type: app_store
+  name: tk-shotgun-launchvredreview
+  version: v1.0.0
 
 # ---- Hiero apps
 
@@ -222,6 +227,11 @@ apps.tk-nuke-quickreview.location:
 
 # writenode
 apps.tk-nuke-writenode.location:
+  type: shotgun
+  name: tk-nuke-writenode
+  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
+  field: sg_uploaded_config  # attachment field where payload can be found
+  version:  456629           # attachment id of particular attachment
   # name: tk-nuke-writenode
   # type: app_store
   # version: v1.4.2
@@ -231,15 +241,8 @@ apps.tk-nuke-writenode.location:
   # linux_path: /mav/stor/studio/systems/_shotgun/apps/tk-nuke-writenode
   # mac_path: /mav/stor/studio/systems/_shotgun/apps/nuke-writenode
 
-    # type: dev
-    # path: /home/mhatton/dev/mvrcks/tk-nuke-writenode
-
-  # Uploaded Shotgun config
-  type: shotgun
-  name: tk-nuke-writenode
-  entity_type: UploadedApp   # entity type  - in this case the Non-Project Custom Entity that has been renamed to UploadedApp
-  field: sg_uploaded_config  # attachment field where payload can be found
-  version:  456629           # attachment id of particular attachment
+  # type: dev
+  # path: /home/mhatton/dev/mvrcks/tk-nuke-writenode
 
 # ---- Flame apps
 
@@ -261,12 +264,11 @@ apps.tk-flame-review.location:
 apps.tk-mari-projectmanager.location:
   name: tk-mari-projectmanager
   type: app_store
-  version: v1.2.1
+  version: v1.2.2
 
 ################################################################################
 # reference all of the common frameworks
 frameworks: '@frameworks'
-
 
 # timecard
 apps.tk-desktop-timecard.location:
