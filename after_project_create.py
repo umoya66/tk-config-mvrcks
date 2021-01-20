@@ -40,8 +40,6 @@ after_project_create
 create(sg, {PROJECT ID}, logger)
 
 ----
-
-
 """
 
 

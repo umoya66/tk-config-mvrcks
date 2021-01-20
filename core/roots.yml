@@ -42,18 +42,19 @@
 # ------------------------------------------------------------------------------
 
 primary:
-    description: "Main project root"
+
+    description: A top-level root folder for production data. Project folders
+        will be created beneath this location.
 
     # these paths will be populated by the associated local storage in Shotgun
     # at setup time.
     mac_path:
-    linux_path: 
+    linux_path:
     windows_path:
 
     # indicates that this is the default storage root
     default: true
     shotgun_storage_id: 3
-
 
 # ------------------------------------------------------------------------------
 # Below is an example of a second storage root. This root would require a local
