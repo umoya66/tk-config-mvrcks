@@ -561,6 +561,11 @@ paths:
     nuke_shot_precomp_pub_dir:
         definition: '@shot_root_pub/publish/nuke/precomp/'
 
+    nuke_shot_render_undistort:
+        definition:  '@shot_root_wip/work/renders/undistort/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.jpg'
+    nuke_shot_render_pub_undistort:
+        definition: '@shot_root_pub/publish/renders/undistort/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.jpg'
+
 
     nuke_shot_render_mono_tif:
         definition:  '@shot_root_wip/work/nuke/renders/{Shot}_{Step}_{name}_v{version}/{Shot}_{Step}_{name}_v{version}.{SEQ}.tif'
@@ -607,7 +612,7 @@ paths:
         # TODO: this could be fixed with a proper Hiero publish
         definition: 'pub/episodes/{Episode}/{Sequence}/{Shot}/plates/publish/'
     hiero_plate_path:
-        definition: '@shot_root_pub/plates/publish/{track}/{Shot}_plates_{track}_v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.exr'
+        definition: 'pub/episodes/{Episode}/{Sequence}/{Shot}/plates/publish/{track}/{Shot}_plates_{track}_v{version}/{Shot}_plates_{track}_v{version}.{SEQ}.exr'
     hiero_render_path:
         definition: '@shot_root_pub/plates/publish/{track}/{Shot}_plates_{track}_v{version}/{Shot}_plates_{track}_v{version}.mov'
 
