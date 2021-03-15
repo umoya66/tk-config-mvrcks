@@ -35,16 +35,16 @@ settings.tk-nuke-writenode.asset:
 settings.tk-nuke-writenode.shot:
   template_script_work: nuke_shot_work
   write_nodes:
-      # - file_type: dpx
-      #   name: Delivery DPX
-      #   promote_write_knobs: []
-      #   proxy_publish_template:
-      #   proxy_render_template:
-      #   publish_template: nuke_shot_render_pub_mono_dpx
-      #   render_template: nuke_shot_render_mono_dpx
-      #   settings: {datatype: 16 bit, colorspace: SLog3}
-      #   tank_type: Rendered Image
-      #   tile_color: [26,26,256]
+  # - file_type: dpx
+  #   name: Delivery DPX
+  #   promote_write_knobs: []
+  #   proxy_publish_template:
+  #   proxy_render_template:
+  #   publish_template: nuke_shot_render_pub_mono_dpx
+  #   render_template: nuke_shot_render_mono_dpx
+  #   settings: {datatype: 16 bit, colorspace: AlexaV3LogC}
+  #   tank_type: Rendered Image
+  #   tile_color: [26,26,256]
 
   - file_type: exr
     name: Delivery EXR
@@ -84,6 +84,17 @@ settings.tk-nuke-writenode.shot:
     tank_type: Quicktime
     tile_color: []
     promote_write_knobs: []
+
+  - file_type: jpg
+    name: Undistort Plate Jpeg
+    promote_write_knobs: []
+    proxy_publish_template:
+    proxy_render_template:
+    publish_template: nuke_shot_render_pub_undistort
+    render_template: nuke_shot_render_undistort
+    settings: {datatype: 8 bit, colorspace: sRGB }
+    tank_type: Undistorted Plate
+    tile_color: [66,26,256]
 
 #   - file_type: exr
 #     name: Stereo Exr, 16 bit
